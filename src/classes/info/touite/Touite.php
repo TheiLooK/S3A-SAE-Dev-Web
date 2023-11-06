@@ -1,6 +1,6 @@
 <?php
 
-namespace touiteur\app\touite;
+namespace touiteur\app\info\touite;
 
 use touiteur\app\Exception\InvalidPropertyNameException;
 
