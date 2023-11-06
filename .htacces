@@ -1,0 +1,6 @@
+RewriteEngine On
+
+# Pour interdire l'accès aux répertoires contenant du code
+RewriteRule ^conf(/.*|)$ - [NC,F]
+RewriteRule ^src(/.*|)$ - [NC,F]
+RewriteRule ^vendor(/.*|)$ - [NC,F]
