@@ -106,4 +106,7 @@ class PublierTouiteAction extends Action{
         }
     }
 
+    private function checkForTags(string $touite){
+
+    }
 }

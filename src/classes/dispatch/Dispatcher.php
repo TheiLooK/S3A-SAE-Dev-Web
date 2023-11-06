@@ -22,6 +22,9 @@ class Dispatcher {
             case 'affiche':
                 $result = (new \touiteur\app\action\AfficherListeTouite())->execute();
                 break;
+            case 'displayTouite':
+                $result = (new \touiteur\app\action\AfficherTouite())->execute();
+                break;
             default :
                 $result = "Accueil ";
         }
@@ -42,6 +45,7 @@ class Dispatcher {
                 <h1>touite</h1>
             </div>
             <ul>
+                <li><a href="./">Accueil</a></li>
                 <li><a href="?action=signin">Connexion</a></li>
                 <li><a href="?action=register">Inscription</a></li>
                 <li><a href="?action=publie">publier</a></li>
@@ -52,7 +56,6 @@ class Dispatcher {
         <div>
             $html
         </div>
-
     </body>
     </html>
     END;
