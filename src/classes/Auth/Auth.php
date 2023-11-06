@@ -17,7 +17,7 @@ class Auth
         if(!password_verify($pwd,$user['passwd'])){ throw new \iutnc\deefy\Exception\AuthException("Erreur : mot de passe invalid "); }
     }
 
-    public static function register(string $pwd, string $email) : bool {
+    public static function register(string $pwd, string $email, string $pseudo) : bool {
 
         if(!self::checkPasswordStrength($pwd,10)) {
             throw new \iutnc\deefy\Exception\AuthException("password trop faible ");
@@ -37,7 +37,7 @@ class Auth
         }
 
         try{
-            $query ="insert into user(email,passwd,role) values (?, ?, 1)";
+            $query ="insert into user(email,passwd,pseudo,role) values (?, ?, 1)";
             $resultset = $connexion->prepare(($query));
             $res = $resultset ->execute([$email,$hash]);
         } catch (PDOException $e) {
@@ -53,5 +53,16 @@ class Auth
             return false;
         }
         return true;
+    }
+
+    public static function loadProfile(String $email) : void {
+        $connexion = ConnectionFactory::makeConnection();
+        $query = "SELECT * from user where email = :email";
+        $resultset = $connexion->prepare(($query));
+        $resultset ->execute(["$email"]);
+        $user =$resultset->fetch(PDO::FETCH_ASSOC);
+
+        $profile = new User($user['email'], $user['passwd'], $user['role']);
+        $_SESSION['users'] = serialize($profile);
     }
 }
