@@ -16,6 +16,9 @@ class Dispatcher {
             case 'register':
                 $result = (new \touiteur\app\action\RegisterAction())->execute();
                 break;
+            case 'publie':
+                $result = (new \touiteur\app\action\PublierTouiteAction())->execute();
+                break;
             default :
                 $result = "Accueil ";
         }
@@ -38,6 +41,7 @@ class Dispatcher {
             <ul>
                 <li><a href="?action=signin">Connexion</a></li>
                 <li><a href="?action=register">Inscription</a></li>
+                <li><a href="?action=publie">publier</a></li>
             </ul>
         </nav>
     </header>

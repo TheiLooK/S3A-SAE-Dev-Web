@@ -1,5 +1,8 @@
 <?php
 require_once "vendor/autoload.php";
-\touiteur\app\db\ConnectionFactory::setconfig("./conf.ini");
+
+date_default_timezone_set('Europe/Paris');
 session_start();
+
+\touiteur\app\db\ConnectionFactory::setconfig("./conf.ini");
 \touiteur\app\dispatch\Dispatcher::run();

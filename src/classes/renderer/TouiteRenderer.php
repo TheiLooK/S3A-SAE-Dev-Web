@@ -3,7 +3,7 @@
 namespace touiteur\app\renderer;
 
 use touiteur\app\Exception\InvalidPropertyNameException;
-use touiteur\app\info\touite\Touite;
+use touiteur\app\structure\touite\Touite;
 
 class TouiteRenderer implements Renderer {
     private Touite $touite;
