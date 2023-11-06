@@ -1,6 +1,15 @@
 RewriteEngine On
 
-# Pour interdire l'accès aux répertoires contenant du code
-RewriteRule ^conf(/.*|)$ - [NC,F]
+#
+# RewriteBase indispensable sur webetu :
+# pour un projet sur webetu dans ~/www/repertoire-projet
+RewriteBase /www/votre login/repertoire-projet
+
+
+#
+# Pour interdire l'accès aux sous-répertoires contenant du code
+# -> ~/www/repertoire-projet/src
+# -> ~/www/repertoire-projet/sql
+# -> etc...
+RewriteRule ^sql(/.*|)$ - [NC,F]
 RewriteRule ^src(/.*|)$ - [NC,F]
-RewriteRule ^vendor(/.*|)$ - [NC,F]
