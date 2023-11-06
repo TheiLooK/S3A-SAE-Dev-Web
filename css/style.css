@@ -1,0 +1,26 @@
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #333;
+    color: #fff;
+    padding: 0 1rem;
+}
+header h1 {
+    margin: 0;
+}
+header ul {
+    display: flex;
+    list-style: none;
+    margin: 0;
+}
+header ul li {
+    margin-left: 1rem;
+}
+header ul li a {
+    color: #fff;
+    text-decoration: none;
+}
+header ul li a:hover {
+    text-decoration: underline;
+}
