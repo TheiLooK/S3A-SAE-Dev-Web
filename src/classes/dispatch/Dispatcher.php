@@ -13,6 +13,9 @@ class Dispatcher {
             case 'signin':
                 $result = (new \touiteur\app\action\SigninAction())->execute();
                 break;
+            case 'register':
+                $result = (new \touiteur\app\action\RegisterAction())->execute();
+                break;
             default :
                 $result = "Accueil ";
         }
@@ -33,7 +36,8 @@ class Dispatcher {
                 <h1>touite</h1>
             </div>
             <ul>
-                <li><a href="?action=signin">Signin</a></li>
+                <li><a href="?action=signin">Connexion</a></li>
+                <li><a href="?action=register">Inscription</a></li>
             </ul>
         </nav>
     </header>
