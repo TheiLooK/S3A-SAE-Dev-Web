@@ -9,11 +9,11 @@ class Touite {
     private string $date;
     private string $user;
     private int $score;
-    private ?string $image = null;
+    private ?string $image;
 
-    public function __construct(string $message, string $user, ?string $image = null) {
+    public function __construct(string $message, string $user, ?string $image, string $date) {
         $this->message = $message;
-        $this->date = date("Y-m-d H:i:s");
+        $this->date = $date;
         $this->user = $user;
         $this->score = 0;
         $this->image = $image;

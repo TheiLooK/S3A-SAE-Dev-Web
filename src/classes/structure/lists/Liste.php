@@ -2,7 +2,8 @@
 declare(strict_types=1);
 namespace touiteur\app\structure\lists;
 
-use touiteur\app\info\touite\Touite;
+use touiteur\app\Exception\InvalidPropertyNameException;
+use touiteur\app\structure\touite\Touite;
 
 class Liste{
     protected iterable $list;
@@ -40,6 +41,6 @@ class Liste{
      */
     public function __get(String $arg):mixed{
         if(property_exists($this, $arg)) return $this->$arg;
-        throw new touiteur\app\Exception\InvalidPropertyNameException ("$arg: invalid property");
+        throw new InvalidPropertyNameException("$arg: invalid property");
     }
 }

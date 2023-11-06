@@ -24,7 +24,14 @@ class TouiteRenderer implements Renderer {
     }
 
     protected function renderCompact(): string {
-        return "TODO";
+        $res = '<h4>'.$this->touite->__get('user').'</h4>';
+        if(!is_null($this->touite->__get('image'))){
+            echo"img";
+            $res.='<img src="'.$this->touite->__get('image').'"/>';
+        }
+        $res.= '<p>'.$this->touite->__get('message').'</p>';
+
+        return $res;
     }
 
     protected function renderLong(): string {
