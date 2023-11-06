@@ -10,7 +10,7 @@ class Auth
         $connexion = ConnectionFactory::makeConnection();
         $resultset = $connexion->prepare($query);
         $res = $resultset->execute([$email]);
-        if(!$res) {throw new \iutnc\deefy\Exception\AuthException("Erreur : requetes");}
+        if(!$res) {throw new \touiteur\app\Exception\AuthException("Erreur : requetes");}
 
         $user = $resultset->fetch(PDO::FETCH_ASSOC);
         if(!$user) { throw new \iutnc\deefy\Exception\AuthException("Erreur :  authentification invalid"); }
@@ -20,7 +20,7 @@ class Auth
     public static function register(string $pwd, string $email, string $pseudo) : bool {
 
         if(!self::checkPasswordStrength($pwd,10)) {
-            throw new \iutnc\deefy\Exception\AuthException("password trop faible ");
+            throw new \touiteur\app\Exception\AuthException("password trop faible ");
         }
 
         $hash = password_hash($pwd, PASSWORD_DEFAULT, ['cost' => 12]);
@@ -33,7 +33,7 @@ class Auth
         $resultset = $connexion->prepare($query_email);
         $res = $resultset ->execute([$email]);
         if($resultset->fetch()) {
-            throw new \iutnc\deefy\Exception\AuthException("compte déjà existant");
+            throw new \touiteur\app\Exception\AuthException("compte déjà existant");
         }
 
         try{
@@ -41,7 +41,7 @@ class Auth
             $resultset = $connexion->prepare(($query));
             $res = $resultset ->execute([$email,$hash]);
         } catch (PDOException $e) {
-            throw new \iutnc\deefy\Exception\AuthException("Erreur lors de la création du compte");
+            throw new \touiteur\app\Exception\AuthException("Erreur lors de la création du compte");
 
         }
         return $res;
