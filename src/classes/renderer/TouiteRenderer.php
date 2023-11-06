@@ -3,10 +3,10 @@
 namespace touiteur\app\renderer;
 
 use touiteur\app\Exception\InvalidPropertyNameException;
-use touiteur\app\touite\Touite;
+use touiteur\app\info\touite\Touite;
 
 class TouiteRenderer implements Renderer {
-    protected Touite $touite;
+    private Touite $touite;
 
     public function __construct(Touite $touite) {
         $this->touite = $touite;
