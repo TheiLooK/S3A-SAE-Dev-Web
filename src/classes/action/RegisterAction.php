@@ -2,7 +2,7 @@
 
 namespace touiteur\app\action;
 
-class registerAction extends Action{
+class RegisterAction extends Action{
 
     public function execute() : string {
         $pageContent = "";

@@ -7,7 +7,7 @@ class Auth
     public static function authentification(String $pwd,String $email) : void {
 
         $query = "SELECT * from user where email=?";
-        $connexion = ConnectionFactory::makeConnection();
+        $connexion = \touiteur\app\db\ConnectionFactory::makeConnection();
         $resultset = $connexion->prepare($query);
         $res = $resultset->execute([$email]);
         if(!$res) {throw new \touiteur\app\Exception\AuthException("Erreur : requetes");}
@@ -25,7 +25,7 @@ class Auth
 
         $hash = password_hash($pwd, PASSWORD_DEFAULT, ['cost' => 12]);
         try {
-            $connexion = ConnectionFactory::makeConnection();
+            $connexion = \touiteur\app\db\ConnectionFactory::makeConnection();
         } catch(DBException $e) {
             throw new Exception($e->getMessage());
         }
@@ -55,14 +55,15 @@ class Auth
         return true;
     }
 
+
     public static function loadProfile(String $email) : void {
-        $connexion = ConnectionFactory::makeConnection();
+        $connexion = \touiteur\app\db\ConnectionFactory::makeConnection();
         $query = "SELECT * from user where email = :email";
         $resultset = $connexion->prepare(($query));
         $resultset ->execute(["$email"]);
         $user =$resultset->fetch(PDO::FETCH_ASSOC);
 
-        $profile = new User($user['email'], $user['passwd'], $user['role']);
+        $profile = new \touiteur\app\db\User($user['email'], $user['passwd'],$user['pseudo'], $user['role']);
         $_SESSION['users'] = serialize($profile);
     }
 }

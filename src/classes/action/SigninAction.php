@@ -2,7 +2,7 @@
 
 namespace touiteur\app\action;
 
-class signinAction extends Action {
+class SigninAction extends Action {
     public function execute() : string {
         $pageContent ="";
         if($this->http_method === 'GET') {
