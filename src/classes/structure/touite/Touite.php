@@ -41,24 +41,21 @@ class Touite {
     public static function getTouiteById(int $id) : Touite{
         // we select the info of the touite
         $connexion = \touiteur\app\db\ConnectionFactory::makeConnection();
-        $query ="SELECT * from Touite t inner join Touiter t2 on t.idTouite = t2.idTouite 
-                                        inner join Utilisateur u on t2.email = u.email 
-                           where t.idTouite = ?";
+        $query ="SELECT * from Image i right outer join ImageToTouite i2 on i.idImage = i2.idImage
+			                            RIGHT outer join Touite t on i2.idTouite=t.idTouite 
+                                        right outer join Touiter t2 on t.idTouite = t2.idTouite 
+                                        right outer join Utilisateur u on t2.email = u.email 
+                        where t.idTouite = ?";
         $resultset = $connexion->prepare(($query));
         $resultset ->execute([$id]);
 
         // we fetch the data of the touite
         $data = $resultset->fetch(PDO::FETCH_ASSOC);
 
-        $query ="SELECT image from ImageToTouite i inner join Image i2 on i.idImage = i2.idImage where i.idTouite = ?";
-        $resultsetImage = $connexion->prepare(($query));
-        $resultsetImage ->execute([$id]);
-        $imgTab = $resultsetImage->fetchall(PDO::FETCH_ASSOC);
-
         // we create the touite object
         $touite = null;
-        if(sizeof($imgTab)>0){
-            $touite = new Touite($data['texte'],$data['username'],$imgTab[0]['image'], $data['dateTouite'], $data['idTouite']);
+        if(isset($data['image'])){
+            $touite = new Touite($data['texte'],$data['username'],$data['image'], $data['dateTouite'], $data['idTouite']);
         }else{
             $touite = new Touite($data['texte'],$data['username'],null, $data['dateTouite'], $data['idTouite']);
         }
