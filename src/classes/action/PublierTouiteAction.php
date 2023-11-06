@@ -24,7 +24,7 @@ class PublierTouiteAction extends Action{
                         <label for="twt">Message : </label>
                         <input type="text" id="twt" name="twt" placeholder="message"><br><br>
                         <label for="twt">Image : </label>
-                        <input type="file" id="file" name="file" accept="image/*" /><br><br>
+                        <input type="file" id="file" name="file" accept="images/*" /><br><br>
                         <input type="submit" value="publier">
                     </form>';
 
@@ -36,7 +36,7 @@ class PublierTouiteAction extends Action{
                 // check for tags
                 $this->treatTags($touite, $id);
 
-                //upload the image if the file is there;
+                //upload the images if the file is there;
                 if(isset($_FILES['file'])){
                     $this->treatImage($id);
                 }
@@ -47,7 +47,7 @@ class PublierTouiteAction extends Action{
                 <label for="twt">Message : </label>
                 <input type="text" id="twt" name="twt" placeholder="message"><br><br>
                 <label for="twt">Image : </label>
-                <input type="file" id="file" name="file" accept="image/*" /><br><br>
+                <input type="file" id="file" name="file" accept="images/*" /><br><br>
                 <input type="submit" value="publier">
             </form>';
         }
@@ -84,16 +84,16 @@ class PublierTouiteAction extends Action{
     }
 
     /**
-     * Function used to upload an image and insert the data in the database
+     * Function used to upload an images and insert the data in the database
      * @return void
      */
     private function treatImage(int $id) : void{
-        // we check if the image is the right type
+        // we check if the images is the right type
 
-        $extensions=array( 'image/jpeg', 'image/png', 'image/gif', 'image/webp');
+        $extensions=array( 'images/jpeg', 'images/png', 'images/gif', 'images/webp');
         if(in_array($_FILES['file']['type'], $extensions)){
             // we upload the file
-            $upload_dir ='image/';
+            $upload_dir ='images/upload';
             $tmp = $_FILES['file']['tmp_name'];
             $dest="";
             if (($_FILES['file']['error'] === UPLOAD_ERR_OK)) {

@@ -54,8 +54,8 @@ class Touite {
 
         // we create the touite object
         $touite = null;
-        if(isset($data['image'])){
-            $touite = new Touite($data['texte'],$data['username'],$data['image'], $data['dateTouite'], $data['idTouite']);
+        if(isset($data['images'])){
+            $touite = new Touite($data['texte'],$data['username'],$data['images'], $data['dateTouite'], $data['idTouite']);
         }else{
             $touite = new Touite($data['texte'],$data['username'],null, $data['dateTouite'], $data['idTouite']);
         }
