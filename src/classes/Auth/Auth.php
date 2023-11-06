@@ -13,8 +13,8 @@ class Auth
         if(!$res) {throw new \touiteur\app\Exception\AuthException("Erreur : requetes");}
 
         $user = $resultset->fetch(PDO::FETCH_ASSOC);
-        if(!$user) { throw new \iutnc\deefy\Exception\AuthException("Erreur :  authentification invalid"); }
-        if(!password_verify($pwd,$user['passwd'])){ throw new \iutnc\deefy\Exception\AuthException("Erreur : mot de passe invalid "); }
+        if(!$user) { throw new \touiteur\app\Exception\AuthException("Erreur :  authentification invalid"); }
+        if(!password_verify($pwd,$user['passwd'])){ throw new \touiteur\app\Exception\AuthException("Erreur : mot de passe invalid "); }
     }
 
     public static function register(string $pwd, string $email, string $pseudo) : bool {

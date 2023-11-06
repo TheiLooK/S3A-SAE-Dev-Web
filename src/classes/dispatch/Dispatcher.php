@@ -10,14 +10,11 @@ class Dispatcher {
         $action = "";
         if(isset($_GET['action'])) $action = $_GET['action'];
         switch ($action) {
-            case '1':
-                $result = "a définir ";
-                break;
-            case '2':
-                $result = " a définir ";
+            case 'signin':
+                $result = (new \touiteur\app\action\SigninAction())->execute();
                 break;
             default :
-                $result = "a définir ";
+                $result = "Accueil ";
         }
         Dispatcher::renderPage($result);
     }
@@ -36,6 +33,7 @@ class Dispatcher {
                 <h1>touite</h1>
             </div>
             <ul>
+                <li><a href="?action=signin">Signin</a></li>
             </ul>
         </nav>
     </header>
