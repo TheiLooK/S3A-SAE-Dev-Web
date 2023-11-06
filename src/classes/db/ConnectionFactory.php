@@ -1,6 +1,7 @@
 <?php
 declare(strict_types=1);
 namespace touiteur\app\db;
+use PDO;
 class ConnectionFactory{
     private static array $config =[];
     private static ?PDO $db=null;
