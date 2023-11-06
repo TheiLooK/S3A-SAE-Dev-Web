@@ -1,6 +1,6 @@
 <?php
 declare(strict_types=1);
-namespace touiteur\app\info\lists;
+namespace touiteur\app\structure\lists;
 
 class feed extends Liste {
 

@@ -2,7 +2,7 @@
 
 namespace touiteur\app\renderer;
 
-use touiteur\app\info\feed\Feed;
+use touiteur\app\structure\lists\Feed;
 
 class FeedRenderer implements Renderer {
     private Feed $feed;

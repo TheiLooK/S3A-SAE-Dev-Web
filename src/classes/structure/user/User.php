@@ -1,6 +1,6 @@
 <?php
 
-namespace touiteur\app\info\user;
+namespace touiteur\app\structure\user;
 
 class User {
     public String $email;

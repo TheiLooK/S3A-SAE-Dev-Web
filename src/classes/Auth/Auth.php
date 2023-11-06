@@ -54,8 +54,6 @@ class Auth
         }
         return true;
     }
-
-
     public static function loadProfile(String $email) : void {
         $connexion = \touiteur\app\db\ConnectionFactory::makeConnection();
         $query = "SELECT * from user where email = :email";
@@ -63,7 +61,7 @@ class Auth
         $resultset ->execute(["$email"]);
         $user =$resultset->fetch(PDO::FETCH_ASSOC);
 
-        $profile = new \touiteur\app\db\User($user['email'], $user['passwd'],$user['pseudo'], $user['role']);
+        $profile = new \touiteur\app\structure\user\User($user['email'], $user['passwd'],$user['pseudo'], $user['role']);
         $_SESSION['users'] = serialize($profile);
     }
 }
