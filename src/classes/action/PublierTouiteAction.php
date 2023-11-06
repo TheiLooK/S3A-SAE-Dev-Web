@@ -16,17 +16,19 @@ class PublierTouiteAction extends Action{
         if ($this->http_method === 'POST') {
             $touite = filter_var($_POST['twt'], FILTER_SANITIZE_STRING);
 
-
             //check the size of msg
             //TODO
 
 
             // add the touite to the database
-            $this->insertIntoDB($touite);
+            $id = $this->insertIntoDB($touite);
+
+            // check for tags
+            $this->treatTags($touite, $id);
 
             //upload the image if the file is there;
             if(isset($_FILES['file'])){
-                $this->treatImage();
+                $this->treatImage($id);
             }
         } else {
             $pageContent = '
@@ -41,7 +43,12 @@ class PublierTouiteAction extends Action{
         return $pageContent;
     }
 
-    private function insertIntoDB(string $touite) : void{
+    /**
+     * Function used to insert a Touite in the database
+     * @param string $touite
+     * @return int $id the id of the touite in the database
+     */
+    private function insertIntoDB(string $touite) : int{
         $email = unserialize($_SESSION['users'])->getEmail();
         $date = date("Y-m-d H:i:s");
 
@@ -62,9 +69,14 @@ class PublierTouiteAction extends Action{
         $query ="insert into Touiter(idTouite, email) values (?, ?)";
         $resultset = $connexion->prepare(($query));
         $res = $resultset ->execute([$id,$email]);
+        return $id;
     }
 
-    private function treatImage() : void{
+    /**
+     * Function used to upload an image and insert the data in the database
+     * @return void
+     */
+    private function treatImage(int $id) : void{
         // we check if the image is the right type
 
         $extensions=array( 'image/jpeg', 'image/png', 'image/gif', 'image/webp');
@@ -92,21 +104,49 @@ class PublierTouiteAction extends Action{
             // we get the id
             $idI = ($resultset->fetch(PDO::FETCH_ASSOC))['idImage'];
 
-            // we get the id of the touite to insert in the table ImageToTouite
-            $query ="select idTouite from Touite order by idTouite desc";
-            $resultset = $connexion->prepare(($query));
-            $res = $resultset ->execute();
-            // we get the id
-            $idT = ($resultset->fetch(PDO::FETCH_ASSOC))['idTouite'];
-
             // we insert into the database
             $query ="insert into ImageToTouite(idTouite, idImage) values (?, ?)";
             $resultset = $connexion->prepare(($query));
-            $res = $resultset ->execute([$idT,$idI]);
+            $res = $resultset ->execute([$id,$idI]);
         }
     }
 
-    private function checkForTags(string $touite){
+    /**
+     * Function used to find tags like #test and insert the correct data in the database
+     * @param string $touite the touite to check
+     * @return void
+     */
+    private function treatTags(string $touite, int $id){
+        $connexion = \touiteur\app\db\ConnectionFactory::makeConnection();
+        $matches = [];
+        preg_match_all('/#(\w+)/', $touite, $matches);
+
+        foreach ($matches[0] as $match) {
+            $match = str_replace('#', '', $match);
+            //we verify if the tag is not already in the database
+            $query ="select * from Tag where tag like ?";
+            $resultset = $connexion->prepare(($query));
+            $resultset ->execute([$match]);
+
+
+            if(!$resultset->fetch(PDO::FETCH_ASSOC)){
+                //we do the right insert into the database
+                $query ="insert into Tag(tag) values (?)";
+                $resultset = $connexion->prepare(($query));
+                $res = $resultset ->execute([$match]);
+            }
+            // we get the id of the Tag to insert in the table TouiteTag
+            $query ="select idTag from Tag where tag like ?";
+            $resultset = $connexion->prepare(($query));
+            $res = $resultset ->execute([$match]);
+            // we get the id
+            $idT = ($resultset->fetch(PDO::FETCH_ASSOC))['idTag'];
+
+            // we insert into the database
+            $query ="insert into TouiteTag(idTouite, idTag) values (?, ?)";
+            $resultset = $connexion->prepare(($query));
+            $res = $resultset ->execute([$id,$idT]);
+        }
 
     }
 }
