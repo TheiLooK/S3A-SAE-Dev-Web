@@ -2,7 +2,9 @@
 declare(strict_types=1);
 namespace touiteur\app\info\lists;
 
-class ListeTouite extends Liste {
+class feed extends Liste {
+
+
     public function __construct(){
         parent::__construct();
     }

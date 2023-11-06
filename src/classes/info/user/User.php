@@ -1,11 +1,10 @@
 <?php
 
-namespace touiteur\app\db;
+namespace touiteur\app\info\user;
 
 class User {
     public String $email;
     private String $password;
-
     private String $pseudo;
     public int $role;
 
@@ -15,5 +14,13 @@ class User {
         $this -> password = $p;
         $this -> pseudo = $pseudo;
         $this -> role = $r;
+    }
+
+    /**
+     * @return String
+     */
+    public function getEmail(): string
+    {
+        return $this->email;
     }
 }

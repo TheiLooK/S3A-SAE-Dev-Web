@@ -6,9 +6,11 @@ use touiteur\app\info\touite\Touite;
 
 class Liste{
     protected iterable $list;
+    protected int $touitesCount;
 
     public function __construct(){
         $this->list = [];
+        $this->touitesCount=0;
     }
 
     /**
@@ -18,6 +20,7 @@ class Liste{
      */
     public function ajouterTouite(Touite $touite):void{
         $this->list[] = $touite;
+        $this->touitesCount++;
     }
 
     /**
@@ -27,6 +30,7 @@ class Liste{
      */
     public function suprimerTouite(int $indice):void{
         $this->list->unset($indice);
+        $this->touitesCount--;
     }
 
     /**
