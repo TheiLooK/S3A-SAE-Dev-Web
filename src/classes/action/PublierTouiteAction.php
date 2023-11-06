@@ -16,19 +16,30 @@ class PublierTouiteAction extends Action{
         if ($this->http_method === 'POST') {
             $touite = filter_var($_POST['twt'], FILTER_SANITIZE_STRING);
 
-            //check the size of msg
-            //TODO
+            if(strlen($touite)>325){
+                // the size is over 325 char
+                $pageContent = '
+                    <form method="POST" action="?action=publie" enctype="multipart/form-data">
+                        <p>Message supérieur à 325 caractères veuillez racourcir le message</p>
+                        <label for="twt">Message : </label>
+                        <input type="text" id="twt" name="twt" placeholder="message"><br><br>
+                        <label for="twt">Image : </label>
+                        <input type="file" id="file" name="file" accept="image/*" /><br><br>
+                        <input type="submit" value="publier">
+                    </form>';
 
 
-            // add the touite to the database
-            $id = $this->insertIntoDB($touite);
+            }else{
+                // add the touite to the database
+                $id = $this->insertIntoDB($touite);
 
-            // check for tags
-            $this->treatTags($touite, $id);
+                // check for tags
+                $this->treatTags($touite, $id);
 
-            //upload the image if the file is there;
-            if(isset($_FILES['file'])){
-                $this->treatImage($id);
+                //upload the image if the file is there;
+                if(isset($_FILES['file'])){
+                    $this->treatImage($id);
+                }
             }
         } else {
             $pageContent = '
@@ -135,6 +146,7 @@ class PublierTouiteAction extends Action{
                 $resultset = $connexion->prepare(($query));
                 $res = $resultset ->execute([$match]);
             }
+
             // we get the id of the Tag to insert in the table TouiteTag
             $query ="select idTag from Tag where tag like ?";
             $resultset = $connexion->prepare(($query));
