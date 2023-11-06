@@ -26,17 +26,17 @@ class RegisterAction extends Action{
             $pageContent = '
             <form method="POST" action="?action=register">
                 <label for="username">Pseudo : </label>
-                <input type="text" id="username" name="username" placeholder="Pseudo" ><br><br>
+                <input type="text" id="username" name="username" placeholder="Pseudo" >
                 <label for="lastname">Nom : </label>
-                <input type="text" id="lastname" name="lastname" placeholder="Nom" ><br><br>
+                <input type="text" id="lastname" name="lastname" placeholder="Nom" >
                 <label for="firstname">Prenom :  </label>
-                <input type="text" id="firstname" name="firstname" placeholder="Prenom" ><br><br>
+                <input type="text" id="firstname" name="firstname" placeholder="Prenom" >
                 <label for="email">Email : </label>
-                <input type="email" id="email" name="email" placeholder="Email" ><br><br>
+                <input type="email" id="email" name="email" placeholder="Email" >
                 <label for="pwd">Mot de passe : </label>
-                <input type="text" id="pwd" name="pwd" placeholder="Mot de passe" ><br><br>
+                <input type="text" id="pwd" name="pwd" placeholder="Mot de passe" >
                 <label for="date">Date de naissance : </label>
-                <input type="date" id="date" name="date"placeholder="Date de naissance" ><br><br>
+                <input type="date" id="date" name="date"placeholder="Date de naissance" >
                 <input type="submit" value="Inscription">
             </form>';
         }

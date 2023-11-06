@@ -1,26 +1,122 @@
-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: #333;
-    color: #fff;
-    padding: 0 1rem;
-}
-header h1 {
+html, body {
+    height: 100%;
     margin: 0;
 }
-header ul {
-    display: flex;
-    list-style: none;
-    margin: 0;
+
+body {
+    background: #000000;
+    color: #ffffff;
+    display: flex; /* Permet que les élèments soient  */
 }
-header ul li {
-    margin-left: 1rem;
-}
-header ul li a {
-    color: #fff;
+
+a {
+    color: #ffffff;
     text-decoration: none;
 }
-header ul li a:hover {
-    text-decoration: underline;
+
+.partiegauche {
+    width: 20%;
+    border-right: grey 1px solid;
+    height: 100%;
 }
+
+nav {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    font-family: 'Roboto', sans-serif;
+    font-weight: bold;
+    right: 80%;
+    position: fixed;
+    margin-right: 50px;
+}
+
+nav .bouton {
+    padding: 5px 10px;
+    margin: 10px 0;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+}
+
+nav .bouton:hover {
+    background: #232323;
+}
+
+nav h1 {
+    width: 100%;
+    text-align: left;
+}
+
+nav .publier {
+    background: #1D9BF0;
+    padding: 10px;
+    text-align: center;
+    border-radius: 20px;
+    width: 100%;
+    margin-top: 10px;
+}
+
+nav .publier:hover {
+    background: #166FAB;
+}
+
+nav img {
+    width: 22px;
+    height: 22px;
+    margin-right: 10px;
+}
+
+nav a {
+    display: flex;
+    flex-direction: row;
+}
+
+.partiecentrale {
+    display: block;
+    margin: 20px auto;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 3px solid grey;
+    border-radius: 20px;
+    padding: 10px;
+}
+
+form * {
+    margin: 5px;
+}
+
+form label {
+    margin-top: 20px;
+}
+
+form input {
+    background: #000000;
+    color: #ffffff;
+}
+
+form input[type=submit] {
+    background: #1D9BF0;
+    padding: 10px;
+    text-align: center;
+    border-radius: 20px;
+    width: 100%;
+    margin-top: 10px;
+    border: none;
+    cursor: pointer;
+}
+
+form input[type=submit]:hover {
+    background: #166FAB;
+}
+
+.partiedroite {
+    width: 20%;
+}
+
+
+

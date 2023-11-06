@@ -9,9 +9,9 @@ class SigninAction extends Action {
             $pageContent = '
             <form method="POST" action="?action=signin">
                 <label for="email">Email :</label>
-                <input type ="text" id="email" placeholder="Email" name ="email"><br><br>
+                <input type ="text" id="email" placeholder="Email" name ="email">
                 <label for="pass">Mot de passe :</label>
-                <input type ="text" id="pass" placeholder="Mot de passe" name ="pass"><br><br>
+                <input type ="text" id="pass" placeholder="Mot de passe" name ="pass">
                 <input type="submit" value="Valider">
             </form>';
         } else {

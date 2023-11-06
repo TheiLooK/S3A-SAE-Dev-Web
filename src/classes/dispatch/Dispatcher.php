@@ -36,30 +36,56 @@ class Dispatcher {
     <!DOCTYPE html>
     <html lang="fr">
     <head>
+        <link rel="stylesheet" href="/css/style.css">
         <title>Touiteur</title>
     </head>
     <body>
-    <header>
+    <div class="partiegauche">
         <nav>
-            <div> 
-                <h1>touite</h1>
+            <h1>Touitteur</h1>
+            <div>
+                <a href="./">
+                    <div class="bouton">
+                        <img src="../images/site/home.png">
+                        <span>Accueil</span>
+                    </div>
+                </a>
+                
+                <a href="?action=signin">
+                    <div class="bouton">
+                        <img src="../images/site/connexion.png">
+                        <span>Connexion</span>
+                    </div>
+                </a>
+                
+                <a href="?action=register">
+                    <div class="bouton">
+                        <img src="../images/site/inscription.png">
+                        <span>Inscription</span>
+                    </div>
+                </a>
+                
+                <a href="?action=affiche">
+                    <div class="bouton">
+                        <img src="../images/site/loupe.png">
+                        <span>Afficher</span>
+                    </div>
+                </a>
+                
+                <a href="?action=publie">
+                    <div class="publier">
+                        <span>Publier</span>
+                    </div>
+                </a>
             </div>
-            <ul>
-                <li><a href="./">Accueil</a></li>
-                <li><a href="?action=signin">Connexion</a></li>
-                <li><a href="?action=register">Inscription</a></li>
-                <li><a href="?action=publie">publier</a></li>
-                <li><a href="?action=affiche">afficher</a></li>
-            </ul>
         </nav>
-    </header>
-        <div>
-            $html
-        </div>
+    </div>
+    <div class="partiecentrale">
+        $html
+    </div>
+    <div class="partiedroite"></div>
     </body>
     </html>
     END;
     }
-
-
 }
