@@ -89,18 +89,16 @@ class PublierTouiteAction extends Action{
      */
     private function treatImage(int $id) : void{
         // we check if the images is the right type
-
-        $extensions=array( 'images/jpeg', 'images/png', 'images/gif', 'images/webp');
+        $extensions=array( 'image/jpeg', 'image/png', 'image/gif', 'image/webp');
         if(in_array($_FILES['file']['type'], $extensions)){
             // we upload the file
-            $upload_dir ='images/upload';
+            $upload_dir ='images/upload/';
             $tmp = $_FILES['file']['tmp_name'];
             $dest="";
             if (($_FILES['file']['error'] === UPLOAD_ERR_OK)) {
                 $dest = $upload_dir.$_FILES['file']['name'];
                 move_uploaded_file($tmp, $dest);
             }
-
 
             //we do the right insert into the database
             $connexion = \touiteur\app\db\ConnectionFactory::makeConnection();
