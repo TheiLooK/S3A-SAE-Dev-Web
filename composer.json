@@ -1,0 +1,12 @@
+{
+  "name": "touiteur/app",
+  "description": "loader",
+  "type": "project",
+
+  "autoload": {
+    "psr-4": {
+      "touiteur\\app\\conf\\" : "./conf",
+      "touiteur\\app\\" : "./src/classes"
+    }
+  }
+}
