@@ -2,7 +2,7 @@
 
 namespace touiteur\app\action;
 
-class signinAction extends Action {
+class SigninAction extends Action {
     public function execute() : string {
         $pageContent ="";
         if($this->http_method === 'GET') {
@@ -21,7 +21,6 @@ class signinAction extends Action {
                 $pageContent.= "<h4> connexion réussie pour {$_POST['email']}</h4>";
                 \touiteur\app\auth\Auth::loadProfile($_POST['email']);
                 $authenticatedUser = unserialize($_SESSION['users']);
-
             } catch(\touiteur\app\Exception\AuthException $e) {
                 $pageContent .= "<h4> échec authentification : {$e->getMessage()}</h4>";
             }
