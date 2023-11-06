@@ -3,7 +3,7 @@ RewriteEngine On
 #
 # RewriteBase indispensable sur webetu :
 # pour un projet sur webetu dans ~/www/repertoire-projet
-RewriteBase /www/votre login/repertoire-projet
+RewriteBase /www/quilliec2u/autres/test
 
 
 #
@@ -11,5 +11,10 @@ RewriteBase /www/votre login/repertoire-projet
 # -> ~/www/repertoire-projet/src
 # -> ~/www/repertoire-projet/sql
 # -> etc...
-RewriteRule ^sql(/.*|)$ - [NC,F]
 RewriteRule ^src(/.*|)$ - [NC,F]
+RewriteRule (/*).ini - [NC,F]
+RewriteRule (/*).json - [NC,F]
+RewriteRule (/*).lock - [NC,F]
+RewriteRule (/*).md - [NC,F]
+RewriteRule .gitignore - [NC,F]
+RewriteRule ^vendor(/.*|)$ - [NC,F]
