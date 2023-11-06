@@ -41,7 +41,6 @@ class Dispatcher {
             </ul>
         </nav>
     </header>
-    <div></div>
         <div>
             $html
         </div>
