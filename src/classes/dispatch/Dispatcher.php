@@ -25,8 +25,20 @@ class Dispatcher {
             case 'displayTouite':
                 $result = (new \touiteur\app\action\AfficherTouite())->execute();
                 break;
+            case 'follow':
+                $result = (new \touiteur\app\action\FollowUser())->execute();
+                break;
+            case 'unfollow':
+                $result = (new \touiteur\app\action\UnfollowUser())->execute();
+                break;
+            case 'disconnect':
+                $result = (new \touiteur\app\action\DisconnectAction())->execute();
+                break;
             case 'displayTouitePersonne':
                 $result = (new \touiteur\app\action\AfficherTouitePersonne())->execute();
+                break;
+            case 'displayTouiteTag':
+                $result = (new \touiteur\app\action\AfficherTouiteTag())->execute();
                 break;
             default :
                 $result = "Accueil ";

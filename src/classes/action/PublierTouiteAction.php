@@ -7,7 +7,7 @@ class PublierTouiteAction extends Action{
     public function execute() : string {
 
         // if the user is not sign in, He can't publish a touite, so we redirect him
-        if(!isset($_SESSION['users'])) {
+        if(!isset($_SESSION['user'])) {
             header("Location: index.php?action=signin");
             exit();
         }
@@ -15,6 +15,7 @@ class PublierTouiteAction extends Action{
         $pageContent = "";
         if ($this->http_method === 'POST') {
             $touite = filter_var($_POST['twt'], FILTER_SANITIZE_STRING);
+            $touite = htmlspecialchars_decode($touite);
 
             if(strlen($touite)>325){
                 // the size is over 325 char
