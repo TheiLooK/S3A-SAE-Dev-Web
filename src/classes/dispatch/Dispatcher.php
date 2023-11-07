@@ -90,6 +90,7 @@ class Dispatcher {
                 <a href="?action=publie">
                     <div class="publier">
                         <span>Publier</span>
+                        <img src="./images/site/publier.png">
                     </div>
                 </a>
             </div>

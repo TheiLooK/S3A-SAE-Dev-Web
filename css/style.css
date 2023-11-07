@@ -20,9 +20,10 @@ a {
 }
 
 .partiegauche {
-    width: 15%;
+    width: 30%;
     border-right: grey 1px solid;
     height: 100%;
+    font-size: 20px;
 }
 
 nav {
@@ -51,7 +52,7 @@ nav .publier {
     padding: 10px;
     text-align: center;
     border-radius: 20px;
-    width: 100%;
+    width: 200px;
     margin-top: 10px;
 }
 
@@ -60,9 +61,9 @@ nav .publier:hover {
 }
 
 nav img {
-    width: 22px;
-    height: 22px;
-    margin-right: 10px;
+    width: 40px;
+    height: 40px;
+    margin-right: 20px;
 }
 
 nav a {
@@ -89,7 +90,6 @@ nav a {
     border-top: 3px solid grey;
     word-wrap: break-word
 }
-
 
 form {
     display: flex;
@@ -163,7 +163,7 @@ form input[type=submit]:hover {
 }
 
 .partiedroite {
-    width: 10%;
+    width: 30%;
 }
 
 input:focus + label {
@@ -179,4 +179,37 @@ form a:hover {
     text-decoration: underline;
 }
 
+.publier img {
+    display: none;
+}
 
+@media screen and (max-width: 920px) {
+    .partiegauche {
+        width: 300px;
+
+    }
+
+    nav {
+        align-items: flex-start;
+    }
+
+    nav .bouton span {
+        display: none;
+    }
+
+    nav .publier span {
+        display: none;
+    }
+
+    nav .publier img {
+        display: block;
+    }
+
+    nav .publier {
+        width: 50px;
+    }
+
+    .partiedroite {
+        display: none;
+    }
+}
