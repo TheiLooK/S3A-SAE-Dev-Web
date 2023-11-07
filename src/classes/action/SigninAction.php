@@ -23,10 +23,11 @@ class SigninAction extends Action {
         } else {
             try {
                 \touiteur\app\auth\Auth::authentification($_POST['pass'],$_POST['email']);
-                $pageContent.= "<h4> Connexion réussie pour {$_POST['email']}</h4>";
+                $pageContent.= "<div><h4> Connexion réussie pour {$_POST['email']}</h4>";
                 \touiteur\app\auth\Auth::loadProfile($_POST['email']);
                 $authenticatedUser = unserialize($_SESSION['users']);
-                $pageContent .= '<p>Redirection vers la page d\'accueil dans 2 secondes</p>';
+                //page d'accueil
+                $pageContent .= '<p>Redirection vers la page d\'accueil dans 2 secondes</p></div>';
                 $pageContent .= '<script type="text/javascript">window.setTimeout(function(){window.location.replace("?action=home");}, 2000);</script>';
             } catch(\touiteur\app\Exception\AuthException $e) {
                 $pageContent .= "<h4> échec authentification : {$e->getMessage()}</h4>";

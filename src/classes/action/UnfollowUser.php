@@ -2,12 +2,14 @@
 
 namespace touiteur\app\action;
 
-use touiteur\app\action\Action;
 use touiteur\app\structure\user\User;
 
 class UnfollowUser extends Action {
 
     public function execute(): string {
+        if(!isset($_SESSION['users'])) {
+            return '<script type="text/javascript">window.location.replace("?action=signin");</script>';
+        }
         try {
             $userToUnfollow = User::getUser($_POST['user']);
             $followed = $this->checkFollow($userToUnfollow->__get('email'));

@@ -2,7 +2,6 @@
 declare(strict_types=1);
 namespace touiteur\app\dispatch;
 
-use touiteur\app\action\Action;
 class Dispatcher {
 
 
@@ -47,25 +46,43 @@ class Dispatcher {
     }
 
     private static function renderPage(string $html): void {
-        echo <<<END
-    <!DOCTYPE html>
-    <html lang="fr">
-    <head>
-        <link rel="stylesheet" href="./css/style.css">
-        <title>Touiteur</title>
-    </head>
-    <body>
-    <div class="partiegauche">
-        <nav>
-            <h1>Touitteur</h1>
-            <div>
-                <a href="./">
+        $pagecontent = <<<END
+            <!DOCTYPE html>
+            <html lang="fr">
+            <head>
+                <link rel="stylesheet" href="./css/style.css">
+                <title>Touiteur</title>
+            </head>
+            <body>
+            <div class="partiegauche">
+                <nav>
+                    <h1>Touiteur</h1>
+                    <div>
+                        <a href="./">
+                            <div class="bouton">
+                                <img src="./images/site/home.png">
+                                <span>Accueil</span>
+                            </div>
+                        </a>
+                        <a href="?action=affiche">
+                            <div class="bouton">
+                                <img src="./images/site/loupe.png">
+                                <span>Afficher</span>
+                            </div>
+                        </a>
+        END;
+        if (isset($_SESSION['users'])) {
+            $pagecontent .= <<<END
+                <a href="?action=disconnect">
                     <div class="bouton">
-                        <img src="./images/site/home.png">
-                        <span>Accueil</span>
+                        <img src="./images/site/connexion.png">
+                        <span>Déconnexion</span>
                     </div>
                 </a>
-                
+            END;
+        }
+        else {
+            $pagecontent .= <<<END
                 <a href="?action=signin">
                     <div class="bouton">
                         <img src="./images/site/connexion.png">
@@ -79,29 +96,25 @@ class Dispatcher {
                         <span>Inscription</span>
                     </div>
                 </a>
-                
-                <a href="?action=affiche">
-                    <div class="bouton">
-                        <img src="./images/site/loupe.png">
-                        <span>Afficher</span>
-                    </div>
-                </a>
-                
-                <a href="?action=publie">
-                    <div class="publier">
-                        <span>Publier</span>
-                        <img src="./images/site/publier.png">
-                    </div>
-                </a>
-            </div>
-        </nav>
-    </div>
-    <div class="partiecentrale">
-        $html
-    </div>
-    <div class="partiedroite"></div>
-    </body>
-    </html>
+            END;
+        }
+        $pagecontent .= <<<END
+                    <a href="?action=publie">
+                        <div class="publier">
+                            <span>Publier</span>
+                            <img src="./images/site/publier.png">
+                        </div>
+                    </a>
+                </div>
+            </nav>
+        </div>
+        <div class="partiecentrale">
+            $html
+        </div>
+        <div class="partiedroite"></div>
+        </body>
+        </html>
     END;
+        echo $pagecontent;
     }
 }
