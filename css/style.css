@@ -126,6 +126,13 @@ form label {
 
 form input:focus + label {
     display: block;
+    position: relative;
+    top: -60px;
+    left: 5px;
+}
+
+form input:focus {
+    padding-top: 30px;
 }
 
 form input:focus {
