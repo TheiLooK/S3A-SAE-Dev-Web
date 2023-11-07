@@ -2,9 +2,6 @@
     font-family: 'Roboto', sans-serif;
 }
 
-
-
-
 html, body {
     height: 100%;
     margin: 0;
@@ -50,7 +47,7 @@ nav .bouton:hover {
 }
 
 nav .publier {
-    background: #1D9BF0;
+    background: #FF9D08;
     padding: 10px;
     text-align: center;
     border-radius: 20px;
@@ -59,7 +56,7 @@ nav .publier {
 }
 
 nav .publier:hover {
-    background: #166FAB;
+    background: #DC8C14;
 }
 
 nav img {
@@ -98,45 +95,69 @@ form {
     display: flex;
     width: fit-content;
     height: fit-content;
-
     flex-direction: column;
-    align-items: center;
-    border: 3px solid grey;
-    border-radius: 20px;
+    align-items: flex-start;
     padding: 10px;
 }
 
 form * {
     margin: 5px;
-}
-
-form label {
-    margin-top: 20px;
+    text-align: left;
 }
 
 form input {
     background: #000000;
     color: #ffffff;
+    width: 400px;
+    border: 1px solid grey;
+    padding: 10px;
+    font-size: 20px;
+    border-radius: 5px;
+
+}
+
+form label {
+    padding: 0 5px;
+    font-size: 15px;
+    margin-bottom: 10px;
+    margin-top: 0;
+}
+
+form input:focus {
+    outline: #FF9D08 2px solid;
 }
 
 form input[type=submit] {
-    background: #1D9BF0;
+    background: #FF9D08;
     padding: 10px;
-    text-align: center;
     border-radius: 20px;
     width: 100%;
-    margin-top: 10px;
+    margin-top: 20px;
     border: none;
     cursor: pointer;
+    text-align: center;
+    font-size: 30px;
 }
 
 form input[type=submit]:hover {
-    background: #166FAB;
+    background: #DC8C14;
 }
 
 .partiedroite {
     width: 10%;
 }
 
+input:focus + label {
+    right: 10px;
+}
+
+form a {
+    color: #FF9D08;
+}
+
+form a:hover {
+    color: #DC8C14;
+    text-decoration: underline;
+}
 
 

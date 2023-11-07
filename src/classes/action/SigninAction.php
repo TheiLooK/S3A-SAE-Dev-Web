@@ -13,6 +13,7 @@ class SigninAction extends Action {
                 <label for="pass">Mot de passe :</label>
                 <input type ="text" id="pass" placeholder="Mot de passe" name ="pass">
                 <input type="submit" value="Valider">
+                <a href="?action=register">Pas encore enregistré ? Créer un compte</a>
             </form>';
         } else {
             try {

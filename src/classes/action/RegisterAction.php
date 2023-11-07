@@ -25,19 +25,20 @@ class RegisterAction extends Action{
         } else {
             $pageContent = '
             <form method="POST" action="?action=register">
-                <label for="username">Pseudo : </label>
+                <h1>Créer votre compte</h1>
                 <input type="text" id="username" name="username" placeholder="Pseudo" >
-                <label for="lastname">Nom : </label>
+                <label for="username">Pseudo : </label>
                 <input type="text" id="lastname" name="lastname" placeholder="Nom" >
-                <label for="firstname">Prenom :  </label>
+                <label for="lastname">Nom : </label>
                 <input type="text" id="firstname" name="firstname" placeholder="Prenom" >
-                <label for="email">Email : </label>
+                <label for="firstname">Prenom :  </label>
                 <input type="email" id="email" name="email" placeholder="Email" >
-                <label for="pwd">Mot de passe : </label>
+                <label for="email">Email : </label>
                 <input type="text" id="pwd" name="pwd" placeholder="Mot de passe" >
-                <label for="date">Date de naissance : </label>
+                <label for="pwd">Mot de passe : </label>
                 <input type="date" id="date" name="date"placeholder="Date de naissance" >
-                <input type="submit" value="Inscription">
+                <label for="date">Date de naissance : </label><input type="submit" value="Inscription">
+                <a href="?action=signin">Déjà enregistré ? Connectez-vous</a>
             </form>';
         }
         return $pageContent;
