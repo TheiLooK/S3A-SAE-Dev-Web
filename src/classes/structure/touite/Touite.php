@@ -63,5 +63,17 @@ class Touite {
         return $touite;
     }
 
+    public function prepareHtml() : string {
+        $res = $this->message;
+        $tag = [];
+        preg_match_all('/#(\w+)/', $res, $tag);
+
+        foreach($tag[0] as $t) {
+            $string = '<a href="?action=displayTouiteTag&tag='.str_replace('#', '', $t).'">'.$t."</a>";
+            str_replace($t, $string, $res);
+        }
+        return $res;
+    }
+
 
 }
