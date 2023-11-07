@@ -50,7 +50,7 @@ class AfficherProfil extends Action
 
     private function checkFollow($email): bool {
         $followed = false;
-        $followedUsers = unserialize($_SESSION['user'])->getFollowedUsers();
+        $followedUsers = unserialize($_SESSION['users'])->getFollowedUsers();
         foreach($followedUsers as $user) {
             if($user == $email) {
                 $followed = true;
