@@ -32,7 +32,7 @@ class AfficherProfil extends Action
                 $html .= '<form method="POST" action="?action=follow">';
                 $html .= '<input type="hidden" name="user" value="' . $user->__get("username") . '">';
                 $html .= '<input type="submit" value="Follow">';
-                $html .= '</form></div>';
+                $html .= '</form></div></div>';
             }
         } catch (\touiteur\app\Exception\InvalidPropertyNameException $e) {
             return "<h3>Utilisateur inconnu</h3>";
