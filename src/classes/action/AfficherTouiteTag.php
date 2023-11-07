@@ -10,7 +10,7 @@ class AfficherTouiteTag extends Action
 {
     public function execute(): string
     {
-        $tag = new Tag($_GET[$_GET['tag']]);
+        $tag = new Tag($_GET['tag']);
         $tag->getListeTouiteTag();
         $r = new FeedRenderer($tag);
 

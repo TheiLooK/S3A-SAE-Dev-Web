@@ -3,7 +3,7 @@ declare(strict_types=1);
 namespace touiteur\app\structure\lists;
 
 use touiteur\app\structure\touite\Touite;
-
+use PDO;
 class Tag extends Liste {
     private string $nom;
 
@@ -19,8 +19,8 @@ class Tag extends Liste {
     public function getListeTouiteTag() : void{
         $connexion = \touiteur\app\db\ConnectionFactory::makeConnection();
         $query ="SELECT * from Touite t inner join TouiteTag t2 on t.idTouite = t2.idTouite 
-                                        inner join tag tag on t2.idTag = tag.idTag
-                                        where tag.Tag = ?
+                                        inner join Tag tag on t2.idTag = tag.idTag
+                                        where tag.tag = ?
                            order by dateTouite desc";
         $resultset = $connexion->prepare(($query));
         $res = $resultset ->execute([$this->nom]);

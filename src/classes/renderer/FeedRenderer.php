@@ -3,9 +3,10 @@
 namespace touiteur\app\renderer;
 
 use touiteur\app\structure\lists\Feed;
+use touiteur\app\structure\lists\Liste;
 
 class FeedRenderer implements Renderer {
-    private Feed $feed;
+    private Liste $feed;
 
     public function __construct($feed) {
         $this->feed = $feed;

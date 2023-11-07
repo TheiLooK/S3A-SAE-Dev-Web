@@ -70,7 +70,7 @@ class Touite {
 
         foreach($tag[0] as $t) {
             $string = '<a href="?action=displayTouiteTag&tag='.str_replace('#', '', $t).'">'.$t."</a>";
-            str_replace($t, $string, $res);
+            $res = str_replace($t, $string, $res);
         }
         return $res;
     }
