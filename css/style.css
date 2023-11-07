@@ -232,6 +232,19 @@ form a:hover {
     padding: 10px;
 }
 
+.icon{
+    width : 3%;
+    height : 3%;
+}
+
+.buttons{
+    justify-content: end;
+    display: inline-flex;
+    flex-direction: row;
+    padding: 0px;
+    margin: 0px auto;
+}
+
 @media screen and (max-width: 920px) {
     .partiegauche {
         width: 300px;

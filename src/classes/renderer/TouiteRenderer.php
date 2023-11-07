@@ -27,31 +27,20 @@ class TouiteRenderer implements Renderer {
         $id = $this->touite->id;
         $user = $this->touite->user;
         $message = $this->touite->prepareHtml();
-        $thing="location.href='?action=displayTouite&id={$id}';";
+        $onclick="location.href='?action=displayTouite&id={$id}';";
 
         // image
         $html = "";
         if(!is_null($this->touite->image)){
-            $html='<img src="'.$this->touite->image.'"/>';
+            $html='<p><i>+ image</i></p>';
         }
-
         // faire la structure, on utilise un onclick car des <a> dans des <a> sont illégaux
-        $res = '<div class="Touite" onclick="'.$thing.'">
+        $res = '<div class="Touite" onclick="'.$onclick.'">
             <h4><a href="?action=profil&user='.$user.'">'.$user.'</a></h4>'.
             '<p>'.$message.'</p>'.$html;
 
-
-        //si l'utilisateur est celui qui a publié le touite il peut le supprimer
-        if(isset($_SESSION['users'])&&unserialize($_SESSION['users'])->username===$this->touite->user){
-            $html = '<form method="POST" action="?action=supprimerTouite">';
-            $html .= '<input type="hidden" name="id" value="' . $this->touite->id . '">';
-            $html .= '<input class="suprBut icon" type="submit">';
-            $html .= '</form>';
-            $res .= $html;
-        }
+        $res.=$this->createButton();
         $res.='</div>';
-
-
         return $res;
     }
     protected function renderLong(): string {
@@ -62,6 +51,7 @@ class TouiteRenderer implements Renderer {
             $res.='<img src="'.$this->touite->image.'"/>';
         }
         $res.= '<p> score : '.$this->touite->score.'</p>';
+        $res.=$this->createButton();
         return $res;
     }
     public function __get(string $at): mixed
@@ -70,5 +60,20 @@ class TouiteRenderer implements Renderer {
             throw new InvalidPropertyNameException(get_called_class() . "invalid property : $at");
         }
         return $this->$at;
+    }
+
+    private function createButton() : string{
+        //Create the upvote / downvote Button
+        $button = '<form method="POST" class="buttons">';
+        $button .= '<input type="image" class="icon" src="images/site/up.png" alt="Submit" formaction="?action=home">';
+        $button .= '<input type="image" class="icon" src="images/site/down.png" alt="Submit" formaction="?action=home">';
+        // create delete button if the user is the creator of the touite
+        if(isset($_SESSION['users'])&&unserialize($_SESSION['users'])->username===$this->touite->user){
+            $button .= '<input type="hidden" name="id" value="' . $this->touite->id . '">';
+            $button .= '<input type="image" class="icon" src="images/site/supprimer.png" alt="Submit" formaction="?action=supprimerTouite">';
+        }
+        $button .= '</form>';
+
+        return $button;
     }
 }
