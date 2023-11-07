@@ -34,8 +34,8 @@ class Dispatcher {
             case 'disconnect':
                 $result = (new \touiteur\app\action\DisconnectAction())->execute();
                 break;
-            case 'displayTouitePersonne':
-                $result = (new \touiteur\app\action\AfficherTouitePersonne())->execute();
+            case 'profil':
+                $result = (new \touiteur\app\action\AfficherProfil())->execute();
                 break;
             case 'displayTouiteTag':
                 $result = (new \touiteur\app\action\AfficherTouiteTag())->execute();
@@ -90,6 +90,7 @@ class Dispatcher {
                 <a href="?action=publie">
                     <div class="publier">
                         <span>Publier</span>
+                        <img src="./images/site/publier.png">
                     </div>
                 </a>
             </div>

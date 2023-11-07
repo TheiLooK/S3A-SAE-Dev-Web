@@ -16,6 +16,7 @@ class RegisterAction extends Action{
             try {
                 \touiteur\app\auth\Auth::register($pwd,$email,$pseudo,$firstname,$lastname,$date);
                 $pageContent.= "<h4> inscription réussie pour {$_POST['email']}</h4>";
+                \touiteur\app\auth\Auth::loadProfile($_POST['email']);
 
             } catch(\touiteur\app\Exception\AuthException $e) {
                 $pageContent .= "<h4> échec inscription : {$e->getMessage()}</h4>";
@@ -43,8 +44,7 @@ class RegisterAction extends Action{
                 <label for="pwd">Mot de passe</label>
                 <input type="password" id="pwd" name="pwd" placeholder="Confirmer le mot de passe" >
                 <label for="date">Confirmer le mot de passe</label>
-                <input type="date" id="date" name="date"placeholder="Date de naissance" >
-                <label for="date">Date de naissance : </label><input type="submit" value="Inscription">
+                <input type="submit" value="Valider">
                 <a href="?action=signin">Déjà enregistré ? Connectez-vous</a>
             </form>';
         }
