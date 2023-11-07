@@ -23,11 +23,11 @@ class AfficherProfil extends Action
             $html .= '<div id="info"> <h3>' . $user->__get('prenom') . $user->__get("nom") . '</h3>';
             $html .= '<p>@' . $user->__get('username') . '</p></div>';
             $html .= '<div id="followButton">';
-            if($this->checkFollow($user->__get('email'))) {
+            if($this->checkFollow()) {
                 $html .= '<form method="POST" action="?action=unfollow">';
                 $html .= '<input type="hidden" name="user" value="' . $user->__get("username") . '">';
                 $html .= '<input type="submit" value="Unfollow">';
-                $html .= '</form></div>';
+                $html .= '</form></div></div>';
             } else {
                 $html .= '<form method="POST" action="?action=follow">';
                 $html .= '<input type="hidden" name="user" value="' . $user->__get("username") . '">';
@@ -46,14 +46,14 @@ class AfficherProfil extends Action
         return $html;
     }
 
-    private function checkFollow($email): bool {
+    private function checkFollow(): bool {
         if(!isset($_SESSION['users'])) {
             return false;
         }
         $followed = false;
         $followedUsers = unserialize($_SESSION['users'])->getFollowedUsers();
         foreach($followedUsers as $user) {
-            if($user == $email) {
+            if($user == $_GET['user']) {
                 $followed = true;
             }
         }

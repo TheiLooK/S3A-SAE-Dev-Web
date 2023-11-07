@@ -42,6 +42,21 @@ class User {
         return $followedUsers;
     }
 
+    public function getFollowedTags(): array {
+        $connexion = \touiteur\app\db\ConnectionFactory::makeConnection();
+        $query = "SELECT t.tag FROM Tag t INNER JOIN FollowTag f ON t.idTag = f.idTag WHERE f.emailSuiveur = ?";
+        $st = $connexion->prepare($query);
+        $st->execute([$this->email]);
+        $res = $st->fetchAll(\PDO::FETCH_ASSOC);
+        $st->closeCursor();
+
+        $followedTags = [];
+        foreach ($res as $row) {
+            $followedTags[] = $row['tag'];
+        }
+        return $followedTags;
+    }
+
     public static function getUser($username): User {
         $connexion = \touiteur\app\db\ConnectionFactory::makeConnection();
         $query = "SELECT * FROM Utilisateur WHERE username = ?";
