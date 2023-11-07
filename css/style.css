@@ -83,6 +83,7 @@ nav a {
 
 .partiecentrale {
     display: flex;
+    flex-direction: column;
     width: 70%;
     padding: 1em 1em 1em 1em;
     justify-content: space-around;
