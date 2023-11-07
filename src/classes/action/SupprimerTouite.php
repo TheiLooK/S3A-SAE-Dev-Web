@@ -9,23 +9,34 @@ class SupprimerTouite extends Action
 {
     public function execute(): string
     {
+        $pageContent="";
         $id = $_POST['id'];
-        $db = ConnectionFactory::makeConnection();
+        if(!isset($_GET['delete'])){
+            $pageContent=<<<HTML
+                     <form method="POST">
+                        <p>Voulez vous vraiment supprimer votre touite ?</p>
+                        <input type="hidden" name="id" value=$id>
+                        <input type="submit" value="oui" formaction="?action=supprimerTouite&delete=true">
+                        <input type="submit" value="non" formaction="?action=affiche">
+                    </form>
+                HTML;
+        }else{
+            $db = ConnectionFactory::makeConnection();
 
+            $tabDelete = [];
+            $tabDelete[] = "DELETE FROM `Touiter` WHERE idTouite = ?";
+            $tabDelete[] = "DELETE FROM `ImageToTouite` WHERE idTouite = ?";
+            $tabDelete[] = "DELETE FROM `TouiteTag` WHERE idTouite = ?";
+            $tabDelete[] = "DELETE FROM `Touite` WHERE idTouite = ?";
 
-        $tabDelete = [];
-        $tabDelete[] = "DELETE FROM `Touiter` WHERE idTouite = ?";
-        $tabDelete[] = "DELETE FROM `ImageToTouite` WHERE idTouite = ?";
-        $tabDelete[] = "DELETE FROM `TouiteTag` WHERE idTouite = ?";
-        $tabDelete[] = "DELETE FROM `Touite` WHERE idTouite = ?";
-
-        foreach ($tabDelete as $query) {
-            $resultset = $db->prepare(($query));
-            $res = $resultset ->execute([$id]);
+            foreach ($tabDelete as $query) {
+                $resultset = $db->prepare(($query));
+                $res = $resultset ->execute([$id]);
+            }
+            $pageContent="le touite a bien été supprimé, retour a la page";
+            $pageContent .= '<script type="text/javascript">window.setTimeout(function(){window.location.replace("?action=affiche");}, 1500);</script>';
         }
 
-        $pageContent="le touite a bien été supprimer";
-        $pageContent .= '<script type="text/javascript">window.setTimeout(function(){window.location.replace("?action=home");}, 1000);</script>';
         return $pageContent;
     }
 }
