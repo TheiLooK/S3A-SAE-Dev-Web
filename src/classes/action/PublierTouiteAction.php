@@ -7,7 +7,7 @@ class PublierTouiteAction extends Action{
     public function execute() : string {
 
         // if the user is not sign in, He can't publish a touite, so we redirect him
-        if(!isset($_SESSION['users'])) {
+        if(!isset($_SESSION['user'])) {
             header("Location: index.php?action=signin");
             exit();
         }
@@ -60,7 +60,7 @@ class PublierTouiteAction extends Action{
      * @return int $id the id of the touite in the database
      */
     private function insertIntoDB(string $touite) : int{
-        $email = unserialize($_SESSION['users'])->getEmail();
+        $email = unserialize($_SESSION['user'])->getEmail();
         $date = date("Y-m-d H:i:s");
 
         // we insert the touite into the database

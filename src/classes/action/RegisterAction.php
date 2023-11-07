@@ -23,6 +23,11 @@ class RegisterAction extends Action{
 
 
         } else {
+            if (isset($_SESSION['user'])) {
+                $pageContent .= "<div id='already-connected'><h3>Vous êtes déjà connecté !</h3>";
+                $pageContent .= '<a href="?action=disconnect">Se déconnecter</a></div>';
+                return $pageContent;
+            }
             $pageContent = '
             <form method="POST" action="?action=register">
                 <label for="username">Pseudo : </label>
