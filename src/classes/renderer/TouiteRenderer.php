@@ -24,32 +24,44 @@ class TouiteRenderer implements Renderer {
     protected function renderCompact(): string {
 
         // recuparation variables
-        $id = $this->touite->__get('id');
-        $user = $this->touite->__get('user');
+        $id = $this->touite->id;
+        $user = $this->touite->user;
         $message = $this->touite->prepareHtml();
         $thing="location.href='?action=displayTouite&id={$id}';";
 
         // image
         $html = "";
-        if(!is_null($this->touite->__get('image'))){
-            $html='<img src="'.$this->touite->__get('image').'"/>';
+        if(!is_null($this->touite->image)){
+            $html='<img src="'.$this->touite->image.'"/>';
         }
 
         // faire la structure, on utilise un onclick car des <a> dans des <a> sont illégaux
         $res = '<div class="Touite" onclick="'.$thing.'">
             <h4><a href="?action=profil&user='.$user.'">'.$user.'</a></h4>'.
-            '<p>'.$message.'</p>'.$html.
-            '</div>';
+            '<p>'.$message.'</p>'.$html;
+
+
+        //si l'utilisateur est celui qui a publié le touite il peut le supprimer
+        if(isset($_SESSION['users'])&&unserialize($_SESSION['users'])->username===$this->touite->user){
+            $html = '<form method="POST" action="?action=supprimerTouite">';
+            $html .= '<input type="hidden" name="id" value="' . $this->touite->id . '">';
+            $html .= '<input class="suprBut icon" type="submit">';
+            $html .= '</form>';
+            $res .= $html;
+        }
+        $res.='</div>';
+
 
         return $res;
     }
     protected function renderLong(): string {
-        $res = '<h4>'.$this->touite->__get('user')." | ".$this->touite->__get('date').'</h4>';
-        $res.= '<p>'.$this->touite->__get('message').'</p>';
-        if(!is_null($this->touite->__get('image'))){
-            $res.='<img src="'.$this->touite->__get('image').'"/>';
+        $user = $this->touite->user;
+        $res = '<h4><a href="?action=profil&user='.$user.'">'.$user.'</a>'." | ".$this->touite->date.'</h4>';
+        $res.= '<p>'.$this->touite->prepareHtml().'</p>';
+        if(!is_null($this->touite->image)){
+            $res.='<img src="'.$this->touite->image.'"/>';
         }
-        $res.= '<p> score : '.$this->touite->__get('score').'</p>';
+        $res.= '<p> score : '.$this->touite->score.'</p>';
         return $res;
     }
     public function __get(string $at): mixed
