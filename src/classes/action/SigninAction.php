@@ -21,10 +21,12 @@ class SigninAction extends Action {
                 <a href="?action=register">Pas encore enregistré ? Créer un compte</a>
             </form>';
         } else {
+            $email = filter_var($_POST['email'], FILTER_SANITIZE_EMAIL);
+            $pwd = filter_var($_POST['pass'], FILTER_SANITIZE_STRING);
             try {
-                \touiteur\app\Auth\Auth::authentification($_POST['pass'],$_POST['email']);
+                \touiteur\app\auth\Auth::authentification($pwd,$email);
                 $pageContent.= "<div><h4> Connexion réussie pour {$_POST['email']}</h4>";
-                \touiteur\app\Auth\Auth::loadProfile($_POST['email']);
+                \touiteur\app\auth\Auth::loadProfile($email);
                 $authenticatedUser = unserialize($_SESSION['users']);
                 //page d'accueil
                 $pageContent .= '<p>Redirection vers la page d\'accueil dans 2 secondes</p></div>';
