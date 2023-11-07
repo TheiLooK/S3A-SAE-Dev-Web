@@ -34,7 +34,7 @@ class RegisterAction extends Action{
                 <label for="email">Email : </label>
                 <input type="email" id="email" name="email" placeholder="Email" >
                 <label for="pwd">Mot de passe : </label>
-                <input type="text" id="pwd" name="pwd" placeholder="Mot de passe" >
+                <input type="password" id="pwd" name="pwd" placeholder="Mot de passe" >
                 <label for="date">Date de naissance : </label>
                 <input type="date" id="date" name="date"placeholder="Date de naissance" >
                 <input type="submit" value="Inscription">
