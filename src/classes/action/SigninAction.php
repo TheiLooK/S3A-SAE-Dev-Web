@@ -6,6 +6,11 @@ class SigninAction extends Action {
     public function execute() : string {
         $pageContent ="";
         if($this->http_method === 'GET') {
+            if (isset($_SESSION['user'])) {
+                $pageContent .= "<div id='already-connected'><h3>Vous êtes déjà connecté !</h3>";
+                $pageContent .= '<a href="?action=disconnect">Se déconnecter</a></div>';
+                return $pageContent;
+            }
             $pageContent = '
             <form method="POST" action="?action=signin">
                 <label for="email">Email :</label>
@@ -16,11 +21,10 @@ class SigninAction extends Action {
             </form>';
         } else {
             try {
-
                 \touiteur\app\auth\Auth::authentification($_POST['pass'],$_POST['email']);
                 $pageContent.= "<h4> connexion réussie pour {$_POST['email']}</h4>";
                 \touiteur\app\auth\Auth::loadProfile($_POST['email']);
-                $authenticatedUser = unserialize($_SESSION['users']);
+                $authenticatedUser = unserialize($_SESSION['user']);
             } catch(\touiteur\app\Exception\AuthException $e) {
                 $pageContent .= "<h4> échec authentification : {$e->getMessage()}</h4>";
             }

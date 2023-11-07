@@ -23,6 +23,11 @@ class RegisterAction extends Action{
 
 
         } else {
+            if (isset($_SESSION['user'])) {
+                $pageContent .= "<div id='already-connected'><h3>Vous êtes déjà connecté !</h3>";
+                $pageContent .= '<a href="?action=disconnect">Se déconnecter</a></div>';
+                return $pageContent;
+            }
             $pageContent = '
             <form method="POST" action="?action=register">
                 <label for="username">Pseudo : </label>
@@ -34,7 +39,7 @@ class RegisterAction extends Action{
                 <label for="email">Email : </label>
                 <input type="email" id="email" name="email" placeholder="Email" >
                 <label for="pwd">Mot de passe : </label>
-                <input type="text" id="pwd" name="pwd" placeholder="Mot de passe" >
+                <input type="password" id="pwd" name="pwd" placeholder="Mot de passe" >
                 <label for="date">Date de naissance : </label>
                 <input type="date" id="date" name="date"placeholder="Date de naissance" >
                 <input type="submit" value="Inscription">
