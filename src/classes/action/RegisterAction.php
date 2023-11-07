@@ -13,9 +13,9 @@ class RegisterAction extends Action{
             $firstname = filter_var($_POST['firstname'], FILTER_SANITIZE_STRING);
             $lastname = filter_var($_POST['lastname'], FILTER_SANITIZE_STRING);
             try {
-                \touiteur\app\auth\Auth::register($pwd,$email,$pseudo,$firstname,$lastname,"0/0/0");
+                \touiteur\app\Auth\Auth::register($pwd,$email,$pseudo,$firstname,$lastname,"0/0/0");
                 $pageContent.= "<div><h4> Inscription réussie pour {$_POST['email']}</h4>";
-                \touiteur\app\auth\Auth::loadProfile($_POST['email']);
+                \touiteur\app\Auth\Auth::loadProfile($_POST['email']);
                 $authenticatedUser = unserialize($_SESSION['users']);
                 //page d'accueil
                 $pageContent .= '<p>Redirection vers la page d\'accueil dans 2 secondes</p></div>';

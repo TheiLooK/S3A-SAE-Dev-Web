@@ -22,9 +22,9 @@ class SigninAction extends Action {
             </form>';
         } else {
             try {
-                \touiteur\app\auth\Auth::authentification($_POST['pass'],$_POST['email']);
+                \touiteur\app\Auth\Auth::authentification($_POST['pass'],$_POST['email']);
                 $pageContent.= "<div><h4> Connexion réussie pour {$_POST['email']}</h4>";
-                \touiteur\app\auth\Auth::loadProfile($_POST['email']);
+                \touiteur\app\Auth\Auth::loadProfile($_POST['email']);
                 $authenticatedUser = unserialize($_SESSION['users']);
                 //page d'accueil
                 $pageContent .= '<p>Redirection vers la page d\'accueil dans 2 secondes</p></div>';
