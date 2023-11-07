@@ -16,6 +16,7 @@ class RegisterAction extends Action{
             try {
                 \touiteur\app\auth\Auth::register($pwd,$email,$pseudo,$firstname,$lastname,$date);
                 $pageContent.= "<h4> inscription réussie pour {$_POST['email']}</h4>";
+                \touiteur\app\auth\Auth::loadProfile($_POST['email']);
 
             } catch(\touiteur\app\Exception\AuthException $e) {
                 $pageContent .= "<h4> échec inscription : {$e->getMessage()}</h4>";
