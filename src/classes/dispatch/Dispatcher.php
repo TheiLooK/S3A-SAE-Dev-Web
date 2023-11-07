@@ -51,7 +51,7 @@ class Dispatcher {
             <html lang="fr">
             <head>
                 <link rel="stylesheet" href="./css/style.css">
-                <meta http-equiv="refresh" content="60" />
+                <meta http-equiv="refresh" content="60">
                 <title>Touiteur</title>
             </head>
             <body>
