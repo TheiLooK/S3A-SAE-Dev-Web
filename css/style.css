@@ -128,11 +128,17 @@ form input:focus + label {
     display: block;
     position: relative;
     top: -60px;
-    left: 5px;
+    left: 10px;
+    height: 0;
+    margin: 0;
 }
 
 form input:focus {
     padding-top: 30px;
+}
+
+form input:focus::placeholder {
+    color: transparent;
 }
 
 form input:focus {

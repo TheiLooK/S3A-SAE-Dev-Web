@@ -43,8 +43,6 @@ class RegisterAction extends Action{
                 <label for="pwd">Mot de passe</label>
                 <input type="password" id="pwd" name="pwd" placeholder="Confirmer le mot de passe" >
                 <label for="date">Confirmer le mot de passe</label>
-                <input type="date" id="date" name="date"placeholder="Date de naissance" >
-                <label for="date">Date de naissance : </label><input type="submit" value="Inscription">
                 <a href="?action=signin">Déjà enregistré ? Connectez-vous</a>
             </form>';
         }
