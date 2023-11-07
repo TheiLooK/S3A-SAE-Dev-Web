@@ -125,6 +125,7 @@ form label {
 }
 
 form input:focus + label {
+    color: #FF9D08;
     display: block;
     position: relative;
     top: -60px;
