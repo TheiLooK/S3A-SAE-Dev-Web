@@ -25,21 +25,21 @@ class TouiteRenderer implements Renderer {
 
     protected function renderCompact(): string {
         $res ='<div class="Touite">';
-        $res.= '<h4><a href="?action=displayTouite¨Personne&user='.$this->touite->__get('user').'">'.$this->touite->__get('user').'</a></h4>';
+        $res.= '<h4><a href="?action=profil&user='.$this->touite->__get('user').'">'.$this->touite->__get('user').'</a></h4>';
+        $res.= '<p><a href="?action=displayTouite&id='.$this->touite->__get('id').'">'.$this->touite->prepareHtml().'</a></p>';
         if(!is_null($this->touite->__get('image'))){
             $res.='<img src="'.$this->touite->__get('image').'"/>';
         }
-        $res.= '<p><a href="?action=displayTouite&id='.$this->touite->__get('id').'">'.$this->touite->prepareHtml().'</a></p>';
         $res.='</div>';
         return $res;
     }
 
     protected function renderLong(): string {
         $res = '<h4>'.$this->touite->__get('user')." | ".$this->touite->__get('date').'</h4>';
+        $res.= '<p>'.$this->touite->__get('message').'</p>';
         if(!is_null($this->touite->__get('image'))){
             $res.='<img src="'.$this->touite->__get('image').'"/>';
         }
-        $res.= '<p>'.$this->touite->__get('message').'</p>';
         $res.= '<p> score : '.$this->touite->__get('score').'</p>';
         return $res;
     }
