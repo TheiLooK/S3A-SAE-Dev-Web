@@ -19,6 +19,16 @@ a {
     text-decoration: none;
 }
 
+.lien {
+    color: #FF9D08;
+
+}
+
+.lien:hover {
+    color: #DC8C14;
+    text-decoration: underline;
+}
+
 .partiegauche {
     width: 30%;
     border-right: grey 1px solid;
@@ -113,9 +123,11 @@ nav a {
 
 .Touite{
     min-width: 30%;
-    border-top: 3px solid grey;
-    word-wrap: break-word
+    border: 1px solid grey;
+    word-wrap: break-word;
+    margin-bottom: 20px;
 }
+
 
 form {
     display: flex;
