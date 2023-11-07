@@ -13,10 +13,10 @@ class SigninAction extends Action {
             }
             $pageContent = '
             <form method="POST" action="?action=signin">
-                <label for="email">Email :</label>
                 <input type ="text" id="email" placeholder="Email" name ="email">
-                <label for="pass">Mot de passe :</label>
+                <label for="email">Email</label>               
                 <input type ="password" id="pass" placeholder="Mot de passe" name ="pass">
+                <label for="pass">Mot de passe</label>
                 <input type="submit" value="Valider">
                 <a href="?action=register">Pas encore enregistré ? Créer un compte</a>
             </form>';
