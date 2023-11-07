@@ -32,17 +32,17 @@ class RegisterAction extends Action{
             <form method="POST" action="?action=register">
                 <h1>Créer votre compte</h1>
                 <input type="text" id="username" name="username" placeholder="Pseudo" >
-                <label for="username">Pseudo : </label>
+                <label for="username">Pseudo</label>
                 <input type="text" id="lastname" name="lastname" placeholder="Nom" >
-                <label for="lastname">Nom : </label>
+                <label for="lastname">Nom</label>
                 <input type="text" id="firstname" name="firstname" placeholder="Prenom" >
-                <label for="firstname">Prenom :  </label>
+                <label for="firstname">Prenom</label>
                 <input type="email" id="email" name="email" placeholder="Email" >
-                <label for="email">Email : </label>
-                <input type="text" id="pwd" name="pwd" placeholder="Mot de passe" >
-                <label for="pwd">Mot de passe : </label>
+                <label for="email">Email</label>
                 <input type="password" id="pwd" name="pwd" placeholder="Mot de passe" >
-                <label for="date">Date de naissance : </label>
+                <label for="pwd">Mot de passe</label>
+                <input type="password" id="pwd" name="pwd" placeholder="Confirmer le mot de passe" >
+                <label for="date">Confirmer le mot de passe</label>
                 <input type="date" id="date" name="date"placeholder="Date de naissance" >
                 <label for="date">Date de naissance : </label><input type="submit" value="Inscription">
                 <a href="?action=signin">Déjà enregistré ? Connectez-vous</a>
