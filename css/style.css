@@ -160,7 +160,7 @@ form input:focus + label {
     margin: 0;
 }
 
-form input:focus {
+form input[type="text"]:focus {
     padding-top: 30px;
 }
 
