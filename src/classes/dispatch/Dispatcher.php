@@ -82,10 +82,17 @@ class Dispatcher {
                         </a>
         END;
         if (isset($_SESSION['users'])) {
+            $user = unserialize($_SESSION['users'])->username;
             $pagecontent .= <<<END
-                <a href="?action=disconnect">
+                <a href="?action=profil&user=$user">
                     <div class="bouton">
                         <img src="./images/site/connexion.png">
+                        <span>Votre Profil</span>
+                    </div>
+                </a>
+                <a href="?action=disconnect">
+                    <div class="bouton">
+                        <img src="./images/site/deconnexion.png">
                         <span>Déconnexion</span>
                     </div>
                 </a>
