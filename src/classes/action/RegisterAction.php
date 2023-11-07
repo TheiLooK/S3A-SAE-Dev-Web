@@ -12,9 +12,8 @@ class RegisterAction extends Action{
             $pseudo = filter_var($_POST['username'], FILTER_SANITIZE_STRING);
             $firstname = filter_var($_POST['firstname'], FILTER_SANITIZE_STRING);
             $lastname = filter_var($_POST['lastname'], FILTER_SANITIZE_STRING);
-            $date = $_POST['date'];
             try {
-                \touiteur\app\auth\Auth::register($pwd,$email,$pseudo,$firstname,$lastname,$date);
+                \touiteur\app\auth\Auth::register($pwd,$email,$pseudo,$firstname,$lastname,"0/0/0");
                 $pageContent.= "<div><h4> Inscription réussie pour {$_POST['email']}</h4>";
                 \touiteur\app\auth\Auth::loadProfile($_POST['email']);
                 $authenticatedUser = unserialize($_SESSION['users']);
@@ -29,23 +28,23 @@ class RegisterAction extends Action{
         } else {
             if (isset($_SESSION['users'])) {
                 $pageContent .= "<div id='already-connected'><h3>Vous êtes déjà connecté !</h3>";
-                $pageContent .= '<a href="?action=disconnect">Se déconnecter</a></div>';
+                $pageContent .= '<a class="lien" href="?action=disconnect">Se déconnecter</a></div>';
                 return $pageContent;
             }
             $pageContent = '
             <form method="POST" action="?action=register">
                 <h1>Créer votre compte</h1>
-                <input type="text" id="username" name="username" placeholder="Pseudo" >
+                <input type="text" id="username" name="username" placeholder="Pseudo" required>
                 <label for="username">Pseudo</label>
-                <input type="text" id="lastname" name="lastname" placeholder="Nom" >
+                <input type="text" id="lastname" name="lastname" placeholder="Nom" required>
                 <label for="lastname">Nom</label>
-                <input type="text" id="firstname" name="firstname" placeholder="Prenom" >
+                <input type="text" id="firstname" name="firstname" placeholder="Prenom" required>
                 <label for="firstname">Prenom</label>
-                <input type="email" id="email" name="email" placeholder="Email" >
+                <input type="email" id="email" name="email" placeholder="Email" required>
                 <label for="email">Email</label>
-                <input type="password" id="pwd" name="pwd" placeholder="Mot de passe" >
+                <input type="password" id="pwd" name="pwd" placeholder="Mot de passe" required>
                 <label for="pwd">Mot de passe</label>
-                <input type="password" id="pwd" name="pwd" placeholder="Confirmer le mot de passe" >
+                <input type="password" id="pwd" name="pwd" placeholder="Confirmer le mot de passe" required>
                 <label for="date">Confirmer le mot de passe</label>
                 <input type="submit" value="Valider">
                 <a href="?action=signin">Déjà enregistré ? Connectez-vous</a>

@@ -69,7 +69,7 @@ class Touite {
         preg_match_all('/#(\w+)/', $res, $tag);
 
         foreach($tag[0] as $t) {
-            $string = '<a href="?action=displayTouiteTag&tag='.str_replace('#', '', $t).'">'.$t."</a>";
+            $string = '<a class="lien" href="?action=displayTouiteTag&tag='.str_replace('#', '', $t).'">'.$t."</a>";
             $res = str_replace($t, $string, $res);
         }
         return $res;

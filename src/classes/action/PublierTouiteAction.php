@@ -46,7 +46,7 @@ class PublierTouiteAction extends Action{
             $pageContent = '
             <form method="POST" action="?action=publie" enctype="multipart/form-data">
                 <label for="twt">Message : </label>
-                <input type="text" id="twt" name="twt" placeholder="message">
+                <input type="text" id="twt" name="twt" placeholder="message" required>
                 <label for="twt">Image : </label>
                 <input type="file" id="file" name="file" accept="images/*" />
                 <input type="submit" value="publier">
@@ -61,7 +61,7 @@ class PublierTouiteAction extends Action{
      * @return int $id the id of the touite in the database
      */
     private function insertIntoDB(string $touite) : int{
-        $email = unserialize($_SESSION['users'])->getEmail();
+        $email = unserialize($_SESSION['users'])->__get('email');
         $date = date("Y-m-d H:i:s");
 
         // we insert the touite into the database
