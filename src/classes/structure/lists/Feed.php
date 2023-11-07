@@ -27,4 +27,20 @@ class Feed extends Liste {
             $this->ajouterTouite(Touite::getTouiteById($data['idTouite']));
         }
     }
+
+    public function getListeTouitePersonne(string $user) : void{
+        $connexion = \touiteur\app\db\ConnectionFactory::makeConnection();
+        $query ="SELECT * from Touite t inner join Touiter t2 on t.idTouite = t2.idTouite 
+                                        inner join Utilisateur u on t2.email = u.email
+                                        where u.username = ?
+                           order by dateTouite desc";
+        $resultset = $connexion->prepare(($query));
+        $res = $resultset ->execute([$user]);
+
+        while ($data = $resultset->fetch(PDO::FETCH_ASSOC)){
+
+            $this->ajouterTouite(Touite::getTouiteById($data['idTouite']));
+        }
+    }
+
 }

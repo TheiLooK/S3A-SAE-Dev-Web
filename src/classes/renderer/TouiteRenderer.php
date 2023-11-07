@@ -24,13 +24,13 @@ class TouiteRenderer implements Renderer {
     }
 
     protected function renderCompact(): string {
-        $res = '<div class="Touite">';
-        $res .= '<h4>'.$this->touite->__get('user').'</h4>';
+        $res ='<div class="Touite">';
+        $res.= '<h4><a href="?action=displayTouitePersonne&user='.$this->touite->__get('user').'">'.$this->touite->__get('user').'</a></h4>';
         if(!is_null($this->touite->__get('image'))){
             $res.='<img src="'.$this->touite->__get('image').'"/>';
         }
         $res.= '<p><a href="?action=displayTouite&id='.$this->touite->__get('id').'">'.$this->touite->__get('message').'</a></p>';
-        $res.= "</div>";
+        $res.='</div>';
         return $res;
     }
 

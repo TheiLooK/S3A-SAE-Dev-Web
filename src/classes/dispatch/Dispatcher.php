@@ -34,6 +34,9 @@ class Dispatcher {
             case 'disconnect':
                 $result = (new \touiteur\app\action\DisconnectAction())->execute();
                 break;
+            case 'displayTouitePersonne':
+                $result = (new \touiteur\app\action\AfficherTouitePersonne())->execute();
+                break;
             default :
                 $result = "Accueil ";
         }
