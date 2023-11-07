@@ -22,9 +22,8 @@ class PublierTouiteAction extends Action{
                 $pageContent = '
                     <form method="POST" action="?action=publie" enctype="multipart/form-data">
                         <p>Message supérieur à 325 caractères veuillez racourcir le message</p>
-                        <label for="twt">Message : </label>
-                        <input type="text" id="twt" name="twt" placeholder="message">
-                        <label for="twt">Image : </label>
+                        <input type="text" id="twt" name="twt" placeholder="Message">
+                        <label for="twt">Message</label>
                         <input type="file" id="file" name="file" accept="images/*" />
                         <input type="submit" value="publier">
                     </form>';
@@ -45,9 +44,8 @@ class PublierTouiteAction extends Action{
         } else {
             $pageContent = '
             <form method="POST" action="?action=publie" enctype="multipart/form-data">
-                <label for="twt">Message : </label>
-                <input type="text" id="twt" name="twt" placeholder="message" required>
-                <label for="twt">Image : </label>
+                <input type="text" id="twt" name="twt" placeholder="Message" required>
+                <label for="twt">Message</label>
                 <input type="file" id="file" name="file" accept="images/*" />
                 <input type="submit" value="publier">
             </form>';
