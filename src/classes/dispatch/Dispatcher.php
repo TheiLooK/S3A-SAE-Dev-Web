@@ -25,6 +25,9 @@ class Dispatcher {
             case 'displayTouite':
                 $result = (new \touiteur\app\action\AfficherTouite())->execute();
                 break;
+            case 'displayTouitePersonne':
+                $result = (new \touiteur\app\action\AfficherTouitePersonne())->execute();
+                break;
             default :
                 $result = "Accueil ";
         }
