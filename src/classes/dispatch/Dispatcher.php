@@ -45,6 +45,9 @@ class Dispatcher {
             case 'unfollowTag':
                 $result = (new \touiteur\app\action\UnfollowTag())->execute();
                 break;
+            case 'supprimerTouite':
+                $result = (new \touiteur\app\action\SupprimerTouite())->execute();
+                break;
             default :
                 $result = "Accueil ";
         }
