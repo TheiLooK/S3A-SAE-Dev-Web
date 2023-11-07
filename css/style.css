@@ -96,7 +96,7 @@ nav a {
     padding: 15px;
 }
 
-.profil {
+.profil, .tag {
     display: flex;
     justify-content: space-between;
     margin-right: 50px;
