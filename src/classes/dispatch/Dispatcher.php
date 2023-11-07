@@ -39,6 +39,9 @@ class Dispatcher {
             case 'displayTouiteTag':
                 $result = (new \touiteur\app\action\AfficherTouiteTag())->execute();
                 break;
+            case 'supprimerTouite':
+                $result = (new \touiteur\app\action\SupprimerTouite())->execute();
+                break;
             default :
                 $result = "Accueil ";
         }
