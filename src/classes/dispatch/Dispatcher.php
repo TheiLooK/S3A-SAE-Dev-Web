@@ -39,6 +39,12 @@ class Dispatcher {
             case 'displayTouiteTag':
                 $result = (new \touiteur\app\action\AfficherTouiteTag())->execute();
                 break;
+            case 'followTag':
+                $result = (new \touiteur\app\action\FollowTag())->execute();
+                break;
+            case 'unfollowTag':
+                $result = (new \touiteur\app\action\UnfollowTag())->execute();
+                break;
             case 'supprimerTouite':
                 $result = (new \touiteur\app\action\SupprimerTouite())->execute();
                 break;

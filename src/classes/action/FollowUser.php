@@ -35,7 +35,7 @@ class FollowUser extends Action {
 
     private function checkFollow($userToFollow): bool {
         $followed = false;
-        $followedUsers = unserialize($_SESSION['users'])->getFollowedUsers();
+        $followedUsers = unserialize($_SESSION['users'])->getFollowedTags();
         foreach($followedUsers as $user) {
             if($user == $userToFollow) {
                 $followed = true;
