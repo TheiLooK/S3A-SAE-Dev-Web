@@ -37,6 +37,9 @@ class Dispatcher {
             case 'profil':
                 $result = (new \touiteur\app\action\AfficherProfil())->execute();
                 break;
+            case 'displayTouiteTag':
+                $result = (new \touiteur\app\action\AfficherTouiteTag())->execute();
+                break;
             default :
                 $result = "Accueil ";
         }
@@ -87,6 +90,7 @@ class Dispatcher {
                 <a href="?action=publie">
                     <div class="publier">
                         <span>Publier</span>
+                        <img src="./images/site/publier.png">
                     </div>
                 </a>
             </div>

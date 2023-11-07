@@ -15,6 +15,7 @@ class PublierTouiteAction extends Action{
         $pageContent = "";
         if ($this->http_method === 'POST') {
             $touite = filter_var($_POST['twt'], FILTER_SANITIZE_STRING);
+            $touite = htmlspecialchars_decode($touite);
 
             if(strlen($touite)>325){
                 // the size is over 325 char
@@ -60,7 +61,7 @@ class PublierTouiteAction extends Action{
      * @return int $id the id of the touite in the database
      */
     private function insertIntoDB(string $touite) : int{
-        $email = unserialize($_SESSION['user'])->getEmail();
+        $email = unserialize($_SESSION['users'])->getEmail();
         $date = date("Y-m-d H:i:s");
 
         // we insert the touite into the database
