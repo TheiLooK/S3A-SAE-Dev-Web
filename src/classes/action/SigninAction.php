@@ -22,7 +22,7 @@ class SigninAction extends Action {
             </form>';
         } else {
             $email = filter_var($_POST['email'], FILTER_SANITIZE_EMAIL);
-            $pwd = filter_var($_POST['pwd'], FILTER_SANITIZE_STRING);
+            $pwd = filter_var($_POST['pass'], FILTER_SANITIZE_STRING);
             try {
                 \touiteur\app\auth\Auth::authentification($pwd,$email);
                 $pageContent.= "<div><h4> Connexion réussie pour {$_POST['email']}</h4>";
