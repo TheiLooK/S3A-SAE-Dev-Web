@@ -8,5 +8,9 @@
       "touiteur\\app\\conf\\" : "./conf",
       "touiteur\\app\\" : "./src/classes"
     }
+  },
+  "require": {
+    "ext-json": "*",
+    "ext-curl": "*"
   }
 }

