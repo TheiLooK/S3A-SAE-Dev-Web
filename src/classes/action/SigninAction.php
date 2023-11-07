@@ -6,7 +6,7 @@ class SigninAction extends Action {
     public function execute() : string {
         $pageContent ="";
         if($this->http_method === 'GET') {
-            if (isset($_SESSION['user'])) {
+            if (isset($_SESSION['users'])) {
                 $pageContent .= "<div id='already-connected'><h3>Vous êtes déjà connecté !</h3>";
                 $pageContent .= '<a href="?action=disconnect">Se déconnecter</a></div>';
                 return $pageContent;
@@ -23,9 +23,11 @@ class SigninAction extends Action {
         } else {
             try {
                 \touiteur\app\auth\Auth::authentification($_POST['pass'],$_POST['email']);
-                $pageContent.= "<h4> connexion réussie pour {$_POST['email']}</h4>";
+                $pageContent.= "<h4> Connexion réussie pour {$_POST['email']}</h4>";
                 \touiteur\app\auth\Auth::loadProfile($_POST['email']);
-                $authenticatedUser = unserialize($_SESSION['user']);
+                $authenticatedUser = unserialize($_SESSION['users']);
+                $pageContent .= '<p>Redirection vers la page d\'accueil dans 2 secondes</p>';
+                $pageContent .= '<script type="text/javascript">window.setTimeout(function(){window.location.replace("?action=home");}, 2000);</script>';
             } catch(\touiteur\app\Exception\AuthException $e) {
                 $pageContent .= "<h4> échec authentification : {$e->getMessage()}</h4>";
             }

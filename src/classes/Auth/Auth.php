@@ -62,7 +62,7 @@ class Auth
         $resultset ->execute(["$email"]);
         $user =$resultset->fetch(PDO::FETCH_ASSOC);
 
-        $profile = new \touiteur\app\structure\user\User($user['email'], $user['password'],$user['username'], $user['role']);
+        $profile = new \touiteur\app\structure\user\User($user['email'], $user['password'], $user['username'], $user['nom'], $user['prenom'], $user['role']);
         $_SESSION['users'] = serialize($profile);
     }
 }

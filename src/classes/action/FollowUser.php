@@ -15,7 +15,7 @@ class FollowUser extends Action {
             return "<h3>Utilisateur inconnu</h3>";
         }
 
-        $current_user = unserialize($_SESSION['user']);
+        $current_user = unserialize($_SESSION['users']);
 
         if($followed) {
             $html = '<script type="text/javascript">if(window.confirm("Voulez-vous vraiment arrêter de suivre cet utilisateur ?")){window.location.replace("?action=unfollow&user=' . $userToFollow->__get('username') . '");}</script>';
@@ -33,7 +33,7 @@ class FollowUser extends Action {
 
     private function checkFollow($userToFollow): bool {
         $followed = false;
-        $followedUsers = unserialize($_SESSION['user'])->getFollowedUsers();
+        $followedUsers = unserialize($_SESSION['users'])->getFollowedUsers();
         foreach($followedUsers as $user) {
             if($user == $userToFollow) {
                 $followed = true;

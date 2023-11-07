@@ -7,7 +7,7 @@ class PublierTouiteAction extends Action{
     public function execute() : string {
 
         // if the user is not sign in, He can't publish a touite, so we redirect him
-        if(!isset($_SESSION['user'])) {
+        if(!isset($_SESSION['users'])) {
             header("Location: index.php?action=signin");
             exit();
         }
