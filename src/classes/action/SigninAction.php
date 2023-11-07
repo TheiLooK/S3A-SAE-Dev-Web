@@ -8,7 +8,7 @@ class SigninAction extends Action {
         if($this->http_method === 'GET') {
             if (isset($_SESSION['users'])) {
                 $pageContent .= "<div id='already-connected'><h3>Vous êtes déjà connecté !</h3>";
-                $pageContent .= '<a href="?action=disconnect">Se déconnecter</a></div>';
+                $pageContent .= '<a class="lien" href="?action=disconnect">Se déconnecter</a></div>';
                 return $pageContent;
             }
             $pageContent = '
