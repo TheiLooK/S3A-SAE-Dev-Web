@@ -39,7 +39,7 @@ class Dispatcher {
     <!DOCTYPE html>
     <html lang="fr">
     <head>
-        <link rel="stylesheet" href="/css/style.css">
+        <link rel="stylesheet" href="./css/style.css">
         <title>Touiteur</title>
     </head>
     <body>
@@ -49,28 +49,28 @@ class Dispatcher {
             <div>
                 <a href="./">
                     <div class="bouton">
-                        <img src="../images/site/home.png">
+                        <img src="./images/site/home.png">
                         <span>Accueil</span>
                     </div>
                 </a>
                 
                 <a href="?action=signin">
                     <div class="bouton">
-                        <img src="../images/site/connexion.png">
+                        <img src="./images/site/connexion.png">
                         <span>Connexion</span>
                     </div>
                 </a>
                 
                 <a href="?action=register">
                     <div class="bouton">
-                        <img src="../images/site/inscription.png">
+                        <img src="./images/site/inscription.png">
                         <span>Inscription</span>
                     </div>
                 </a>
                 
                 <a href="?action=affiche">
                     <div class="bouton">
-                        <img src="../images/site/loupe.png">
+                        <img src="./images/site/loupe.png">
                         <span>Afficher</span>
                     </div>
                 </a>
