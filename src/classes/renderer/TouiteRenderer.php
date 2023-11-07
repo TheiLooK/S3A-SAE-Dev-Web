@@ -24,7 +24,7 @@ class TouiteRenderer implements Renderer {
     }
 
     protected function renderCompact(): string {
-        $res = '<h4>'.$this->touite->__get('user').'</h4>';
+        $res = '<h4><a href="?action=displayTouitePersonne&user='.$this->touite->__get('user').'">'.$this->touite->__get('user').'</h4>';
         if(!is_null($this->touite->__get('image'))){
             $res.='<img src="'.$this->touite->__get('image').'"/>';
         }
