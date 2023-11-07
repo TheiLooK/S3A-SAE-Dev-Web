@@ -12,7 +12,7 @@ class FeedRenderer implements Renderer {
     }
 
     public function render(int $selector): string {
-        $r = "<div>";
+        $r = '<div class="feed">';
         foreach ($this->feed->list as $touite) {
             $touiteRenderer = new TouiteRenderer($touite);
             $r .= $touiteRenderer->render(Renderer::COMPACT);
