@@ -172,7 +172,7 @@ form input:focus + label {
     margin: 0;
 }
 
-form input[type="text"]:focus, form input[type="password"]:focus {
+form input[type="text"]:focus, form input[type="password"]:focus, form input[type="email"]:focus {
     padding-top: 30px;
 }
 
