@@ -15,9 +15,11 @@ class RegisterAction extends Action{
             $date = $_POST['date'];
             try {
                 \touiteur\app\auth\Auth::register($pwd,$email,$pseudo,$firstname,$lastname,$date);
-                $pageContent.= "<h4> Inscription réussie pour {$_POST['email']}</h4>";
+                $pageContent.= "<div><h4> Inscription réussie pour {$_POST['email']}</h4>";
                 \touiteur\app\auth\Auth::loadProfile($_POST['email']);
-                $pageContent .= '<p>Redirection vers la page d\'accueil dans 2 secondes</p>';
+                $authenticatedUser = unserialize($_SESSION['users']);
+                //page d'accueil
+                $pageContent .= '<p>Redirection vers la page d\'accueil dans 2 secondes</p></div>';
                 $pageContent .= '<script type="text/javascript">window.setTimeout(function(){window.location.replace("?action=home");}, 2000);</script>';
             } catch(\touiteur\app\Exception\AuthException $e) {
                 $pageContent .= "<h4> échec inscription : {$e->getMessage()}</h4>";

@@ -42,13 +42,14 @@ class AfficherProfil extends Action
         $feed->getListeTouitePersonne($_GET['user']);
         $r = new FeedRenderer($feed);
 
-        $html .= '<div id="feed">';
         $html .= $r->render(Renderer::COMPACT);
-        $html .= '</div></div>';
         return $html;
     }
 
     private function checkFollow($email): bool {
+        if(!isset($_SESSION['users'])) {
+            return false;
+        }
         $followed = false;
         $followedUsers = unserialize($_SESSION['users'])->getFollowedUsers();
         foreach($followedUsers as $user) {
