@@ -89,7 +89,7 @@ nav a {
     justify-content: space-around;
 }
 
-.feed{
+.feed {
     width: 90%;
     overflow-y: scroll;
     text-overflow: ellipsis;
@@ -98,7 +98,6 @@ nav a {
 
 .partiecentrale img {
     max-width: 400px;
-    max-height: 400px;
 }
 
 .feed::-webkit-scrollbar {
