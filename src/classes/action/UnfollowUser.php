@@ -11,13 +11,12 @@ class UnfollowUser extends Action {
             return '<script type="text/javascript">window.location.replace("?action=signin");</script>';
         }
         try {
+            $current_user = unserialize($_SESSION['users']);
             $userToUnfollow = User::getUser($_POST['user']);
-            $followed = $this->checkFollow($userToUnfollow->__get('email'));
+            $followed = $current_user->checkFollow($userToUnfollow);
         } catch (\touiteur\app\Exception\InvalidUsernameException $e) {
             return "<h3>Utilisateur inconnu</h3>";
         }
-
-        $current_user = unserialize($_SESSION['users']);
 
         if($followed) {
             $connexion = \touiteur\app\db\ConnectionFactory::makeConnection();
@@ -32,16 +31,5 @@ class UnfollowUser extends Action {
 
         $html .= '<script type="text/javascript">window.location.replace("?action=profil&user=' . $userToUnfollow->__get('username') . '");</script>';
         return $html;
-    }
-
-    private function checkFollow($userToFollow): bool {
-        $followed = false;
-        $followedUsers = unserialize($_SESSION['users'])->getFollowedUsers();
-        foreach($followedUsers as $user) {
-            if($user == $userToFollow) {
-                $followed = true;
-            }
-        }
-        return $followed;
     }
 }

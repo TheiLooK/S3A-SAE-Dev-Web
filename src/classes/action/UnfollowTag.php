@@ -11,13 +11,12 @@ class UnfollowTag extends Action {
             return '<script type="text/javascript">window.location.replace("?action=signin");</script>';
         }
         try {
+            $current_user = unserialize($_SESSION['users']);
             $tagToFollow = $_POST['tag'];
-            $followed = $this->checkFollow($tagToFollow);
+            $followed = $current_user->checkFollowTag($tagToFollow);
         } catch (\touiteur\app\Exception\InvalidTagNameException $e) {
             return "<h3>Tag inconnu</h3>";
         }
-
-        $current_user = unserialize($_SESSION['users']);
 
         if($followed) {
             $connexion = \touiteur\app\db\ConnectionFactory::makeConnection();
@@ -39,16 +38,5 @@ class UnfollowTag extends Action {
         }
         $html .= '<script type="text/javascript">window.location.replace("?action=displayTouiteTag&tag=' . $tagToFollow . '");</script>';
         return $html;
-    }
-
-    private function checkFollow($tagToFollow): bool {
-        $followed = false;
-        $followedTags = unserialize($_SESSION['users'])->getFollowedTags();
-        foreach($followedTags as $tag) {
-            if($tag == $tagToFollow) {
-                $followed = true;
-            }
-        }
-        return $followed;
     }
 }

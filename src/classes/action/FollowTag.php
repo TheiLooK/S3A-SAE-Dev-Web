@@ -11,13 +11,12 @@ class FollowTag extends Action {
             return '<script type="text/javascript">window.location.replace("?action=signin");</script>';
         }
         try {
+            $current_user = unserialize($_SESSION['users']);
             $tagToFollow = $_POST['tag'];
-            $followed = $this->checkFollow($tagToFollow);
+            $followed = $current_user->checkFollowTag($tagToFollow);
         } catch (\touiteur\app\Exception\InvalidUsernameException $e) {
             return "<h3>Utilisateur inconnu</h3>";
         }
-
-        $current_user = unserialize($_SESSION['users']);
 
         if ($followed) {
             $html = '<script type="text/javascript">if(window.confirm("Voulez-vous vraiment arrêter de suivre ce tag ?")){window.location.replace("?action=unfollow&tag=' . $tagToFollow . '");}</script>';
@@ -38,16 +37,5 @@ class FollowTag extends Action {
         }
         $html .= '<script type="text/javascript">window.location.replace("?action=displayTouiteTag&tag=' . $tagToFollow . '");</script>';
         return $html;
-    }
-
-    private function checkFollow($tagToFollow): bool {
-        $followed = false;
-        $followedTags = unserialize($_SESSION['users'])->getFollowedTags();
-        foreach($followedTags as $tag) {
-            if($tag == $tagToFollow) {
-                $followed = true;
-            }
-        }
-        return $followed;
     }
 }

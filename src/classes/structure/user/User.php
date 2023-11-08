@@ -27,7 +27,7 @@ class User {
         return $this->$name;
     }
 
-    public function getFollowedUsers(): array {
+    private function getFollowedUsers(): array {
         $connexion = \touiteur\app\db\ConnectionFactory::makeConnection();
         $query = "SELECT emailSuivi FROM Follow WHERE emailSuiveur = ?";
         $st = $connexion->prepare($query);
@@ -42,7 +42,18 @@ class User {
         return $followedUsers;
     }
 
-    public function getFollowedTags(): array {
+    public function checkFollow(User $userToFollow): bool {
+        $followed = false;
+        $followedUsers = $this->getFollowedUsers();
+        foreach($followedUsers as $user) {
+            if($user == $userToFollow->__get('email')) {
+                $followed = true;
+            }
+        }
+        return $followed;
+    }
+
+    private function getFollowedTags(): array {
         $connexion = \touiteur\app\db\ConnectionFactory::makeConnection();
         $query = "SELECT t.tag FROM Tag t INNER JOIN FollowTag f ON t.idTag = f.idTag WHERE f.emailSuiveur = ?";
         $st = $connexion->prepare($query);
@@ -55,6 +66,17 @@ class User {
             $followedTags[] = $row['tag'];
         }
         return $followedTags;
+    }
+
+    public function checkFollowTag(String $tagToFollow): bool {
+        $followed = false;
+        $followedTags = $this->getFollowedTags();
+        foreach($followedTags as $tag) {
+            if($tag == $tagToFollow) {
+                $followed = true;
+            }
+        }
+        return $followed;
     }
 
     public static function getUser($username): User {
