@@ -33,7 +33,7 @@ class PublierTouiteAction extends Action{
                 $idI = null;
 
                 //upload the images if the file is there;
-                if($_FILES['fileUpload']['size'] > 0){
+                if($_FILES['file']['size'] > 0){
                     $idI=$this->traiterImage();
                 }
 
@@ -43,17 +43,15 @@ class PublierTouiteAction extends Action{
                 // check for tags
                 $this->traiterTags($touite, $id);
 
-
                 header("Location: index.php?action=home");
                 exit();
-
             }
         } else {
             $pageContent = '
             <form method="POST" action="?action=publie" enctype="multipart/form-data" onsubmit="button.disabled = true; return true;">
                 <input type="text" id="twt" name="twt" placeholder="Message" required>
                 <label for="twt">Message</label>
-                <input type="file" id="fileUpload" name="file" accept="images/*" />
+                <input type="file" id="file" name="file" accept="images/*" />
                 <input type="submit" value="Publier" name="button">
             </form>';
         }

@@ -7,7 +7,6 @@ use touiteur\app\structure\user\User;
 class EvaluerAction
 {
     public function execute() : string {
-        $pageContent = "";
         $user = unserialize($_SESSION['users']);
         $id=$_POST['id'];
         $email=$user->email;
@@ -17,8 +16,11 @@ class EvaluerAction
         }else{
             $this->insertNote($_GET['note'],$email, $id, $user);
         }
-        $pageContent .= '<script type="text/javascript">window.location.replace("'.$_POST['url'].'");</script>';
-        return $pageContent;
+        header("Location:{$_POST['url']}");
+        exit();
+
+        //return useless but we need it so we don't get any errors.
+        return "";
     }
 
 
