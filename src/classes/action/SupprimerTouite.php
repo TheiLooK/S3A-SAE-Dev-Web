@@ -35,7 +35,7 @@ class SupprimerTouite extends Action
                 $res = $resultset ->execute([$id]);
             }
             $pageContent="le touite a bien été supprimé, retour a la page";
-            $pageContent .= '<script type="text/javascript">window.setTimeout(function(){window.location.replace("'.$_POST['url'].'");}, 1500);</script>';
+            $pageContent .= '<script type="text/javascript">window.setTimeout(function(){window.location.replace("./");}, 1500);</script>';
         }
 
         return $pageContent;
