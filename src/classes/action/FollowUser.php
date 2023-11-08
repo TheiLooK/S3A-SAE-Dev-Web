@@ -11,13 +11,12 @@ class FollowUser extends Action {
             return '<script type="text/javascript">window.location.replace("?action=signin");</script>';
         }
         try {
+            $current_user = unserialize($_SESSION['users']);
             $userToFollow = User::getUser($_POST['user']);
-            $followed = $this->checkFollow($userToFollow->__get('email'));
+            $followed = $current_user->checkFollow($userToFollow);
         } catch (\touiteur\app\Exception\InvalidUsernameException $e) {
             return "<h3>Utilisateur inconnu</h3>";
         }
-
-        $current_user = unserialize($_SESSION['users']);
 
         if($followed) {
             $html = '<script type="text/javascript">if(window.confirm("Voulez-vous vraiment arrêter de suivre cet utilisateur ?")){window.location.replace("?action=unfollow&user=' . $userToFollow->__get('username') . '");}</script>';
@@ -31,16 +30,5 @@ class FollowUser extends Action {
         }
         $html .= '<script type="text/javascript">window.location.replace("?action=profil&user=' . $userToFollow->__get('username') . '");</script>';
         return $html;
-    }
-
-    private function checkFollow($userToFollow): bool {
-        $followed = false;
-        $followedUsers = unserialize($_SESSION['users'])->getFollowedTags();
-        foreach($followedUsers as $user) {
-            if($user == $userToFollow) {
-                $followed = true;
-            }
-        }
-        return $followed;
     }
 }
