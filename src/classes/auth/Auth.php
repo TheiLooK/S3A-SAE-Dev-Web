@@ -78,7 +78,7 @@ class Auth
 
     public static function checkAccessLevel(string $user){
         $access = false;
-        if (isset($_SESSION['users']) && (unserialize($_SESSION['users'])->username === $user || unserialize($_SESSION['users'])->role === 100)) {
+        if (isset($_SESSION['users']) && ((unserialize($_SESSION['users'])->username === $user) || (unserialize($_SESSION['users'])->role == 100))) {
             $access = true;
         }
         return $access;

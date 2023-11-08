@@ -233,8 +233,7 @@ form a:hover {
 }
 
 .icon{
-    width : 3%;
-    height : 3%;
+    width : 1em;
 }
 
 .buttons{
@@ -248,7 +247,6 @@ form a:hover {
 @media screen and (max-width: 920px) {
     .partiegauche {
         width: 300px;
-
     }
 
     nav {
