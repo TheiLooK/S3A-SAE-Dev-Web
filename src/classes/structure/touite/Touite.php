@@ -2,6 +2,7 @@
 
 namespace touiteur\app\structure\touite;
 
+use touiteur\app\db\ConnectionFactory;
 use touiteur\app\Exception\InvalidPropertyNameException;
 use PDO;
 class Touite {
@@ -9,16 +10,19 @@ class Touite {
     private string $date;
     private string $user;
     private int $id;
-    private int $score;
+    private int $scoreDown;
+    private int $scoreUp;
     private ?string $image;
 
     public function __construct(string $message, string $user, ?string $image, string $date, int $id) {
         $this->message = $message;
         $this->date = $date;
         $this->user = $user;
-        $this->score = 0;
         $this->image = $image;
         $this->id = $id;
+        $this->scoreUp = 0;
+        $this->scoreDown = 0;
+        $this->getScore();
     }
 
     public function __get($name): mixed {
@@ -75,5 +79,26 @@ class Touite {
         return $res;
     }
 
+    private function getScore() : void{
 
+
+
+        $connexion = ConnectionFactory::makeConnection();
+        $query = "select
+                    sum(case when note = 1 then 1 else 0 end) as up,
+                    sum(case when note = -1 then 1 else 0 end) as down
+                    from Evaluer
+                    where idTouite = ?";
+        $resultset = $connexion->prepare(($query));
+        $resultset ->execute([$this->id]);
+        $data  = $resultset->fetch();
+
+        if(is_null($data['up'])){
+            $this->scoreUp=0;
+            $this->scoreDown=0;
+        }else{
+            $this->scoreUp=$data['up'];
+            $this->scoreDown=$data['down'];
+        }
+    }
 }

@@ -51,7 +51,7 @@ class TouiteRenderer implements Renderer {
         if(!is_null($this->touite->image)){
             $res.='<img src="'.$this->touite->image.'"/>';
         }
-        $res.= '<p> score : '.$this->touite->score.'</p>';
+        $res.= '<p> score : '.$this->touite->scoreUp+$this->touite->scoreDown.'</p>';
         $res.=$this->createButton();
         return $res;
     }
@@ -84,8 +84,9 @@ class TouiteRenderer implements Renderer {
                 $classUp.="selectedIcon";
             }
         }
-
+        $button .= "<p>{$this->touite->scoreUp}</p>";
         $button .= '<input type="image" class="'.$classUp.'" src="images/site/up.png" alt="Submit" formaction="?action=EvaluerAction&note=up">';
+        $button .= "<p>{$this->touite->scoreDown}</p>";
         $button .= '<input type="image" class="'.$classDown.'" src="images/site/down.png" alt="Submit" formaction="?action=EvaluerAction&note=down">';
 
         // create delete button if the user is the creator of the touite
