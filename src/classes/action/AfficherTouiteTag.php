@@ -36,7 +36,7 @@ class AfficherTouiteTag extends Action
         }
 
 
-        $feed = new Feed(Feed::LISTETOUITESTAG, null, $tag);
+        $feed = new Feed(Feed::LISTETOUITESTAG,null, null, $tag);
         $feed->getListe($_GET['page'] ?? 1);
         $r = new FeedRenderer($feed);
 

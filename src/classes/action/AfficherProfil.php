@@ -38,7 +38,7 @@ class AfficherProfil extends Action
             return "<h3>Utilisateur inconnu</h3>";
         }
 
-        $feed = new Feed(Feed::LISTETOUITESPERSONNE, $_GET['user'], null);
+        $feed = new Feed(Feed::LISTETOUITESPERSONNE, null, $_GET['user'], null);
         $feed->getListe($_GET['page'] ?? 1);
         $r = new FeedRenderer($feed);
 

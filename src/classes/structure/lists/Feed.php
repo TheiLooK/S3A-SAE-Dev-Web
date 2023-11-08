@@ -16,12 +16,14 @@ class Feed {
     protected ?string $user;
     protected ?string $tag;
     protected int $nbTouiteMax;
+    protected ?string $home;
 
-    public function __construct(int $type, ?string $user, ?string $tag){
+    public function __construct(int $type, ?string $home, ?string $user, ?string $tag){
         $this->list = [];
         $this->type = $type;
         $this->user = $user;
         $this->tag = $tag;
+        $this->home = $home;
         $this->nbTouiteMax = $this->getNbTouite();
     }
 

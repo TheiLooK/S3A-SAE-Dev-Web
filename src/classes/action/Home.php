@@ -10,13 +10,13 @@ class Home extends Action {
 
     public function execute(): string {
         if (!isset($_SESSION['users'])) {
-            $feed = $_POST['home'] ?? 'general';
+            $feed = $_GET['home'] ?? $_POST['home'] ?? 'general';
             if ($feed === 'personnel') {
                 return '<script type="text/javascript">window.location.replace("?action=signin");</script>';
             }
         } else {
             $current_user = unserialize($_SESSION['users']);
-            $feed = $_POST['home'] ?? 'personnel';
+            $feed = $_GET['home'] ?? $_POST['home'] ?? 'personnel';
         }
 
         $html = '<div class="home">';
@@ -38,12 +38,12 @@ class Home extends Action {
         $html .= '</form>';
         $html .= '</div>';
         if ($feed === 'general') {
-            $feed = new Feed(Feed::LISTETOUITES, null, null);
+            $feed = new Feed(Feed::LISTETOUITES,$feed, null, null);
             $feed->getListe( $_GET['page'] ?? 1);
             $r = new FeedRenderer($feed);
             $html .= $r->render(Renderer::COMPACT);
         } else if ($feed === 'personnel') {
-            $feed = new Feed(Feed::LISTETOUITESFOLLOWED, $current_user->__get('email'), null);
+            $feed = new Feed(Feed::LISTETOUITESFOLLOWED,$feed, $current_user->__get('email'), null);
             $feed->getListe( $_GET['page'] ?? 1);
             $r = new FeedRenderer($feed);
             $html .= $r->render(Renderer::COMPACT);;
