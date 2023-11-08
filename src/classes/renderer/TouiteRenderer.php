@@ -46,13 +46,18 @@ class TouiteRenderer implements Renderer {
     }
     protected function renderLong(): string {
         $user = $this->touite->user;
-        $res = '<h4><a href="?action=profil&user='.$user.'">'.$user.'</a>'." | ".$this->touite->date.'</h4>';
+
+        $res = '<div class="Touite">';
+        $res .= '<h4><a href="?action=profil&user='.$user.'">'.$user.'</a>'."  |  ".$this->touite->date.'</h4>';
         $res.= '<p>'.$this->touite->prepareHtml().'</p>';
+
         if(!is_null($this->touite->image)){
             $res.='<img src="'.$this->touite->image.'"/>';
         }
+
         $res.= '<p> score : '.$this->touite->scoreUp+$this->touite->scoreDown.'</p>';
         $res.=$this->createButton();
+        $res.="</div>";
         return $res;
     }
     public function __get(string $at): mixed
