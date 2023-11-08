@@ -27,6 +27,7 @@ class SupprimerTouite extends Action
             $tabDelete[] = "DELETE FROM `Touiter` WHERE idTouite = ?";
             $tabDelete[] = "DELETE FROM `ImageToTouite` WHERE idTouite = ?";
             $tabDelete[] = "DELETE FROM `TouiteTag` WHERE idTouite = ?";
+            $tabDelete[] = "DELETE FROM `Evaluer` WHERE idTouite = ?";
             $tabDelete[] = "DELETE FROM `Touite` WHERE idTouite = ?";
 
             foreach ($tabDelete as $query) {
