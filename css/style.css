@@ -237,11 +237,12 @@ form a:hover {
 }
 
 .buttons{
-    justify-content: end;
+    justify-content: flex-end;
     display: inline-flex;
     flex-direction: row;
     padding: 0px;
     margin: 0px auto;
+    width: 100%;
 }
 
 @media screen and (max-width: 920px) {
