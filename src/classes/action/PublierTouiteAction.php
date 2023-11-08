@@ -40,7 +40,7 @@ class PublierTouiteAction extends Action{
                 if(isset($_FILES['file'])){
                     $this->treatImage($id);
                 }
-                header("Location: index.php?action=affiche");
+                header("Location: index.php?action=home");
                 exit();
 
             }
