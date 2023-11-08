@@ -37,13 +37,14 @@ class Home extends Action {
         $html .= '<input type="submit" value="Pour vous">';
         $html .= '</form>';
         $html .= '</div>';
+        $action = '?action=home&home=' . $feed;
         if ($feed === 'general') {
-            $feed = new Feed(Feed::LISTETOUITES,$feed, null, null);
+            $feed = new Feed(Feed::LISTETOUITES, $action, null, null);
             $feed->getListe( $_GET['page'] ?? 1);
             $r = new FeedRenderer($feed);
             $html .= $r->render(Renderer::COMPACT);
         } else if ($feed === 'personnel') {
-            $feed = new Feed(Feed::LISTETOUITESFOLLOWED,$feed, $current_user->__get('email'), null);
+            $feed = new Feed(Feed::LISTETOUITESFOLLOWED, $action, $current_user->__get('email'), null);
             $feed->getListe( $_GET['page'] ?? 1);
             $r = new FeedRenderer($feed);
             $html .= $r->render(Renderer::COMPACT);;

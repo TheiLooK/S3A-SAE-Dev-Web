@@ -35,8 +35,9 @@ class AfficherTouiteTag extends Action
             return "<h3>Utilisateur inconnu</h3>";
         }
 
+        $action = '?action=tag&tag=' . $_GET['tag'];
 
-        $feed = new Feed(Feed::LISTETOUITESTAG,null, null, $tag);
+        $feed = new Feed(Feed::LISTETOUITESTAG, $action, null, $tag);
         $feed->getListe($_GET['page'] ?? 1);
         $r = new FeedRenderer($feed);
 
