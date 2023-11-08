@@ -245,6 +245,14 @@ form a:hover {
     width: 100%;
 }
 
+form.active input[type=submit] {
+
+}
+
+form.inactive input[type=submit] {
+
+}
+
 @media screen and (max-width: 920px) {
     .partiegauche {
         width: 300px;
