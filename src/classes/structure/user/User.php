@@ -2,13 +2,16 @@
 
 namespace touiteur\app\structure\user;
 
+use touiteur\app\db\ConnectionFactory;
+
 class User {
     public String $email;
     private String $password;
     private String $username;
     private String $nom;
     private String $prenom;
-    public int $role;
+    private int $role;
+    private array $touiteNote;
 
 
     public function __construct(String $e,String $p, String $username, String $nom, String $prenom, int $r) {
@@ -18,6 +21,7 @@ class User {
         $this -> nom = $nom;
         $this -> prenom = $prenom;
         $this -> role = $r;
+        $this -> touiteNote = $this->getTouiteNote();
     }
 
     public function __get($name): mixed {
@@ -90,5 +94,24 @@ class User {
             throw new \touiteur\app\Exception\InvalidUsernameException("User $username does not exist");
         }
         return new User($res['email'], $res['password'], $res['username'], $res['nom'], $res['prenom'], $res['role']);
+    }
+
+    private function getTouiteNote() : array {
+        $tab = [];
+        $connexion = ConnectionFactory::makeConnection();
+        $query = "Select * from Evaluer where email like ?";
+        $resultset = $connexion->prepare(($query));
+        $resultset ->execute([$this->email]);
+
+        while($data = $resultset->fetch()){
+            $tab[$data['idTouite']] = $data['note'];
+        }
+
+        return $tab;
+    }
+
+    public function changeNote(int $id, int $note) : void{
+        $this->touiteNote[$id] = $note;
+        $_SESSION['users']=serialize($this);
     }
 }

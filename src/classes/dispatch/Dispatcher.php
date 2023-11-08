@@ -48,6 +48,9 @@ class Dispatcher {
             case 'supprimerTouite':
                 $result = (new \touiteur\app\action\SupprimerTouite())->execute();
                 break;
+            case 'EvaluerAction':
+                $result = (new \touiteur\app\action\EvaluerAction())->execute();
+                break;
             default :
                 $result = "Accueil ";
         }
