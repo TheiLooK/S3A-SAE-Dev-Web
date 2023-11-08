@@ -30,16 +30,20 @@ class PublierTouiteAction extends Action{
 
 
             }else{
-                // add the touite to the database
-                $id = $this->insertIntoDB($touite);
-
-                // check for tags
-                $this->treatTags($touite, $id);
+                $idI = null;
 
                 //upload the images if the file is there;
                 if(isset($_FILES['file'])){
-                    $this->treatImage($id);
+                    $idI=$this->traiterImage();
                 }
+
+                // add the touite to the database
+                $id = $this->insertIntoDB($touite, $idI);
+
+                // check for tags
+                $this->traiterTags($touite, $id);
+
+
                 header("Location: index.php?action=home");
                 exit();
 
@@ -61,27 +65,23 @@ class PublierTouiteAction extends Action{
      * @param string $touite
      * @return int $id the id of the touite in the database
      */
-    private function insertIntoDB(string $touite) : int{
+    private function insertIntoDB(string $touite, int $idI) : int{
         $email = unserialize($_SESSION['users'])->__get('email');
         $date = date("Y-m-d H:i:s");
 
         // we insert the touite into the database
         $connexion = \touiteur\app\db\ConnectionFactory::makeConnection();
-        $query ="insert into Touite(texte, dateTouite) values (?, ?)";
+        $query ="insert into touite(texte, dateTouite, idImage, email) values (?, ?, ?, ?)";
         $resultset = $connexion->prepare(($query));
-        $res = $resultset ->execute([$touite,$date]);
+        $res = $resultset ->execute([$touite,$date, $idI, $email]);
 
-        // we get the id of the touite to insert in the table Touiter
-        $query ="select idTouite from Touite order by idTouite desc";
+        // we get the id of the touite to insert in the table touiteToTag
+        $query ="select idTouite from touite order by idTouite desc";
         $resultset = $connexion->prepare(($query));
         $res = $resultset ->execute();
         // we get the id
         $id = ($resultset->fetch(PDO::FETCH_ASSOC))['idTouite'];
 
-        // we insert into the database
-        $query ="insert into Touiter(idTouite, email) values (?, ?)";
-        $resultset = $connexion->prepare(($query));
-        $res = $resultset ->execute([$id,$email]);
         return $id;
     }
 
@@ -89,7 +89,7 @@ class PublierTouiteAction extends Action{
      * Function used to upload an images and insert the data in the database
      * @return void
      */
-    private function treatImage(int $id) : void{
+    private function traiterImage() : int{
         // we check if the images is the right type
         $extensions=array( 'image/jpeg', 'image/png', 'image/gif', 'image/webp');
         if(in_array($_FILES['file']['type'], $extensions)){
@@ -104,21 +104,18 @@ class PublierTouiteAction extends Action{
 
             //we do the right insert into the database
             $connexion = \touiteur\app\db\ConnectionFactory::makeConnection();
-            $query ="insert into Image(Image) values (?)";
+            $query ="insert into image(urlImage) values (?)";
             $resultset = $connexion->prepare(($query));
             $res = $resultset ->execute([$dest]);
 
-            // we get the id of the Image to insert in the table ImageToTouite
-            $query ="select idImage from Image order by idImage desc";
+            // we get the id of the Image to insert in the table touite
+            $query ="select idImage from image order by idImage desc";
             $resultset = $connexion->prepare(($query));
             $res = $resultset ->execute();
             // we get the id
             $idI = ($resultset->fetch(PDO::FETCH_ASSOC))['idImage'];
 
-            // we insert into the database
-            $query ="insert into ImageToTouite(idTouite, idImage) values (?, ?)";
-            $resultset = $connexion->prepare(($query));
-            $res = $resultset ->execute([$id,$idI]);
+            return $idI;
         }
     }
 
@@ -127,7 +124,7 @@ class PublierTouiteAction extends Action{
      * @param string $touite the touite to check
      * @return void
      */
-    private function treatTags(string $touite, int $id){
+    private function traiterTags(string $touite, int $id){
         $connexion = \touiteur\app\db\ConnectionFactory::makeConnection();
         $matches = [];
         preg_match_all('/#(\w+)/', $touite, $matches);
@@ -135,27 +132,27 @@ class PublierTouiteAction extends Action{
         foreach ($matches[0] as $match) {
             $match = str_replace('#', '', $match);
             //we verify if the tag is not already in the database
-            $query ="select * from Tag where tag like ?";
+            $query ="select * from tag where libelle like ?";
             $resultset = $connexion->prepare(($query));
             $resultset ->execute([$match]);
 
 
             if(!$resultset->fetch(PDO::FETCH_ASSOC)){
                 //we do the right insert into the database
-                $query ="insert into Tag(tag) values (?)";
+                $query ="insert into tag(libelle) values (?)";
                 $resultset = $connexion->prepare(($query));
                 $res = $resultset ->execute([$match]);
             }
 
-            // we get the id of the Tag to insert in the table TouiteTag
-            $query ="select idTag from Tag where tag like ?";
+            // we get the id of the Tag to insert in the table touiteToTag
+            $query ="select idTag from tag where libelle like ?";
             $resultset = $connexion->prepare(($query));
             $res = $resultset ->execute([$match]);
             // we get the id
             $idT = ($resultset->fetch(PDO::FETCH_ASSOC))['idTag'];
 
             // we insert into the database
-            $query ="insert into TouiteTag(idTouite, idTag) values (?, ?)";
+            $query ="insert into touiteToTag(idTouite, idTag) values (?, ?)";
             $resultset = $connexion->prepare(($query));
             $res = $resultset ->execute([$id,$idT]);
         }

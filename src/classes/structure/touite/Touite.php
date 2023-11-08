@@ -45,10 +45,8 @@ class Touite {
     public static function getTouiteById(int $id) : Touite{
         // we select the info of the touite
         $connexion = \touiteur\app\db\ConnectionFactory::makeConnection();
-        $query ="SELECT * from Image i right outer join ImageToTouite i2 on i.idImage = i2.idImage
-			                            RIGHT outer join Touite t on i2.idTouite=t.idTouite 
-                                        right outer join Touiter t2 on t.idTouite = t2.idTouite 
-                                        right outer join Utilisateur u on t2.email = u.email 
+        $query ="SELECT * from image i  RIGHT outer join Touite t on i.idTouite=t.idTouite 
+                                        right outer join users u on t.email = u.email 
                         where t.idTouite = ?";
         $resultset = $connexion->prepare(($query));
         $resultset ->execute([$id]);
@@ -59,7 +57,7 @@ class Touite {
         // we create the touite object
         $touite = null;
         if(isset($data['image'])){
-            $touite = new Touite($data['texte'],$data['username'],$data['image'], $data['dateTouite'], $data['idTouite']);
+            $touite = new Touite($data['texte'],$data['username'],$data['urlimage'], $data['dateTouite'], $data['idTouite']);
         }else{
             $touite = new Touite($data['texte'],$data['username'],null, $data['dateTouite'], $data['idTouite']);
         }
@@ -80,14 +78,11 @@ class Touite {
     }
 
     private function getScore() : void{
-
-
-
         $connexion = ConnectionFactory::makeConnection();
         $query = "select
                     sum(case when note = 1 then 1 else 0 end) as up,
                     sum(case when note = -1 then 1 else 0 end) as down
-                    from Evaluer
+                    from notation
                     where idTouite = ?";
         $resultset = $connexion->prepare(($query));
         $resultset ->execute([$this->id]);
