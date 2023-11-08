@@ -12,7 +12,7 @@ class UnfollowTag extends Action {
         }
         try {
             $current_user = unserialize($_SESSION['users']);
-            $tagToFollow = $_POST['Tag'];
+            $tagToFollow = $_POST['tag'];
             $followed = $current_user->checkFollowTag($tagToFollow);
         } catch (\touiteur\app\Exception\InvalidTagNameException $e) {
             return "<h3>Tag inconnu</h3>";

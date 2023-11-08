@@ -67,7 +67,7 @@ class User {
 
         $followedTags = [];
         foreach ($res as $row) {
-            $followedTags[] = $row['tag'];
+            $followedTags[] = $row['libelle'];
         }
         return $followedTags;
     }
@@ -93,7 +93,7 @@ class User {
         if ($res === false) {
             throw new \touiteur\app\Exception\InvalidUsernameException("User $username does not exist");
         }
-        return new User($res['email'], $res['password'], $res['username'], $res['nom'], $res['prenom'], $res['role']);
+        return new User($res['email'], $res['password'], $res['username'], $res['lastname'], $res['firstname'], $res['role']);
     }
 
     private function getTouiteNote() : array {

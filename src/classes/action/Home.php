@@ -16,7 +16,7 @@ class Home extends Action {
             }
         } else {
             $current_user = unserialize($_SESSION['users']);
-            $feed = $_GET['home'] ?? $_POST['home'] ?? 'personnel';
+            $feed = $_GET['home'] ?? $_POST['home'] ?? 'general';
         }
 
         $html = '<div class="home">';

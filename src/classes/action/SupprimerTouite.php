@@ -24,21 +24,23 @@ class SupprimerTouite extends Action
             $db = ConnectionFactory::makeConnection();
 
             // récupérer idImage de la table touite
-            $query = "SELECT idImage, urlImage FROM touite WHERE idTouite = ?";
+            $query = "SELECT i.idImage, i.urlImage FROM touite t inner join image i on t.idImage = i.idImage WHERE t.idTouite = ?";
             $resultset = $db->prepare(($query));
             $res = $resultset ->execute([$id]);
-            $data = $resultset->fetch();
-            $idImage = $data['idImage'];
-            $urlImage = $data['urlImage'];
 
-            // supprimer l'image
-            $query = "DELETE FROM image WHERE idImage = ?";
-            $resultset = $db->prepare(($query));
-            $res = $resultset ->execute([$idImage]);
+            if($data = $resultset->fetch()){
+                $idImage = $data['idImage'];
+                $urlImage = $data['urlImage'];
 
-            // supprimer le fichier de l'image du serveur dans le dossier image
-            $upload_dir ='images/upload/';
-            unlink($upload_dir.$urlImage);
+                // supprimer l'image
+                $query = "DELETE FROM image WHERE idImage = ?";
+                $resultset = $db->prepare(($query));
+                $res = $resultset ->execute([$idImage]);
+
+                // supprimer le fichier de l'image du serveur dans le dossier image
+                $upload_dir ='images/upload/';
+                unlink($upload_dir.$urlImage);
+            }
 
             $tabDelete = [];
             $tabDelete[] = "DELETE FROM notation WHERE idTouite = ?";

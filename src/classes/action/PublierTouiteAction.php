@@ -33,7 +33,7 @@ class PublierTouiteAction extends Action{
                 $idI = null;
 
                 //upload the images if the file is there;
-                if(isset($_FILES['file'])){
+                if($_FILES['fileUpload']['size'] > 0){
                     $idI=$this->traiterImage();
                 }
 
@@ -53,7 +53,7 @@ class PublierTouiteAction extends Action{
             <form method="POST" action="?action=publie" enctype="multipart/form-data" onsubmit="button.disabled = true; return true;">
                 <input type="text" id="twt" name="twt" placeholder="Message" required>
                 <label for="twt">Message</label>
-                <input type="file" id="file" name="file" accept="images/*" />
+                <input type="file" id="fileUpload" name="file" accept="images/*" />
                 <input type="submit" value="Publier" name="button">
             </form>';
         }
@@ -65,7 +65,7 @@ class PublierTouiteAction extends Action{
      * @param string $touite
      * @return int $id the id of the touite in the database
      */
-    private function insertIntoDB(string $touite, int $idI) : int{
+    private function insertIntoDB(string $touite, ?int $idI) : int{
         $email = unserialize($_SESSION['users'])->__get('email');
         $date = date("Y-m-d H:i:s");
 
@@ -90,6 +90,7 @@ class PublierTouiteAction extends Action{
      * @return void
      */
     private function traiterImage() : int{
+        $idI=-2;
         // we check if the images is the right type
         $extensions=array( 'image/jpeg', 'image/png', 'image/gif', 'image/webp');
         if(in_array($_FILES['file']['type'], $extensions)){
@@ -115,8 +116,8 @@ class PublierTouiteAction extends Action{
             // we get the id
             $idI = ($resultset->fetch(PDO::FETCH_ASSOC))['idImage'];
 
-            return $idI;
         }
+        return $idI;
     }
 
     /**

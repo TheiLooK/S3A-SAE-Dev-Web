@@ -19,7 +19,7 @@ class AfficherTouiteTag extends Action
             $html = '<div class="tag">';
             $html .= '<div id="info"> <h3>#' . $tag . '</h3></div>';
             $html .= '<div id="followButton">';
-            if(unserialize($_SESSION['users'])->checkFollowTag($tag)) {
+            if(isset($_SESSION['users']) && unserialize($_SESSION['users'])->checkFollowTag($tag)) {
                 $html .= '<form method="POST" action="?action=unfollowTag">';
                 $html .= '<input type="hidden" name="tag" value="' . $tag . '">';
                 $html .= '<input type="submit" value="Unfollow">';

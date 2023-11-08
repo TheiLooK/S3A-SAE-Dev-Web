@@ -138,8 +138,9 @@ class Feed {
 
     private function getListeTouiteTag(int $nbPage, string $tag): void {
         $connexion = \touiteur\app\db\ConnectionFactory::makeConnection();
-        $query ="SELECT * FROM touite t INNER JOIN tag tag ON t.idTag = tag.idTag
-                                        WHERE tag.tag = ?
+        $query ="SELECT * FROM touite t2 inner join touiteToTag t on t2.idTouite = t.idTouite 
+                                        INNER JOIN tag tag ON t.idTag = tag.idTag
+                                        WHERE tag.libelle = ?
                                         ORDER BY dateTouite DESC
                                         limit ?, ?";
         $resultset = $connexion->prepare(($query));
@@ -187,7 +188,7 @@ class Feed {
 
     private function getNbTouiteTag(string $tag): int {
         $connexion = \touiteur\app\db\ConnectionFactory::makeConnection();
-        $query ="SELECT COUNT(*) AS nbTouite FROM touite t INNER JOIN tag tag ON t.idTag = tag.idTag WHERE tag.tag = ?";
+        $query ="SELECT COUNT(*) AS nbTouite FROM touiteToTag t INNER JOIN tag tag ON t.idTag = tag.idTag WHERE tag.libelle = ?";
         $resultset = $connexion->prepare(($query));
         $res = $resultset ->execute([$tag]);
         $data = $resultset->fetch(\PDO::FETCH_ASSOC);

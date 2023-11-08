@@ -45,7 +45,7 @@ class Touite {
     public static function getTouiteById(int $id) : Touite{
         // we select the info of the touite
         $connexion = \touiteur\app\db\ConnectionFactory::makeConnection();
-        $query ="SELECT * from image i  RIGHT outer join Touite t on i.idTouite=t.idTouite 
+        $query ="SELECT * from image i  RIGHT outer join touite t on i.idImage=t.idImage 
                                         right outer join users u on t.email = u.email 
                         where t.idTouite = ?";
         $resultset = $connexion->prepare(($query));
@@ -56,8 +56,8 @@ class Touite {
 
         // we create the touite object
         $touite = null;
-        if(isset($data['image'])){
-            $touite = new Touite($data['texte'],$data['username'],$data['urlimage'], $data['dateTouite'], $data['idTouite']);
+        if(isset($data['urlImage'])){
+            $touite = new Touite($data['texte'],$data['username'],$data['urlImage'], $data['dateTouite'], $data['idTouite']);
         }else{
             $touite = new Touite($data['texte'],$data['username'],null, $data['dateTouite'], $data['idTouite']);
         }

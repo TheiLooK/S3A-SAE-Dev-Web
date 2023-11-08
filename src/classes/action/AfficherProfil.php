@@ -18,7 +18,7 @@ class AfficherProfil extends Action
         }
         try {
             $html = '<div class="profil">';
-            $html .= '<div id="info"> <h3>' . $user->__get('prenom') . $user->__get("nom") . '</h3>';
+            $html .= '<div id="info"> <h3>' . $user->__get('prenom'). " " . $user->__get("nom") . '</h3>';
             $html .= '<p>@' . $user->__get('username') . '</p></div>';
             if (isset($_SESSION['users']) && unserialize($_SESSION['users'])->__get('username') != $user->__get('username')) {
                 $html .= '<div id="followButton">';
