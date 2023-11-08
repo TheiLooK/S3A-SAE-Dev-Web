@@ -18,7 +18,7 @@ class SigninAction extends Action {
                 <input type ="password" id="pass" placeholder="Mot de passe" name ="pass" required>
                 <label for="pass">Mot de passe</label>
                 <input type="submit" value="Valider">
-                <a href="?action=register">Pas encore enregistré ? Créer un compte</a>
+                <a class="lien" href="?action=register">Pas encore enregistré ? Créer un compte</a>
             </form>';
         } else {
             $email = filter_var($_POST['email'], FILTER_SANITIZE_EMAIL);
