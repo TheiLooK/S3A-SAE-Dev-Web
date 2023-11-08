@@ -20,7 +20,7 @@ class UnfollowUser extends Action {
 
         if($followed) {
             $connexion = \touiteur\app\db\ConnectionFactory::makeConnection();
-            $query = "DELETE FROM Follow WHERE emailSuiveur = ? AND emailSuivi = ?";
+            $query = "DELETE FROM follow WHERE emailSuiveur = ? AND emailSuivi = ?";
             $st = $connexion->prepare($query);
             $st->execute([$current_user->__get("email"), $userToUnfollow->__get("email")]);
             $st->closeCursor();

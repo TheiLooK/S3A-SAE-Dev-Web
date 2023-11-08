@@ -26,7 +26,7 @@ class EvaluerAction
 
     private function updateNote(string $type, string $email, int $id, User $user){
         $connexion = ConnectionFactory::makeConnection();
-        $query = "UPDATE Evaluer set note = ? where email like ? and idTouite = ?";
+        $query = "UPDATE notation set note = ? where email like ? and idTouite = ?";
         $resultset = $connexion->prepare(($query));
         switch ($type){
             case "up":
@@ -43,15 +43,15 @@ class EvaluerAction
 
     private function insertNote(string $type, string $email, int $id, User $user){
         $connexion = ConnectionFactory::makeConnection();
-        $query = "insert into Evaluer (note, email, idTouite) values (?,?,?)";
+        $query = "insert into notation (email, idTouite, note) values (?,?,?)";
         $resultset = $connexion->prepare(($query));
         switch ($type){
             case "up":
-                $resultset ->execute([1,$email,$id]);
+                $resultset ->execute([$email, $id, 1]);
                 $user->changeNote($id, 1);
                 break;
             case "down":
-                $resultset ->execute([-1,$email,$id]);
+                $resultset ->execute([$email, $id, -1]);
                 $user->changeNote($id, -1);
                 break;
         }

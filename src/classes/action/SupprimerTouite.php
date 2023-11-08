@@ -23,12 +23,27 @@ class SupprimerTouite extends Action
         }else{
             $db = ConnectionFactory::makeConnection();
 
+            // récupérer idImage de la table touite
+            $query = "SELECT idImage, urlImage FROM touite WHERE idTouite = ?";
+            $resultset = $db->prepare(($query));
+            $res = $resultset ->execute([$id]);
+            $data = $resultset->fetch();
+            $idImage = $data['idImage'];
+            $urlImage = $data['urlImage'];
+
+            // supprimer l'image
+            $query = "DELETE FROM image WHERE idImage = ?";
+            $resultset = $db->prepare(($query));
+            $res = $resultset ->execute([$idImage]);
+
+            // supprimer le fichier de l'image du serveur dans le dossier image
+            $upload_dir ='images/upload/';
+            unlink($upload_dir.$urlImage);
+
             $tabDelete = [];
-            $tabDelete[] = "DELETE FROM `Touiter` WHERE idTouite = ?";
-            $tabDelete[] = "DELETE FROM `ImageToTouite` WHERE idTouite = ?";
-            $tabDelete[] = "DELETE FROM `TouiteTag` WHERE idTouite = ?";
-            $tabDelete[] = "DELETE FROM `Evaluer` WHERE idTouite = ?";
-            $tabDelete[] = "DELETE FROM `Touite` WHERE idTouite = ?";
+            $tabDelete[] = "DELETE FROM notation WHERE idTouite = ?";
+            $tabDelete[] = "DELETE FROM touiteToTag WHERE idTouite = ?";
+            $tabDelete[] = "DELETE FROM touite WHERE idTouite = ?";
 
             foreach ($tabDelete as $query) {
                 $resultset = $db->prepare(($query));
