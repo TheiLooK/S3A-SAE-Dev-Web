@@ -96,7 +96,7 @@ nav a {
     padding: 15px;
 }
 
-.profil, .tag {
+.profil, .tag, .home {
     display: flex;
     justify-content: space-between;
     margin-right: 50px;

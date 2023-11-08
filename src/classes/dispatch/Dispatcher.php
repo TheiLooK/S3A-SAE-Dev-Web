@@ -49,7 +49,8 @@ class Dispatcher {
                 $result = (new \touiteur\app\action\SupprimerTouite())->execute();
                 break;
             default :
-                $result = "Accueil ";
+                $result = (new \touiteur\app\action\Home())->execute();
+                break;
         }
         Dispatcher::renderPage($result);
     }

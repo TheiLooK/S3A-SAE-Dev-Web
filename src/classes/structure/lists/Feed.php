@@ -14,7 +14,7 @@ class Feed extends Liste {
      * Method to get the touites from the database and insert them into the list
      * @return void
      */
-    public function getListeTouite() : void{
+    public function getListeTouite(): void {
         $connexion = \touiteur\app\db\ConnectionFactory::makeConnection();
         $query ="SELECT * from Touite t inner join Touiter t2 on t.idTouite = t2.idTouite 
                                         inner join Utilisateur u on t2.email = u.email 
@@ -28,7 +28,7 @@ class Feed extends Liste {
         }
     }
 
-    public function getListeTouitePersonne(string $user) : void{
+    public function getListeTouitePersonne(string $user): void {
         $connexion = \touiteur\app\db\ConnectionFactory::makeConnection();
         $query ="SELECT * from Touite t inner join Touiter t2 on t.idTouite = t2.idTouite 
                                         inner join Utilisateur u on t2.email = u.email
@@ -38,7 +38,25 @@ class Feed extends Liste {
         $res = $resultset ->execute([$user]);
 
         while ($data = $resultset->fetch(PDO::FETCH_ASSOC)){
+            $this->ajouterTouite(Touite::getTouiteById($data['idTouite']));
+        }
+    }
 
+    public function getListeTouiteFollowed(string $user): void {
+        $connexion = \touiteur\app\db\ConnectionFactory::makeConnection();
+        $query ="SELECT DISTINCT tt.idTouite
+                    FROM TouiteTag tt
+                    INNER JOIN FollowTag ft ON tt.idTag = ft.idTag
+                    WHERE ft.emailSuiveur = ?
+                    UNION
+                    SELECT DISTINCT t.idTouite
+                    FROM Touiter t
+                    INNER JOIN Follow f ON t.email = f.emailSuivi
+                    WHERE f.emailSuiveur = ?";
+        $resultset = $connexion->prepare(($query));
+        $res = $resultset ->execute([$user, $user]);
+
+        while ($data = $resultset->fetch(PDO::FETCH_ASSOC)){
             $this->ajouterTouite(Touite::getTouiteById($data['idTouite']));
         }
     }
