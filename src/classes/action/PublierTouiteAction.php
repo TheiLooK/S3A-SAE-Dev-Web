@@ -20,12 +20,12 @@ class PublierTouiteAction extends Action{
             if(strlen($touite)>325){
                 // the size is over 325 char
                 $pageContent = '
-                    <form method="POST" action="?action=publie" enctype="multipart/form-data">
+                    <form method="POST" enctype="multipart/form-data">
                         <p>Message supérieur à 325 caractères veuillez racourcir le message</p>
                         <input type="text" id="twt" name="twt" placeholder="Message">
                         <label for="twt">Message</label>
                         <input type="file" id="file" name="file" accept="images/*" />
-                        <input type="submit" value="publier">
+                        <input type="submit" value="publier" onsubmit="this.disabled = true; return true;">
                     </form>';
 
 
@@ -46,11 +46,11 @@ class PublierTouiteAction extends Action{
             }
         } else {
             $pageContent = '
-            <form method="POST" action="?action=publie" enctype="multipart/form-data">
+            <form method="POST" action="?action=publie" enctype="multipart/form-data" onsubmit="button.disabled = true; return true;">
                 <input type="text" id="twt" name="twt" placeholder="Message" required>
                 <label for="twt">Message</label>
                 <input type="file" id="file" name="file" accept="images/*" />
-                <input type="submit" value="publier">
+                <input type="submit" value="publier" name="button">
             </form>';
         }
         return $pageContent;
