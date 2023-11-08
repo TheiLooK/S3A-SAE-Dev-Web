@@ -45,7 +45,7 @@ class RegisterAction extends Action{
                 <input type="password" id="pwd" name="pwd" placeholder="Confirmer le mot de passe" required>
                 <label for="date">Confirmer le mot de passe</label>
                 <input type="submit" value="Valider">
-                <a class="lien" href="?action=signin">Déjà enregistré ? Connectez-vous</a>
+                <a class="lien" href="?action=signin">Déjà inscrit ? Connectez-vous</a>
             </form>';
         }
         return $pageContent;

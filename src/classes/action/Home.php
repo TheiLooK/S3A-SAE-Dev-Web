@@ -2,11 +2,9 @@
 
 namespace touiteur\app\action;
 
-use touiteur\app\action\Action;
 use touiteur\app\renderer\FeedRenderer;
 use touiteur\app\renderer\Renderer;
 use touiteur\app\structure\lists\Feed;
-use touiteur\app\structure\user\User;
 
 class Home extends Action {
 
@@ -40,13 +38,13 @@ class Home extends Action {
         $html .= '</form>';
         $html .= '</div>';
         if ($feed === 'general') {
-            $feed = new Feed();
-            $feed->getListeTouite();
+            $feed = new Feed(Feed::LISTETOUITES, null, null);
+            $feed->getListe( $_GET['page'] ?? 1);
             $r = new FeedRenderer($feed);
             $html .= $r->render(Renderer::COMPACT);
         } else if ($feed === 'personnel') {
-            $feed = new Feed();
-            $feed->getListeTouiteFollowed($current_user->__get('email'));
+            $feed = new Feed(Feed::LISTETOUITESFOLLOWED, $current_user->__get('email'), null);
+            $feed->getListe( $_GET['page'] ?? 1);
             $r = new FeedRenderer($feed);
             $html .= $r->render(Renderer::COMPACT);;
         }

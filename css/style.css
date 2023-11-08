@@ -156,7 +156,7 @@ form {
     margin: 10px auto;
 }
 
-form * {
+form input {
     margin: 5px;
     text-align: left;
 }
@@ -216,6 +216,11 @@ form input[type=submit] {
 
 form input[type=submit]:hover {
     background: #DC8C14;
+}
+
+form a {
+    text-align: center;
+    margin: auto;
 }
 
 .publier img {
