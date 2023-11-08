@@ -50,7 +50,7 @@ class PublierTouiteAction extends Action{
                 <input type="text" id="twt" name="twt" placeholder="Message" required>
                 <label for="twt">Message</label>
                 <input type="file" id="file" name="file" accept="images/*" />
-                <input type="submit" value="publier" name="button">
+                <input type="submit" value="Publier" name="button">
             </form>';
         }
         return $pageContent;

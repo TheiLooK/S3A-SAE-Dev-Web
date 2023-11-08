@@ -48,6 +48,9 @@ class Dispatcher {
             case 'EvaluerAction':
                 $result = (new \touiteur\app\action\EvaluerAction())->execute();
                 break;
+            case 'admin':
+                $result = (new \touiteur\app\action\Admin())->execute();
+                break;
             default :
                 $result = (new \touiteur\app\action\Home())->execute();
                 break;
@@ -84,6 +87,7 @@ class Dispatcher {
         END;
         if (isset($_SESSION['users'])) {
             $user = unserialize($_SESSION['users'])->username;
+            $role = unserialize($_SESSION['users'])->role;
             $pagecontent .= <<<END
                 <a href="?action=profil&user=$user">
                     <div class="bouton">
@@ -98,6 +102,16 @@ class Dispatcher {
                     </div>
                 </a>
             END;
+            if($role===100) {
+                $pagecontent .= <<<END
+                <a href="?action=admin&user=$user">
+                    <div class="bouton">
+                        <img src="./images/site/connexion.png">
+                        <span>Administration</span>
+                    </div>
+                </a>
+            END;
+            }
         }
         else {
             $pagecontent .= <<<END

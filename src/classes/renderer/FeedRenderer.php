@@ -24,21 +24,13 @@ class FeedRenderer implements Renderer {
 
         $r .= '<div class="pagination">';
         if ($page > 1) {
-            $r .= '<a href="?page=1">Premier</a>';
-            if ($this->feed->__get('home') !== null) {
-                $r .= '<a href="?home=' . $this->feed->__get('home') . '&page=' . ($page - 1) . '">Précédent</a>';
-            } else {
-                $r .= '<a href="?page=' . ($page - 1) . '">Précédent</a>';
-            }
+            $r .= '<a href="' . $this->feed->__get('action') . '&page=1' . '">Premier</a>';
+            $r .= '<a href="' . $this->feed->__get('action') . '&page=' . ($page - 1) . '">Précédent</a>';
         }
         $r .= '<span>Page ' . $page . ' sur ' . $nbPageMax . '</span>';
         if ($page < $nbPageMax) {
-           if ($this->feed->__get('home') !== null) {
-                $r .= '<a href="?home=' . $this->feed->__get('home') . '&page=' . ($page + 1) . '">Suivant</a>';
-            } else {
-                $r .= '<a href="?page=' . ($page + 1) . '">Suivant</a>';
-            }
-            $r .= '<a href="?page=' . ceil($this->feed->__get('nbTouiteMax') / Feed::NBPARPAGEFEED) . '">Dernier</a>';
+            $r .= '<a href="' . $this->feed->__get('action') . '&page=' . ($page + 1) . '">Suivant</a>';
+            $r .= '<a href="' . $this->feed->__get('action') . '&page=' . ceil($this->feed->__get('nbTouiteMax') / Feed::NBPARPAGEFEED) . '">Dernier</a>';
         }
         $r .= '</div>';
 
