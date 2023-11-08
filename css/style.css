@@ -151,7 +151,7 @@ form {
     width: fit-content;
     height: fit-content;
     flex-direction: column;
-    align-items: center;
+    align-items: flex-start;
     padding: 10px;
     margin: 10px auto;
 }
@@ -220,6 +220,7 @@ form input[type=submit]:hover {
 
 form a {
     text-align: center;
+    margin: auto;
 }
 
 .publier img {
