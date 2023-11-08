@@ -67,7 +67,7 @@ class Dispatcher {
             <body>
             <div class="partiegauche">
                 <nav>
-                    <h1>Touiteur</h1>
+                    <img class="logo" src="./images/site/logo.png" alt="logo">
                     <div>
                         <a href="./">
                             <div class="bouton">

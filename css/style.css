@@ -254,6 +254,21 @@ form a {
     align-items: center;
 }
 
+.Touite div{
+    display: flex;
+    justify-content: space-between;
+}
+.score{
+    flex-basis: 30%;
+}
+
+.logo{
+    margin : 1em 0em 1em 0em;
+    max-width:230px;
+    max-height:95px;
+    width: auto;
+    height: auto;
+}
 /* Page home */
 
 .home form {

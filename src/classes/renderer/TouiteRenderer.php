@@ -55,8 +55,8 @@ class TouiteRenderer implements Renderer {
             $res.='<img src="'.$this->touite->image.'"/>';
         }
 
-        $res.= '<p> score : '.$this->touite->scoreUp+$this->touite->scoreDown.'</p>';
-        $res.=$this->createButton();
+        $res.= '<div><p class = "score"> score : '.$this->touite->scoreUp+$this->touite->scoreDown.'</p>';
+        $res.=$this->createButton() . "</div>";
         $res.="</div>";
         return $res;
     }
