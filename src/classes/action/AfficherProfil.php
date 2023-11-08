@@ -4,9 +4,7 @@ namespace touiteur\app\action;
 
 use touiteur\app\renderer\FeedRenderer;
 use touiteur\app\renderer\Renderer;
-use touiteur\app\renderer\TouiteRenderer;
 use touiteur\app\structure\lists\Feed;
-use touiteur\app\structure\touite\Touite;
 use touiteur\app\structure\user\User;
 
 class AfficherProfil extends Action
@@ -40,8 +38,8 @@ class AfficherProfil extends Action
             return "<h3>Utilisateur inconnu</h3>";
         }
 
-        $feed = new Feed();
-        $feed->getListeTouitePersonne($_GET['user']);
+        $feed = new Feed(Feed::LISTETOUITESPERSONNE, $_GET['user'], null);
+        $feed->getListe($_GET['page'] ?? 1);
         $r = new FeedRenderer($feed);
 
         $html .= $r->render(Renderer::COMPACT);

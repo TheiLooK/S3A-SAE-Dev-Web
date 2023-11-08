@@ -4,8 +4,7 @@ namespace touiteur\app\action;
 
 use touiteur\app\renderer\FeedRenderer;
 use touiteur\app\renderer\Renderer;
-use touiteur\app\structure\lists\Tag;
-use touiteur\app\structure\user\User;
+use touiteur\app\structure\lists\Feed;
 
 class AfficherTouiteTag extends Action
 {
@@ -37,9 +36,9 @@ class AfficherTouiteTag extends Action
         }
 
 
-        $tag = new Tag($_GET['tag']);
-        $tag->getListeTouiteTag();
-        $r = new FeedRenderer($tag);
+        $feed = new Feed(Feed::LISTETOUITESTAG, null, $tag);
+        $feed->getListe($_GET['page'] ?? 1);
+        $r = new FeedRenderer($feed);
 
         $html .= $r->render(Renderer::COMPACT);
 

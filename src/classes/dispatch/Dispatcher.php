@@ -18,9 +18,6 @@ class Dispatcher {
             case 'publie':
                 $result = (new \touiteur\app\action\PublierTouiteAction())->execute();
                 break;
-            case 'affiche':
-                $result = (new \touiteur\app\action\AfficherListeTouite())->execute();
-                break;
             case 'displayTouite':
                 $result = (new \touiteur\app\action\AfficherTouite())->execute();
                 break;
