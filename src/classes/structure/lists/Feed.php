@@ -90,7 +90,7 @@ class Feed {
 
     private function getListeTouite(int $nbPage): void {
         $connexion = \touiteur\app\db\ConnectionFactory::makeConnection();
-        $query ="SELECT * FROM Touite t INNER JOIN Users u on t.email = u.email 
+        $query ="SELECT * FROM touite t INNER JOIN users u on t.email = u.email 
                            ORDER BY dateTouite DESC
                            limit ?, ?";
         $resultset = $connexion->prepare(($query));
@@ -103,10 +103,10 @@ class Feed {
 
     private function getListeTouitePersonne(int $nbPage, string $user): void {
         $connexion = \touiteur\app\db\ConnectionFactory::makeConnection();
-        $query ="SELECT * FROM Touite t INNER JOIN Utilisateur u on t.email = u.email
+        $query ="SELECT * FROM touite t INNER JOIN users u on t.email = u.email
                                         WHERE u.username = ?
                                         ORDER BY dateTouite DESC
-                                        limit ?, ?";
+                                        LIMIT ?, ?";
         $resultset = $connexion->prepare(($query));
         $res = $resultset ->execute([$user, ($nbPage-1)*self::NBPARPAGEFEED, self::NBPARPAGEFEED]);
 
@@ -118,13 +118,13 @@ class Feed {
     private function getListeTouiteFollowed(int $nbPage, string $user): void {
         $connexion = \touiteur\app\db\ConnectionFactory::makeConnection();
         $query ="SELECT DISTINCT tt.idTouite
-                    FROM TouiteToTag tt
-                    INNER JOIN FollowTag ft ON tt.idTag = ft.idTag
+                    FROM touiteToTag tt
+                    INNER JOIN followTag ft ON tt.idTag = ft.idTag
                     WHERE ft.emailSuiveur = ?
                     UNION
                     SELECT DISTINCT t.idTouite
-                    FROM Touiter t
-                    INNER JOIN Follow f ON t.email = f.emailSuivi
+                    FROM touite t
+                    INNER JOIN follow f ON t.email = f.emailSuivi
                     WHERE f.emailSuiveur = ?
                     ORDER BY idTouite DESC
                     LIMIT ?, ?";
@@ -138,7 +138,7 @@ class Feed {
 
     private function getListeTouiteTag(int $nbPage, string $tag): void {
         $connexion = \touiteur\app\db\ConnectionFactory::makeConnection();
-        $query ="SELECT * FROM Touite t INNER JOIN Tag tag ON t.idTag = tag.idTag
+        $query ="SELECT * FROM touite t INNER JOIN tag tag ON t.idTag = tag.idTag
                                         WHERE tag.tag = ?
                                         ORDER BY dateTouite DESC
                                         limit ?, ?";
@@ -152,7 +152,7 @@ class Feed {
 
     private function getNbTouiteTouite(): int {
         $connexion = \touiteur\app\db\ConnectionFactory::makeConnection();
-        $query ="SELECT COUNT(*) as nbTouite from Touite";
+        $query ="SELECT COUNT(*) as nbTouite from touite";
         $resultset = $connexion->prepare(($query));
         $res = $resultset ->execute();
         $data = $resultset->fetch(\PDO::FETCH_ASSOC);
@@ -161,7 +161,7 @@ class Feed {
 
     private function getNbTouitePersonne(string $user): int {
         $connexion = \touiteur\app\db\ConnectionFactory::makeConnection();
-        $query ="SELECT COUNT(*) AS nbTouite FROM Touite t INNER JOIN Utilisateur u ON t.email = u.email WHERE u.username = ?";
+        $query ="SELECT COUNT(*) AS nbTouite FROM touite t INNER JOIN users u ON t.email = u.email WHERE u.username = ?";
         $resultset = $connexion->prepare(($query));
         $res = $resultset ->execute([$user]);
         $data = $resultset->fetch(\PDO::FETCH_ASSOC);
@@ -171,13 +171,13 @@ class Feed {
     private function getNbTouiteFollowed(string $user): int {
         $connexion = \touiteur\app\db\ConnectionFactory::makeConnection();
         $query = "SELECT COUNT(*) as nbTouite
-                    FROM TouiteToTag tt
-                    INNER JOIN FollowTag ft ON tt.idTag = ft.idTag
+                    FROM touiteToTag tt
+                    INNER JOIN followTag ft ON tt.idTag = ft.idTag
                     WHERE ft.emailSuiveur = ?
                     UNION
                     SELECT COUNT(*) as nbTouite
-                    FROM Touiter t
-                    INNER JOIN Follow f ON t.email = f.emailSuivi
+                    FROM touite t
+                    INNER JOIN follow f ON t.email = f.emailSuivi
                     WHERE f.emailSuiveur = ?";
         $resultset = $connexion->prepare(($query));
         $res = $resultset ->execute([$user, $user]);
@@ -187,7 +187,7 @@ class Feed {
 
     private function getNbTouiteTag(string $tag): int {
         $connexion = \touiteur\app\db\ConnectionFactory::makeConnection();
-        $query ="SELECT COUNT(*) AS nbTouite FROM Touite t INNER JOIN Tag tag ON t.idTag = tag.idTag WHERE tag.tag = ?";
+        $query ="SELECT COUNT(*) AS nbTouite FROM touite t INNER JOIN tag tag ON t.idTag = tag.idTag WHERE tag.tag = ?";
         $resultset = $connexion->prepare(($query));
         $res = $resultset ->execute([$tag]);
         $data = $resultset->fetch(\PDO::FETCH_ASSOC);
