@@ -2,6 +2,7 @@
 
 namespace touiteur\app\renderer;
 
+use touiteur\app\Auth\Auth;
 use touiteur\app\Exception\InvalidPropertyNameException;
 use touiteur\app\structure\touite\Touite;
 
@@ -68,7 +69,7 @@ class TouiteRenderer implements Renderer {
         $button .= '<input type="image" class="icon" src="images/site/up.png" alt="Submit" formaction="?action=home">';
         $button .= '<input type="image" class="icon" src="images/site/down.png" alt="Submit" formaction="?action=home">';
         // create delete button if the user is the creator of the touite
-        if(isset($_SESSION['users'])&&unserialize($_SESSION['users'])->username===$this->touite->user){
+       if(Auth::checkAccessLevel( $this->touite->user)){
             $button .= '<input type="hidden" name="id" value="' . $this->touite->id . '">';
             $button .= '<input type="image" class="icon" src="images/site/supprimer.png" alt="Submit" formaction="?action=supprimerTouite">';
         }
