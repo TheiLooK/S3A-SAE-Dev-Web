@@ -22,7 +22,7 @@ class FollowUser extends Action {
             $html = '<script type="text/javascript">if(window.confirm("Voulez-vous vraiment arrêter de suivre cet utilisateur ?")){window.location.replace("?action=unfollow&user=' . $userToFollow->__get('username') . '");}</script>';
         } else {
             $connexion = \touiteur\app\db\ConnectionFactory::makeConnection();
-            $query = "INSERT INTO Follow (emailSuiveur, emailSuivi) VALUES (?, ?)";
+            $query = "INSERT INTO follow (emailSuiveur, emailSuivi) VALUES (?, ?)";
             $st = $connexion->prepare($query);
             $st->execute([$current_user->__get("email"), $userToFollow->__get("email")]);
             $st->closeCursor();
