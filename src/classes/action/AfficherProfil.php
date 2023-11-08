@@ -22,7 +22,6 @@ class AfficherProfil extends Action
             $html = '<div class="profil">';
             $html .= '<div id="info"> <h3>' . $user->__get('prenom') . $user->__get("nom") . '</h3>';
             $html .= '<p>@' . $user->__get('username') . '</p></div>';
-            // si l'utilisateur est connecté et que ce n'est pas son profil
             if (isset($_SESSION['users']) && unserialize($_SESSION['users'])->__get('username') != $user->__get('username')) {
                 $html .= '<div id="followButton">';
                 if (unserialize($_SESSION['users'])->checkFollow($user)) {

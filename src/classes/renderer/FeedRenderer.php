@@ -13,12 +13,27 @@ class FeedRenderer implements Renderer {
     }
 
     public function render(int $selector): string {
+        $page = $_GET['page'] ?? 1;
+        $this->feed->getListeTouite();
+
         $r = '<div class="feed">';
-        foreach ($this->feed->list as $touite) {
-            $touiteRenderer = new TouiteRenderer($touite);
-            $r .= $touiteRenderer->render(Renderer::COMPACT);
+        for ($i = ($page - 1) * Renderer::NBPARPAGEFEED; $i < $page * Renderer::NBPARPAGEFEED && $i < count($this->feed->list); $i++) {
+            $touiteRenderer = new TouiteRenderer($this->feed->list[$i]);
+            $r .= $touiteRenderer->render($selector);
         }
         $r .= "</div>";
+        $r .= '<div class="pagination">';
+        $r .= '<a href="?page=1">Premier</a>';
+        if ($page > 1) {
+            $r .= '<a href="?page=' . ($page - 1) . '">Précédent</a>';
+        }
+        $r .= '<span>Page ' . $page . ' sur ' . ceil(count($this->feed->list) / Renderer::NBPARPAGEFEED) . '</span>';
+        if ($page < ceil(count($this->feed->list) / Renderer::NBPARPAGEFEED)) {
+            $r .= '<a href="?page=' . ($page + 1) . '">Suivant</a>';
+        }
+        $r .= '<a href="?page=' . ceil(count($this->feed->list) / Renderer::NBPARPAGEFEED) . '">Dernier</a>';
+        $r .= '</div>';
+
         return $r;
     }
 }

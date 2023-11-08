@@ -276,7 +276,37 @@ form input[type=submit]:hover {
 
 form.active input[type=submit] {
     border-bottom: #FF9D08 solid;
+}
 
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20px 0;
+}
+
+.pagination a {
+    padding: 10px;
+    margin: 0 5px;
+    border: 1px solid #000;
+    background-color: #FF9D08;
+    color: #ffffff;
+    border-radius: 10px;
+}
+
+.pagination a:hover {
+    background-color: #DC8C14;
+    color: #ffffff;
+}
+
+.pagination span {
+    padding: 10px;
+    margin: 0 5px;
+    border: 1px solid #000;
+    text-decoration: none;
+    color: #ffffff;
+    background-color: #FF9D08;
+    border-radius: 10px;
 }
 
 /* Quand la largeur est trop petite */

@@ -30,7 +30,7 @@ class Liste{
      * @return void
      */
     public function suprimerTouite(int $indice):void{
-        $this->list->unset($indice);
+        unset($this->list[$indice]);
         $this->touitesCount--;
     }
 
@@ -38,6 +38,7 @@ class Liste{
      * Method used to get an argument
      * @param String $arg the name of the argument
      * @return mixed the argument if it exists
+     * @throws InvalidPropertyNameException
      */
     public function __get(String $arg):mixed{
         if(property_exists($this, $arg)) return $this->$arg;
