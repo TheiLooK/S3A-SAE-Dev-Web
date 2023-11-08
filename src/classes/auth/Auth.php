@@ -7,7 +7,7 @@ class Auth
     public static function authentification(string $pwd, string $email): void
     {
 
-        $query = "SELECT * from Utilisateur where email=?";
+        $query = "SELECT * from users where email=?";
         $connexion = \touiteur\app\db\ConnectionFactory::makeConnection();
         $resultset = $connexion->prepare($query);
         $res = $resultset->execute([$email]);
@@ -24,7 +24,7 @@ class Auth
         }
     }
 
-    public static function register(string $pwd, string $email, string $pseudo, string $firstname, string $lastname, string $date): bool
+    public static function register(string $pwd, string $email, string $pseudo, string $firstname, string $lastname): bool
     {
 
         if (!self::checkPasswordStrength($pwd, 1)) {
@@ -37,16 +37,16 @@ class Auth
         } catch (DBException $e) {
             throw new Exception($e->getMessage());
         }
-        $query_email = "select * from Utilisateur where email = ?";
+        $query_email = "select * from users where email = ?";
         $resultset = $connexion->prepare($query_email);
         $res = $resultset->execute([$email]);
         if ($resultset->fetch()) {
             throw new \touiteur\app\Exception\AuthException("compte déjà existant");
         }
         try {
-            $query = "insert into Utilisateur(email,username,password,role,nom,prenom,datenaissance) values (?,?,?,1,?,?,?)";
+            $query = "insert into users(email,username,password,lastname,firstname,role) values (?,?,?,?,?,1)";
             $resultset = $connexion->prepare(($query));
-            $res = $resultset->execute([$email, $pseudo, $hash, $lastname, $firstname, $date]);
+            $res = $resultset->execute([$email, $pseudo, $hash, $lastname, $firstname]);
         } catch (PDOException $e) {
             throw new \touiteur\app\Exception\AuthException("Erreur lors de la création du compte");
 
@@ -67,12 +67,12 @@ class Auth
     public static function loadProfile(string $email): void
     {
         $connexion = \touiteur\app\db\ConnectionFactory::makeConnection();
-        $query = "SELECT * from Utilisateur where email = :email";
+        $query = "SELECT * from users where email = :email";
         $resultset = $connexion->prepare(($query));
         $resultset->execute(["$email"]);
         $user = $resultset->fetch(PDO::FETCH_ASSOC);
 
-        $profile = new \touiteur\app\structure\user\User($user['email'], $user['password'], $user['username'], $user['nom'], $user['prenom'], $user['role']);
+        $profile = new \touiteur\app\structure\user\User($user['email'], $user['password'], $user['username'], $user['lastname'], $user['firstname'], $user['role']);
         $_SESSION['users'] = serialize($profile);
     }
 

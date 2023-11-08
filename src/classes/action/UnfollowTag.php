@@ -12,7 +12,7 @@ class UnfollowTag extends Action {
         }
         try {
             $current_user = unserialize($_SESSION['users']);
-            $tagToFollow = $_POST['tag'];
+            $tagToFollow = $_POST['Tag'];
             $followed = $current_user->checkFollowTag($tagToFollow);
         } catch (\touiteur\app\Exception\InvalidTagNameException $e) {
             return "<h3>Tag inconnu</h3>";
@@ -21,14 +21,14 @@ class UnfollowTag extends Action {
         if($followed) {
             $connexion = \touiteur\app\db\ConnectionFactory::makeConnection();
 
-            $query = "SELECT idTag FROM Tag WHERE tag = ?";
+            $query = "SELECT idTag FROM tag WHERE libelle = ?";
             $st = $connexion->prepare($query);
             $st->execute([$tagToFollow]);
             $res = $st->fetchAll(\PDO::FETCH_ASSOC);
             $st->closeCursor();
             $idTagToUnfollow = $res[0]['idTag'];
 
-            $query = "DELETE FROM FollowTag WHERE emailSuiveur = ? AND idTag = ?";
+            $query = "DELETE FROM followTag WHERE emailSuiveur = ? AND idTag = ?";
             $st = $connexion->prepare($query);
             $st->execute([$current_user->__get("email"), $idTagToUnfollow]);
             $st->closeCursor();
