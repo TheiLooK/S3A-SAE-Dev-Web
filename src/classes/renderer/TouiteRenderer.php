@@ -67,12 +67,27 @@ class TouiteRenderer implements Renderer {
         // if the user is not sign in he cant see the button
         if(!isset($_SESSION['users'])) return "";
 
+        $user = unserialize($_SESSION['users']);
 
         //Create the upvote / downvote Button
         $button = '<form method="POST" class="buttons">';
+
         $button .= '<input type="hidden" name="id" value="' . $this->touite->id . '">';
-        $button .= '<input type="image" class="icon" src="images/site/up.png" alt="Submit" formaction="?action=EvaluerAction&note=up">';
-        $button .= '<input type="image" class="icon" src="images/site/down.png" alt="Submit" formaction="?action=EvaluerAction&note=down">';
+        $button .= '<input type="hidden" name="url" value="' .$_SERVER['REQUEST_URI']. '">';
+        $classUp = "icon ";
+        $classDown = "icon ";
+        //if the user has upvoted the button,
+        if(array_key_exists($this->touite->id, $user->touiteNote)){
+            if(($user->touiteNote)[$this->touite->id]===-1){
+                $classDown.="selectedIcon";
+            }else{
+                $classUp.="selectedIcon";
+            }
+        }
+
+        $button .= '<input type="image" class="'.$classUp.'" src="images/site/up.png" alt="Submit" formaction="?action=EvaluerAction&note=up">';
+        $button .= '<input type="image" class="'.$classDown.'" src="images/site/down.png" alt="Submit" formaction="?action=EvaluerAction&note=down">';
+
         // create delete button if the user is the creator of the touite
        if(Auth::checkAccessLevel( $this->touite->user)){
             $button .= '<input type="image" class="icon" src="images/site/supprimer.png" alt="Submit" formaction="?action=supprimerTouite">';

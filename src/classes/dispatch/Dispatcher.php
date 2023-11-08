@@ -78,10 +78,10 @@ class Dispatcher {
                                 <span>Accueil</span>
                             </div>
                         </a>
-                        <a href="?action=affiche">
+                        <a href="?action=home">
                             <div class="bouton">
                                 <img src="./images/site/loupe.png">
-                                <span>Afficher</span>
+                                <span>Recherche</span>
                             </div>
                         </a>
         END;

@@ -236,6 +236,10 @@ form a:hover {
     width : 1em;
 }
 
+.selectedIcon{
+    background-color: #DC8C14;
+}
+
 .buttons{
     justify-content: flex-end;
     display: inline-flex;

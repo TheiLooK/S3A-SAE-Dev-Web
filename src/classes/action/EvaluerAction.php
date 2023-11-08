@@ -17,7 +17,7 @@ class EvaluerAction
         }else{
             $this->insertNote($_GET['note'],$email, $id, $user);
         }
-        $pageContent .= '<script type="text/javascript">window.setTimeout(function(){window.location.replace("?action=affiche");}, 100);</script>';
+        $pageContent .= '<script type="text/javascript">window.location.replace("'.$_POST['url'].'");</script>';
         return $pageContent;
     }
 
