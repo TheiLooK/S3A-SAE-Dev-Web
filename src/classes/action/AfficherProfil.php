@@ -22,17 +22,21 @@ class AfficherProfil extends Action
             $html = '<div class="profil">';
             $html .= '<div id="info"> <h3>' . $user->__get('prenom') . $user->__get("nom") . '</h3>';
             $html .= '<p>@' . $user->__get('username') . '</p></div>';
-            $html .= '<div id="followButton">';
-            if (unserialize($_SESSION['users'])->checkFollow($user)) {
-                $html .= '<form method="POST" action="?action=unfollow">';
-                $html .= '<input type="hidden" name="user" value="' . $user->__get("username") . '">';
-                $html .= '<input type="submit" value="Unfollow">';
-            } else {
-                $html .= '<form method="POST" action="?action=follow">';
-                $html .= '<input type="hidden" name="user" value="' . $user->__get("username") . '">';
-                $html .= '<input type="submit" value="Follow">';
+            // si l'utilisateur est connecté et que ce n'est pas son profil
+            if (isset($_SESSION['users']) && unserialize($_SESSION['users'])->__get('username') != $user->__get('username')) {
+                $html .= '<div id="followButton">';
+                if (unserialize($_SESSION['users'])->checkFollow($user)) {
+                    $html .= '<form method="POST" action="?action=unfollow">';
+                    $html .= '<input type="hidden" name="user" value="' . $user->__get("username") . '">';
+                    $html .= '<input type="submit" value="Unfollow">';
+                } else {
+                    $html .= '<form method="POST" action="?action=follow">';
+                    $html .= '<input type="hidden" name="user" value="' . $user->__get("username") . '">';
+                    $html .= '<input type="submit" value="Follow">';
+                }
+                $html .= '</form></div>';
             }
-            $html .= '</form></div></div>';
+            $html .= '</div>';
         } catch (\touiteur\app\Exception\InvalidPropertyNameException $e) {
             return "<h3>Utilisateur inconnu</h3>";
         }

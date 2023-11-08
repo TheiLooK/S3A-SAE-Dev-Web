@@ -52,7 +52,8 @@ class Dispatcher {
                 $result = (new \touiteur\app\action\EvaluerAction())->execute();
                 break;
             default :
-                $result = "Accueil ";
+                $result = (new \touiteur\app\action\Home())->execute();
+                break;
         }
         Dispatcher::renderPage($result);
     }

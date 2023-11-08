@@ -96,7 +96,7 @@ nav a {
     padding: 15px;
 }
 
-.profil, .tag {
+.profil, .tag, .home {
     display: flex;
     justify-content: space-between;
     margin-right: 50px;
@@ -240,9 +240,37 @@ form a:hover {
     justify-content: flex-end;
     display: inline-flex;
     flex-direction: row;
-    padding: 0px;
-    margin: 0px auto;
+    padding: 0;
+    margin: 0 auto;
     width: 100%;
+}
+
+.home form {
+    width: 100%;
+    display: flex;
+    border-bottom: 1px solid grey;
+    padding: 0;
+    margin-right: 50px;
+}
+
+.home input:focus {
+    outline: none;
+}
+
+.home input[type=submit] {
+    width: 100%;
+    border-radius: 0;
+    background: none;
+    margin: 0;
+}
+
+.home input[type=submit]:hover {
+    background: grey;
+}
+
+form.active input[type=submit] {
+    border-bottom: #FF9D08 solid;
+
 }
 
 @media screen and (max-width: 920px) {
