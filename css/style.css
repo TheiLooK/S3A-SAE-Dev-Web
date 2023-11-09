@@ -350,7 +350,8 @@ form.active input[type=submit] {
     }
 
     nav .publier {
-        width: 50px;
+        width: 40px;
+        margin: 10px 0;
     }
 
     .partiedroite {
@@ -359,6 +360,10 @@ form.active input[type=submit] {
 
     .logo{
         width: 150px;
+    }
+
+    nav img {
+        margin: auto;
     }
 
 }
