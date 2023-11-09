@@ -264,10 +264,8 @@ form a {
 }
 
 .logo{
-    margin : 1em 0em 1em 0em;
-    max-width:230px;
-    max-height:95px;
-    width: auto;
+    margin : 1em 0 1em 0;
+    width: 300px;
     height: auto;
 }
 /* Page home */
@@ -359,6 +357,10 @@ form.active input[type=submit] {
 
     .partiedroite {
         display: none;
+    }
+
+    .logo{
+        width: 150px;
     }
 
 }
