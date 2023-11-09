@@ -14,10 +14,14 @@ class ListUserRenderer implements Renderer{
 
     public function render(int $selector): string {
         $r = '<div class="feed">';
+        if ($this->list->nbUser === 0) {
+            $r .= '<p>Aucun résultat</p>';
+        }
         foreach ($this->list->list as $user) {
             $userRenderer = new UserRenderer($user);
             $r .= $userRenderer->render(Renderer::COMPACT);
         }
+        $r .= '</div>';
         return $r;
     }
 }

@@ -9,10 +9,12 @@ class ListUser{
 
     private array $list;
     private string $user;
+    private int $nbUser;
 
     public function __construct(string $user){
         $this->user=$user;
         $this->list=[];
+        $this->nbUser=0;
     }
 
     public function getFollower() : void{
@@ -23,6 +25,7 @@ class ListUser{
         while($data = $resultset->fetch()){
             $u = new User($data['email'], $data['password'], $data['username'], $data['lastname'], $data['firstname'], $data['role']);
             $this->list[] = $u;
+            $this->nbUser++;
         }
     }
 
@@ -34,6 +37,7 @@ class ListUser{
         while($data = $resultset->fetch()){
             $u = new User($data['email'], $data['password'], $data['username'], $data['lastname'], $data['firstname'], $data['role']);
             $this->list[] = $u;
+            $this->nbUser++;
         }
     }
 
