@@ -101,7 +101,7 @@ nav a {
     width: 100%;
     overflow-y: scroll;
     text-overflow: ellipsis;
-    padding: 5px;
+    padding: 5px 10px 0 5px;
 }
 
 .profil, .tag, .home {
