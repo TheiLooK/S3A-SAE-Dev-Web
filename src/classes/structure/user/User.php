@@ -110,6 +110,22 @@ class User {
         return $tab;
     }
 
+    public function getScoreMoyen() : float{
+        $connexion = ConnectionFactory::makeConnection();
+        $query = "select sum(note) as score from notation where idTouite in (select idTouite from touite where email like ?)";
+        $resultset = $connexion->prepare(($query));
+        $resultset ->execute([$this->email]);
+        $data = $resultset->fetch();
+        $query2 = "SELECT count(*) as nbTouite FROM touite WHERE email like ?";
+        $resultset2 = $connexion->prepare(($query2));
+        $resultset2 ->execute([$this->email]);
+        $data2 = $resultset2->fetch();
+        if($data2['nbTouite'] == 0){
+            return 0;
+        }
+        return $data['score']/($data2['nbTouite']);
+    }
+
     public function changeNote(int $id, int $note) : void{
         $this->touiteNote[$id] = $note;
         $_SESSION['users']=serialize($this);
