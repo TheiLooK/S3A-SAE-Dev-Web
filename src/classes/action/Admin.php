@@ -50,7 +50,7 @@ class Admin extends Action
             while ($row = $st->fetch(\PDO::FETCH_ASSOC)) {
                 $tendances[] = $row;
             }
-
+            $html .= '<div class = "feed">';
             foreach ($tendances as $tend) {
                 if(isset($tend['libelle'])&&isset($tend['nbTag'])) {
                     $html .= "<div class='Touite'>";
@@ -59,6 +59,7 @@ class Admin extends Action
                     $html .= "</div>";
                 }
             }
+            $html .= '</div>';
         } else if ($feed === 'influenceurs') {
             $connexion = \touiteur\app\db\ConnectionFactory::makeConnection();
             $query = "SELECT u.username,u.email, count(f.emailSuivi) as nbSuivi FROM follow f inner join users u on f.emailSuivi= u.email group by u.email order by nbSuivi desc";
@@ -67,6 +68,7 @@ class Admin extends Action
             while ($row = $st->fetch(\PDO::FETCH_ASSOC)) {
                 $influenceurs[] = $row;
             }
+            $html .= '<div class = "feed">';
             foreach ($influenceurs as $inf) {
                 if(isset($inf['email'])&&isset($inf['username'])&&isset($inf['nbSuivi'])) {
                     $html .= "<div class='Touite'>";
@@ -76,7 +78,7 @@ class Admin extends Action
                     $html .= "</div>";
                 }
             }
-
+            $html .= "</div>";
         }
         return $html;
     }
