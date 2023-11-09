@@ -329,7 +329,6 @@ form.active input[type=submit] {
 }
 
 /* Quand la largeur est trop petite */
-
 @media screen and (max-width: 920px) {
     .partiegauche {
         width: 300px;
@@ -363,4 +362,17 @@ form.active input[type=submit] {
         width: 150px;
     }
 
+}
+
+/* Quand on est sur téléphone */
+@media all and (orientation: portrait) {
+    /* On enlève la partie droite */
+    .partiedroite {
+        display: none;
+    }
+
+    /* On met le text plus grand */
+    .partiecentrale {
+        font-size: 20px;
+    }
 }
