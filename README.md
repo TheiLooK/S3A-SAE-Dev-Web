@@ -16,10 +16,14 @@ S3A-SAE-Dev-Web
 
 ---
 ## 1. For the new users :
+TODO
 
 ---
 ## 2. For the users who already have an account :
-
+TODO
 
 ---
 ## 3. For the administrators :
+TODO
+
+---
