@@ -98,16 +98,15 @@ nav a {
 }
 
 .feed {
-    width: 90%;
+    width: 100%;
     overflow-y: scroll;
     text-overflow: ellipsis;
-    padding: 15px;
+    padding: 5px;
 }
 
 .profil, .tag, .home {
     display: flex;
     justify-content: space-between;
-    margin-right: 50px;
 }
 
 .partiecentrale img {
@@ -275,7 +274,7 @@ form a {
     display: flex;
     border-bottom: 1px solid grey;
     padding: 0;
-    margin-right: 50px;
+    margin: 10px;
 }
 
 .home input:focus {
