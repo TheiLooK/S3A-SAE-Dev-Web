@@ -26,6 +26,7 @@ TODO
 ## 3. For the administrators :
 TODO
 
+---
 ### Sources
 - Icons : [x.com](https://twitter.com/)
 - Logo : [DALL-E by OpenAI](https://openai.com/blog/dall-e/)
