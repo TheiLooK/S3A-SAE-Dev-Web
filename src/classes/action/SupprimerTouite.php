@@ -14,10 +14,10 @@ class SupprimerTouite extends Action
         if(!isset($_GET['delete'])){
             $pageContent=<<<HTML
                      <form method="POST">
-                        <p>Voulez vous vraiment supprimer votre touite ?</p>
+                        <p>Voulez-vous vraiment supprimer votre touite ?</p>
                         <input type="hidden" name="id" value=$id>
-                        <input type="submit" value="oui" formaction="?action=supprimerTouite&delete=true">
-                        <input type="submit" value="non" formaction="?action=affiche">
+                        <input type="submit" value="Oui" formaction="?action=supprimerTouite&delete=true">
+                        <input type="submit" value="Non" formaction="?action=affiche">
                     </form>
                 HTML;
         }else{

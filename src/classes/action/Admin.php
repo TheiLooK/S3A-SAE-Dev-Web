@@ -22,7 +22,7 @@ class Admin extends Action
             $html .= '<form method="POST"  class="inactive">';
         }
         $html .= '<input type="hidden" name="admin" value="tendances">';
-        $html .= '<input type="submit" value="tendances">';
+        $html .= '<input type="submit" value="Tendances">';
         $html .= '</form>';
         if ($feed === 'influenceurs') {
             $html .= '<form method="POST"  class="active">';
@@ -30,10 +30,9 @@ class Admin extends Action
             $html .= '<form method="POST"  class="inactive">';
         }
         $html .= '<input type="hidden" name="admin" value="influenceurs">';
-        $html .= '<input type="submit" value="influenceurs">';
+        $html .= '<input type="submit" value="Influenceurs">';
         $html .= '</form>';
         $html .= '</div>';
-        $action = '?action=admin&admin=' . $feed;
         if ($feed === 'tendances') {
             $connexion = \touiteur\app\db\ConnectionFactory::makeConnection();
             $query = "SELECT t2.libelle, COUNT(t.idTag) AS nbTag FROM touiteToTag t inner join tag t2 on t.idTag=t2.idTag GROUP BY libelle ORDER BY nbTag asc;";

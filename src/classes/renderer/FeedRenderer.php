@@ -14,6 +14,9 @@ class FeedRenderer implements Renderer {
     public function render(int $selector): string {
         $page = $_GET['page'] ?? 1;
         $nbPageMax = ceil($this->feed->__get('nbTouiteMax') / Feed::NBPARPAGEFEED);
+        if ($nbPageMax == 0) {
+            $nbPageMax = 1;
+        }
 
         $r = '<div class="feed">';
         foreach ($this->feed->list as $touite) {

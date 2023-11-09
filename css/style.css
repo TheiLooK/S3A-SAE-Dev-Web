@@ -139,6 +139,7 @@ nav a {
 .Touite{
     min-width: 30%;
     border: 1px solid grey;
+    border-radius: 5px;
     word-wrap: break-word;
     margin-bottom: 20px;
     padding: 10px;
@@ -263,10 +264,8 @@ form a {
 }
 
 .logo{
-    margin : 1em 0em 1em 0em;
-    max-width:230px;
-    max-height:95px;
-    width: auto;
+    margin: 50px auto;
+    width: 230px;
     height: auto;
 }
 /* Page home */
@@ -358,6 +357,10 @@ form.active input[type=submit] {
 
     .partiedroite {
         display: none;
+    }
+
+    .logo{
+        width: 150px;
     }
 
 }
