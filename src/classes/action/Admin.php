@@ -44,7 +44,7 @@ class Admin extends Action
         $html .= '</div>';
         if ($feed === 'tendances') {
             $connexion = \touiteur\app\db\ConnectionFactory::makeConnection();
-            $query = "SELECT t2.libelle, COUNT(t.idTag) AS nbTag FROM touiteToTag t inner join tag t2 on t.idTag=t2.idTag GROUP BY libelle ORDER BY nbTag asc;";
+            $query = "SELECT t2.libelle, COUNT(t.idTag) AS nbTag FROM touiteToTag t inner join tag t2 on t.idTag=t2.idTag GROUP BY libelle ORDER BY nbTag desc;";
             $st = $connexion->prepare($query);
             $st->execute();
             while ($row = $st->fetch(\PDO::FETCH_ASSOC)) {
@@ -61,7 +61,7 @@ class Admin extends Action
             }
         } else if ($feed === 'influenceurs') {
             $connexion = \touiteur\app\db\ConnectionFactory::makeConnection();
-            $query = "SELECT u.username,u.email, count(f.emailSuivi) as nbSuivi FROM follow f inner join users u on f.emailSuivi= u.email group by u.email order by nbSuivi asc";
+            $query = "SELECT u.username,u.email, count(f.emailSuivi) as nbSuivi FROM follow f inner join users u on f.emailSuivi= u.email group by u.email order by nbSuivi desc";
             $st = $connexion->prepare($query);
             $st->execute();
             while ($row = $st->fetch(\PDO::FETCH_ASSOC)) {
