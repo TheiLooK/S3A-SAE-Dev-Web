@@ -3,6 +3,7 @@
 namespace touiteur\app\action;
 
 use Couchbase\User;
+use touiteur\app\Auth\Auth;
 use touiteur\app\renderer\FeedRenderer;
 use touiteur\app\renderer\Renderer;
 use touiteur\app\structure\lists\Feed;
@@ -12,6 +13,14 @@ class Admin extends Action
 
     public function execute(): string
     {
+        //if the user in session is not an admin he can't access the page
+        if(!Auth::checkAccessLevel(100)){
+            $pageContent = "<h1>Droits insuffisants</h1>";
+            $pageContent .= '<p>Redirection vers la page d\'accueil dans 2 secondes</p></div>';
+            $pageContent .= '<script type="text/javascript">window.setTimeout(function(){window.location.replace("?action=home");}, 2000);</script>';
+            return $pageContent;
+        }
+
 
         $feed = isset($_GET['admin']) ? $_GET['admin'] : (isset($_POST['admin']) ? $_POST['admin'] : 'tendances');
 

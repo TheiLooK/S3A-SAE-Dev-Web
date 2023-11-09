@@ -2,6 +2,7 @@
 
 namespace touiteur\app\action;
 
+use touiteur\app\Auth\Auth;
 use touiteur\app\db\ConnectionFactory;
 use touiteur\app\renderer\Renderer;
 
@@ -10,7 +11,26 @@ class SupprimerTouite extends Action
     public function execute(): string
     {
         $pageContent="";
-        $id = $_POST['id'];
+        // if emailTouite is not set then its an access via modifing the url
+        if(!isset($_POST['emailTouite'])){
+            $pageContent = "<h1>Access Interdit via modification Url</h1>";
+            $pageContent .= '<p>Redirection vers la page d\'accueil dans 2 secondes</p></div>';
+            $pageContent .= '<script type="text/javascript">window.setTimeout(function(){window.location.replace("?action=home");}, 2000);</script>';
+            return $pageContent;
+        }
+
+
+        $email = $_POST['emailTouite'];
+        //we check if the user is the owner of the touite or an admin
+        if(!Auth::checkOwnership($email)){
+            $pageContent = "<h1>Droits insuffisants</h1>";
+            $pageContent .= '<p>Redirection vers la page d\'accueil dans 2 secondes</p></div>';
+            $pageContent .= '<script type="text/javascript">window.setTimeout(function(){window.location.replace("?action=home");}, 2000);</script>';
+            return $pageContent;
+        }
+
+
+        $id = $_POST['idTouite'];
         if(!isset($_GET['delete'])){
             $pageContent=<<<HTML
                      <form method="POST">
@@ -20,7 +40,7 @@ class SupprimerTouite extends Action
                         <input type="submit" value="Non" formaction="?action=affiche">
                     </form>
                 HTML;
-        }else{
+        } else {
             $db = ConnectionFactory::makeConnection();
 
             // récupérer idImage de la table touite
@@ -52,7 +72,6 @@ class SupprimerTouite extends Action
                 $res = $resultset ->execute([$id]);
             }
             $pageContent="le touite a bien été supprimé, retour à la page";
-            $pageContent .= '<script type="text/javascript">window.setTimeout(function(){window.location.replace("./");}, 1500);</script>';
         }
 
         return $pageContent;

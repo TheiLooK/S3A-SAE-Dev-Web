@@ -2,6 +2,7 @@
 
 namespace touiteur\app\action;
 
+use touiteur\app\Auth\Auth;
 use touiteur\app\renderer\FeedRenderer;
 use touiteur\app\renderer\Renderer;
 use touiteur\app\structure\lists\Feed;
@@ -9,7 +10,7 @@ use touiteur\app\structure\lists\Feed;
 class Home extends Action {
 
     public function execute(): string {
-        if (!isset($_SESSION['users'])) {
+        if (!Auth::checkSignIn()) {
             $feed = $_GET['home'] ?? $_POST['home'] ?? 'general';
             if ($feed === 'personnel') {
                 return '<script type="text/javascript">window.location.replace("?action=signin");</script>';

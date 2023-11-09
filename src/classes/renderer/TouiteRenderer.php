@@ -68,16 +68,22 @@ class TouiteRenderer implements Renderer {
         return $this->$at;
     }
 
+
+    /**
+     * Function used to create the buttons upvote, downvote and delete according to the user state(signed in, owner, admin...)
+     * @return string the html of the buttons
+     */
     private function createButton() : string{
         // if the user is not sign in he cant see the button
-        if(!isset($_SESSION['users'])) return "";
+        if(!Auth::checkSignIn()) return "";
 
         $user = unserialize($_SESSION['users']);
 
         //Create the upvote / downvote Button
         $button = '<form method="POST" class="buttons">';
-
-        $button .= '<input type="hidden" name="id" value="' . $this->touite->id . '">';
+        //we add hidden values used in the actions of the buttons
+        $button .= '<input type="hidden" name="idTouite" value="' . $this->touite->id . '">';
+        $button .= '<input type="hidden" name="emailTouite" value="' . $this->touite->email . '">';
         $button .= '<input type="hidden" name="url" value="' .$_SERVER['REQUEST_URI']. '">';
         $classUp = "icon ";
         $classDown = "icon ";
@@ -95,7 +101,7 @@ class TouiteRenderer implements Renderer {
         $button .= '<input type="image" class="'.$classDown.'" src="images/site/down.png" alt="Submit" formaction="?action=EvaluerAction&note=down">';
 
         // create delete button if the user is the creator of the touite
-        if(Auth::checkAccessLevel( $this->touite->user)){
+        if(Auth::checkOwnership($this->touite->email)){
             $button .= '<input type="image" class="icon" src="images/site/supprimer.png" alt="Submit" formaction="?action=supprimerTouite">';
         }
         $button .= '</form>';

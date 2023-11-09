@@ -2,11 +2,13 @@
 
 namespace touiteur\app\action;
 
+use touiteur\app\Auth\Auth;
+
 class SigninAction extends Action {
     public function execute() : string {
         $pageContent ="";
         if($this->http_method === 'GET') {
-            if (isset($_SESSION['users'])) {
+            if (Auth::checkSignIn()) {
                 $pageContent .= "<div id='already-connected'><h3>Vous êtes déjà connecté !</h3>";
                 $pageContent .= '<a class="lien" href="?action=disconnect">Se déconnecter</a></div>';
                 return $pageContent;
