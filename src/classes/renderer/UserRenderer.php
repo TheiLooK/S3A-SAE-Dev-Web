@@ -14,7 +14,7 @@ class UserRenderer implements Renderer {
 
     public function render(int $selector): string {
         $res = "<div>";
-        $res = '<h4><a href="?action=profil&user='.$this->user.'">'.$this->user.'</a></h4>';
+        $res = '<h4><a href="?action=profil&user='.$this->user->username.'">'.$this->user->username.'</a></h4>';
         return $res."</div>";
     }
 }
