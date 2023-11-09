@@ -114,4 +114,5 @@ class User {
         $this->touiteNote[$id] = $note;
         $_SESSION['users']=serialize($this);
     }
+
 }
