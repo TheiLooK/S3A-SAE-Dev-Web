@@ -24,7 +24,6 @@ a {
 
 .lien {
     color: #FF9D08;
-
 }
 
 .lien:hover {
@@ -140,6 +139,7 @@ nav a {
     word-wrap: break-word;
     margin-bottom: 20px;
     padding: 10px;
+    cursor: pointer;
 }
 
 /* Form : log-in / sign-in */
@@ -235,10 +235,15 @@ form a {
 /* Icons (delete touite, vote, ...) */
 .icon {
     width : 1em;
+    border-color: #FF9D08;
+}
+
+.icon:hover {
+    background: #DC8C14;
 }
 
 .selectedIcon {
-    background-color: #DC8C14;
+    background-color: #FF9D08;
 }
 
 .buttons{
@@ -254,6 +259,14 @@ form a {
 .Touite div{
     display: flex;
     justify-content: space-between;
+}
+
+h4 a{
+    color: #FF9D08;
+}
+
+h4 a:hover {
+    text-decoration: underline;
 }
 
 .score{
