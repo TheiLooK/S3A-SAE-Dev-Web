@@ -20,13 +20,13 @@ S3A-SAE-Dev-Web
 ## 1. For the new users :
 - ### 1.1. You have access to :
 - The home page :
-![Home page](./PicsForTheREADME/home.png)
+![Home page](images/PicsForTheREADME/home.png)
 - The login page :
-![Login page](./PicsForTheREADME/login.png)
+![Login page](images/PicsForTheREADME/login.png)
 - The register page :
-![Register page](./PicsForTheREADME/register.png)
+![Register page](images/PicsForTheREADME/register.png)
 - The search page :
-![Search page](./PicsForTheREADME/search.png)
+![Search page](images/PicsForTheREADME/search.png)
 - ### 1.2. You can :
 ---
 ## 2. For the users who already have an account :
