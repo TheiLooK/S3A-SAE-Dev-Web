@@ -130,14 +130,4 @@ class User {
         $this->touiteNoter[$id] = $note;
         $_SESSION['users']=serialize($this);
     }
-
-    public  function getScoreMoyen() : float{
-        $connexion = ConnectionFactory::makeConnection();
-        $query = "select AVG(n.note) as moy from notation n inner join touite t on n.idTouite = t.idTouite where t.email like ?";
-        $resultset = $connexion->prepare(($query));
-        $res = $resultset ->execute([$this->email]);
-
-        $data = $resultset->fetch();
-        return $data['moy'];
-    }
 }
