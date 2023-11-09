@@ -106,7 +106,6 @@ class User {
         while($data = $resultset->fetch()){
             $tab[$data['idTouite']] = $data['note'];
         }
-
         return $tab;
     }
 
@@ -126,8 +125,13 @@ class User {
         return $data['score']/($data2['nbTouite']);
     }
 
-    public function changeNote(int $id, int $note) : void{
+    public function changeNote(int $id, int $note): void {
         $this->touiteNoter[$id] = $note;
+        $_SESSION['users']=serialize($this);
+    }
+
+    public function removeNote(int $id): void {
+        unset($this->touiteNoter[$id]);
         $_SESSION['users']=serialize($this);
     }
 }
