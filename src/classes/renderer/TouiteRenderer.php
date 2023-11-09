@@ -55,7 +55,7 @@ class TouiteRenderer implements Renderer {
             $res.='<img src="'.$this->touite->image.'"/>';
         }
 
-        $res.= '<div><p class = "score"> score : '.$this->touite->scoreUp+$this->touite->scoreDown.'</p>';
+        $res.= '<div><p class = "score"> score : '.$this->touite->scoreUp-$this->touite->scoreDown.'</p>';
         $res.=$this->createButton() . "</div>";
         $res.="</div>";
         return $res;
@@ -82,8 +82,8 @@ class TouiteRenderer implements Renderer {
         $classUp = "icon ";
         $classDown = "icon ";
         //if the user has upvoted the button,
-        if(array_key_exists($this->touite->id, $user->touiteNote)){
-            if(($user->touiteNote)[$this->touite->id]===-1){
+        if(array_key_exists($this->touite->id, $user->touiteNoter)){
+            if(($user->touiteNoter)[$this->touite->id]===-1){
                 $classDown.="selectedIcon";
             }else{
                 $classUp.="selectedIcon";

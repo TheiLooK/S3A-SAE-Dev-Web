@@ -11,7 +11,7 @@ class EvaluerAction
         $id=$_POST['id'];
         $email=$user->email;
         // if the id is in the touite note by the user we update
-        if(array_key_exists($id, $user->touiteNote)){
+        if(array_key_exists($id, $user->touiteNoter)){
             $this->updateNote($_GET['note'],$email, $id, $user);
         }else{
             $this->insertNote($_GET['note'],$email, $id, $user);

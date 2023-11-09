@@ -139,6 +139,7 @@ nav a {
 .Touite{
     min-width: 30%;
     border: 1px solid grey;
+    border-radius: 5px;
     word-wrap: break-word;
     margin-bottom: 20px;
     padding: 10px;
@@ -359,4 +360,5 @@ form.active input[type=submit] {
     .partiedroite {
         display: none;
     }
+
 }

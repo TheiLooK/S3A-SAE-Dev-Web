@@ -11,7 +11,7 @@ class User {
     private String $nom;
     private String $prenom;
     private int $role;
-    private array $touiteNote;
+    private array $touiteNoter;
 
 
     public function __construct(String $e,String $p, String $username, String $nom, String $prenom, int $r) {
@@ -21,7 +21,7 @@ class User {
         $this -> nom = $nom;
         $this -> prenom = $prenom;
         $this -> role = $r;
-        $this -> touiteNote = $this->getTouiteNote();
+        $this -> touiteNoter = $this->getTouiteNoter();
     }
 
     public function __get($name): mixed {
@@ -96,7 +96,7 @@ class User {
         return new User($res['email'], $res['password'], $res['username'], $res['lastname'], $res['firstname'], $res['role']);
     }
 
-    private function getTouiteNote() : array {
+    private function getTouiteNoter() : array {
         $tab = [];
         $connexion = ConnectionFactory::makeConnection();
         $query = "Select * from notation where email like ?";
@@ -127,7 +127,17 @@ class User {
     }
 
     public function changeNote(int $id, int $note) : void{
-        $this->touiteNote[$id] = $note;
+        $this->touiteNoter[$id] = $note;
         $_SESSION['users']=serialize($this);
+    }
+
+    public  function getScoreMoyen() : float{
+        $connexion = ConnectionFactory::makeConnection();
+        $query = "select AVG(n.note) as moy from notation n inner join touite t on n.idTouite = t.idTouite where t.email like ?";
+        $resultset = $connexion->prepare(($query));
+        $res = $resultset ->execute([$this->email]);
+
+        $data = $resultset->fetch();
+        return $data['moy'];
     }
 }
