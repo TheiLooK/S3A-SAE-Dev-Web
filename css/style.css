@@ -242,6 +242,16 @@ form a {
     background: #DC8C14;
 }
 
+/* Les icons avec lesquelles on ne peut pas intéragir */
+.icon:disabled {
+    cursor: not-allowed;
+    border-color: grey;
+}
+
+.icon:disabled:hover {
+    background: none;
+}
+
 .selectedIcon {
     background-color: #FF9D08;
 }
