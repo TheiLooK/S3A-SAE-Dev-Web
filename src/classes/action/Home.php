@@ -40,12 +40,12 @@ class Home extends Action {
         $html .= '</div>';
         $action = '?action=home&home=' . $feed;
         if ($feed === 'general') {
-            $feed = new Feed(Feed::LISTETOUITES, $action, null, null);
+            $feed = new Feed(Feed::LISTETOUITES, $action, null, null, null);
             $feed->getListe( $_GET['page'] ?? 1);
             $r = new FeedRenderer($feed);
             $html .= $r->render(Renderer::COMPACT);
         } else if ($feed === 'personnel') {
-            $feed = new Feed(Feed::LISTETOUITESFOLLOWED, $action, $current_user->__get('email'), null);
+            $feed = new Feed(Feed::LISTETOUITESFOLLOWED, $action, $current_user->__get('email'), null, null);
             $feed->getListe( $_GET['page'] ?? 1);
             $r = new FeedRenderer($feed);
             $html .= $r->render(Renderer::COMPACT);;

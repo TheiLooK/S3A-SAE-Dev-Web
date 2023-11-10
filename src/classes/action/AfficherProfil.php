@@ -89,7 +89,7 @@ class AfficherProfil extends Action {
                 $html .= $r->render(Renderer::COMPACT);
                 break;
             case 'feed':
-                $feed = new Feed(Feed::LISTETOUITESPERSONNE, $action, $_GET['user'], null);
+                $feed = new Feed(Feed::LISTETOUITESPERSONNE, $action, $_GET['user'], null, null);
                 $feed->getListe($_GET['page'] ?? 1);
                 $r = new FeedRenderer($feed);
                 $html .= $r->render(Renderer::COMPACT);

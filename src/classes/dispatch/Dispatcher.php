@@ -46,8 +46,11 @@ class Dispatcher {
             case 'supprimerTouite':
                 $result = (new \touiteur\app\action\SupprimerTouite())->execute();
                 break;
-            case 'EvaluerAction':
+            case 'evaluer':
                 $result = (new \touiteur\app\action\EvaluerAction())->execute();
+                break;
+            case 'recherche':
+                $result = (new \touiteur\app\action\RechercheAction())->execute();
                 break;
             case 'admin':
                 $result = (new \touiteur\app\action\AdminAction())->execute();
@@ -79,7 +82,7 @@ class Dispatcher {
                                 <span>Accueil</span>
                             </div>
                         </a>
-                        <a href="?action=home">
+                        <a href="?action=recherche">
                             <div class="bouton">
                                 <img src="./images/site/loupe.png">
                                 <span>Recherche</span>

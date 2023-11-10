@@ -8,16 +8,16 @@ use touiteur\app\structure\user\User;
 class ListUser{
 
     private array $list;
-    private string $user;
+    private ?string $user;
     private int $nbUser;
 
-    public function __construct(string $user){
+    public function __construct(?string $user){
         $this->user=$user;
         $this->list=[];
         $this->nbUser=0;
     }
 
-    public function getFollower() : void{
+    public function getFollower(): void {
         $connexion = ConnectionFactory::makeConnection();
         $query = "SELECT * FROM users u INNER JOIN follow f ON u.email = f.emailSuiveur WHERE f.emailSuivi LIKE ?";
         $resultset = $connexion->prepare(($query));
@@ -29,11 +29,23 @@ class ListUser{
         }
     }
 
-    public function getFollowing() : void{
+    public function getFollowing(): void {
         $connexion = ConnectionFactory::makeConnection();
         $query = "SELECT * FROM users u INNER JOIN follow f ON u.email = f.emailSuivi WHERE f.emailSuiveur LIKE ?";
         $resultset = $connexion->prepare(($query));
         $res = $resultset ->execute([$this->user]);
+        while($data = $resultset->fetch()){
+            $u = new User($data['email'], $data['password'], $data['username'], $data['lastname'], $data['firstname'], $data['role']);
+            $this->list[] = $u;
+            $this->nbUser++;
+        }
+    }
+
+    public function getUserLike(string $name): void {
+        $connexion = ConnectionFactory::makeConnection();
+        $query = "SELECT * FROM users WHERE username LIKE ?";
+        $resultset = $connexion->prepare(($query));
+        $res = $resultset ->execute([$name]);
         while($data = $resultset->fetch()){
             $u = new User($data['email'], $data['password'], $data['username'], $data['lastname'], $data['firstname'], $data['role']);
             $this->list[] = $u;

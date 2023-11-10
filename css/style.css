@@ -343,6 +343,11 @@ form.active input[type=submit] {
     justify-content: space-between;
 }
 
+.recherche {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
 
 /* Small width */
 @media screen and (max-width: 920px) {

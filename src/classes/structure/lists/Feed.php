@@ -11,19 +11,23 @@ class Feed {
     const LISTETOUITESPERSONNE = 2;
     const LISTETOUITESFOLLOWED = 3;
     const LISTETOUITESTAG = 4;
+    const LISTETOUITESLIKE = 5;
+
     protected iterable $list;
     protected int $type;
     protected ?string $user;
     protected ?string $tag;
     protected int $nbTouiteMax;
     protected string $action;
+    protected ?string $like;
 
-    public function __construct(int $type, string $action, ?string $user, ?string $tag){
+    public function __construct(int $type, string $action, ?string $user, ?string $tag, ?string $like) {
         $this->list = [];
         $this->type = $type;
         $this->user = $user;
         $this->tag = $tag;
         $this->action = $action;
+        $this->like = $like;
         $this->nbTouiteMax = $this->getNbTouite();
     }
 
@@ -70,6 +74,9 @@ class Feed {
             case self::LISTETOUITESTAG:
                 $this->getListeTouiteTag($nbPage, $this->tag);
                 break;
+            case self::LISTETOUITESLIKE:
+                $this->getListeTouiteLike($nbPage, $this->like);
+                break;
         }
     }
 
@@ -83,6 +90,8 @@ class Feed {
                 return $this->getNbTouiteFollowed($this->user);
             case self::LISTETOUITESTAG:
                 return Feed::getNbTouiteTag($this->tag);
+            case self::LISTETOUITESLIKE:
+                return $this->getNbTouiteLike($this->like);
             default:
                 return 0;
         }
@@ -151,6 +160,19 @@ class Feed {
         }
     }
 
+    private function getListeTouiteLike(int $nbPage, string $like): void {
+        $connexion = \touiteur\app\db\ConnectionFactory::makeConnection();
+        $query ="SELECT * FROM touite WHERE texte LIKE ?
+                                        ORDER BY dateTouite DESC
+                                        LIMIT ?, ?";
+        $resultset = $connexion->prepare(($query));
+        $res = $resultset ->execute(["%$like%", ($nbPage-1)*self::NBPARPAGEFEED, self::NBPARPAGEFEED]);
+
+        while ($data = $resultset->fetch(\PDO::FETCH_ASSOC)){
+            $this->ajouterTouite(Touite::getTouiteById($data['idTouite']));
+        }
+    }
+
     private function getNbTouiteTouite(): int {
         $connexion = \touiteur\app\db\ConnectionFactory::makeConnection();
         $query ="SELECT COUNT(*) AS nbTouite FROM touite";
@@ -202,5 +224,14 @@ class Feed {
         $res = $resultset ->execute([$tag]);
         $data = $resultset->fetch(\PDO::FETCH_ASSOC);
         return $data['nbFollowers'];
+    }
+
+    private function getNbTouiteLike(string $like): int {
+        $connexion = \touiteur\app\db\ConnectionFactory::makeConnection();
+        $query ="SELECT COUNT(*) AS nbTouite FROM touite WHERE texte LIKE ?";
+        $resultset = $connexion->prepare(($query));
+        $res = $resultset ->execute(["%$like%"]);
+        $data = $resultset->fetch(\PDO::FETCH_ASSOC);
+        return $data['nbTouite'];
     }
 }
