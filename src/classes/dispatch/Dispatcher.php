@@ -78,6 +78,9 @@ class Dispatcher {
             <html lang="fr">
             <head>
                 <link rel="stylesheet" href="./css/style.css">
+                <meta charset="UTF-8">
+                <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                <link rel='icon' href='./images/site/icon.ico' type='image/x-icon'/>
                 <meta http-equiv="refresh" content="60">
                 <title>Touiteur</title>
             </head>
