@@ -1,6 +1,4 @@
 <?php
 
 namespace touiteur\app\exception;
-class InvalidUsernameException extends \Exception
-{
-}
+class InvalidUsernameException extends \Exception {}
