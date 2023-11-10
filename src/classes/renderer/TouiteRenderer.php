@@ -87,23 +87,23 @@ class TouiteRenderer implements Renderer {
         $classUp = "icon ";
         $classDown = "icon ";
         //if the user has upvoted the button,
-        if (array_key_exists($this->touite->id, $user->touiteNoter)){
-            if(($user->touiteNoter)[$this->touite->id]===-1){
-                $classDown.="selectedIcon";
-            }else{
-                $classUp.="selectedIcon";
+        if (array_key_exists($this->touite->id, $user->touiteNoter)) {
+            if (($user->touiteNoter)[$this->touite->id] === -1) {
+                $classDown .= "selectedIcon";
+            } else {
+                $classUp .= "selectedIcon";
             }
         }
 
+
         // create delete button if the user is the creator of the touite
+        $button .= "<p>{$this->touite->scoreUp}</p>";
         if (Auth::checkOwnership($this->touite->email)) {
-            $button .= "<p>{$this->touite->scoreUp}</p>";
             $button .= '<input disabled type="image" class="'.$classUp.'" src="images/site/up.png" alt="Submit" formaction="?action=evaluer&note=up">';
             $button .= "<p>{$this->touite->scoreDown}</p>";
             $button .= '<input disabled type="image" class="'.$classDown.'" src="images/site/down.png" alt="Submit" formaction="?action=evaluer&note=down">';
             $button .= '<input type="image" class="icon" src="images/site/supprimer.png" alt="Submit" formaction="?action=supprimerTouite">';
         } else {
-            $button .= "<p>{$this->touite->scoreUp}</p>";
             $button .= '<input type="image" class="'.$classUp.'" src="images/site/up.png" alt="Submit" formaction="?action=evaluer&note=up">';
             $button .= "<p>{$this->touite->scoreDown}</p>";
             $button .= '<input type="image" class="'.$classDown.'" src="images/site/down.png" alt="Submit" formaction="?action=evaluer&note=down">';
