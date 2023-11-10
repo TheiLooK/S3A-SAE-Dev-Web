@@ -16,8 +16,7 @@ class PublierTouiteAction extends Action {
 
         $pageContent = "";
         if ($this->http_method === 'POST') {
-            $touite = filter_var($_POST['twt'], FILTER_SANITIZE_STRING);
-            $touite = htmlspecialchars_decode($touite);
+            $touite = filter_var($_POST['twt'], FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
 
             if(strlen($touite)>325){
                 // the size is over 325 char
