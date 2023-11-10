@@ -95,13 +95,19 @@ class TouiteRenderer implements Renderer {
                 $classUp.="selectedIcon";
             }
         }
+
+        if (Auth::checkOwnership($this->touite->email)) {
+            $classUp .= " disabled";
+            $classDown .= " disabled";
+        }
+
         $button .= "<p>{$this->touite->scoreUp}</p>";
         $button .= '<input type="image" class="'.$classUp.'" src="images/site/up.png" alt="Submit" formaction="?action=evaluer&note=up">';
         $button .= "<p>{$this->touite->scoreDown}</p>";
         $button .= '<input type="image" class="'.$classDown.'" src="images/site/down.png" alt="Submit" formaction="?action=evaluer&note=down">';
 
         // create delete button if the user is the creator of the touite
-        if(Auth::checkOwnership($this->touite->email)){
+        if(Auth::checkOwnership($this->touite->email)) {
             $button .= '<input type="image" class="icon" src="images/site/supprimer.png" alt="Submit" formaction="?action=supprimerTouite">';
         }
         $button .= '</form>';
