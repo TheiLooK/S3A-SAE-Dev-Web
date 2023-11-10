@@ -43,6 +43,16 @@ class SupprimerTouite extends Action {
         } else {
             $db = ConnectionFactory::makeConnection();
 
+            $tabDelete = [];
+            $tabDelete[] = "DELETE FROM notation WHERE idTouite = ?";
+            $tabDelete[] = "DELETE FROM touiteToTag WHERE idTouite = ?";
+            $tabDelete[] = "DELETE FROM touite WHERE idTouite = ?";
+
+            foreach ($tabDelete as $query) {
+                $resultset = $db->prepare(($query));
+                $res = $resultset ->execute([$id]);
+            }
+
             // récupérer idImage de la table touite
             $query = "SELECT i.idImage, i.urlImage FROM touite t inner join image i on t.idImage = i.idImage WHERE t.idTouite = ?";
             $resultset = $db->prepare(($query));
@@ -62,15 +72,7 @@ class SupprimerTouite extends Action {
                 unlink($upload_dir.$urlImage);
             }
 
-            $tabDelete = [];
-            $tabDelete[] = "DELETE FROM notation WHERE idTouite = ?";
-            $tabDelete[] = "DELETE FROM touiteToTag WHERE idTouite = ?";
-            $tabDelete[] = "DELETE FROM touite WHERE idTouite = ?";
 
-            foreach ($tabDelete as $query) {
-                $resultset = $db->prepare(($query));
-                $res = $resultset ->execute([$id]);
-            }
             $pageContent="le touite a bien été supprimé, retour à la page";
             $pageContent .= '<script type="text/javascript">window.setTimeout(function(){window.location.replace("?action=home");}, 1500);</script>';
         }
