@@ -5,6 +5,10 @@ namespace touiteur\app\dispatch;
 class Dispatcher {
 
 
+    /**
+     * Function used to dispatch action
+     *
+     */
     public static function run(): void {
         $action = "";
 
@@ -59,6 +63,12 @@ class Dispatcher {
         Dispatcher::renderPage($result);
     }
 
+
+    /**
+     * Function used to show page html
+     * @param string $html
+     *
+     */
     private static function renderPage(string $html): void {
         $pagecontent = <<<END
             <!DOCTYPE html>

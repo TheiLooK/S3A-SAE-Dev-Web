@@ -4,8 +4,19 @@ namespace touiteur\app\Auth;
 use PDO;
 use touiteur\app\db\ConnectionFactory;
 
+/**
+ *
+ */
 class Auth
 {
+
+    /**
+     * Function used to signin user
+     * @param string $pwd
+     * @param string $email
+     *
+     * @throws \touiteur\app\Exception\AuthException
+     */
     public static function authentification(string $pwd, string $email): void
     {
 
@@ -26,6 +37,17 @@ class Auth
         }
     }
 
+    /**
+     * Function used to register user
+     *
+     * @param string $pwd
+     * @param string $email
+     * @param string $pseudo
+     * @param string $firstname
+     * @param string $lastname
+     * @return bool true if user is register, otherwise false .
+     * @throws \touiteur\app\Exception\AuthException
+     */
     public static function register(string $pwd, string $email, string $pseudo, string $firstname, string $lastname): bool
     {
 
@@ -56,6 +78,13 @@ class Auth
         return $res;
     }
 
+
+    /**
+     * Function used to check if the password is strength
+     * @param string $pwd
+     * @param int $min
+     * @return bool true if password is strength, otherwise false
+     */
     public static function checkPasswordStrength(string $pwd, int $min): bool
     {
         $length = (strlen($pwd) > $min);
@@ -65,6 +94,12 @@ class Auth
         return true;
     }
 
+
+    /**
+     * Function used to load profile user
+     * @param string $email
+     *
+     */
     public static function loadProfile(string $email): void
     {
         $connexion = ConnectionFactory::makeConnection();

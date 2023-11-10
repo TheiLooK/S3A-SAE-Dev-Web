@@ -2,14 +2,35 @@
 declare(strict_types=1);
 namespace touiteur\app\db;
 use PDO;
+
 class ConnectionFactory{
+
+
+    /**
+     * @var array
+     */
     private static array $config =[];
+
+    /**
+     * @var PDO|null
+     */
     private static ?PDO $db=null;
 
+
+    /**
+     * Function used to recover the file config
+     * @param $filename
+     *
+     */
     static function setconfig($filename) {
         self::$config = parse_ini_file($filename);
     }
 
+
+    /**
+     * Function used to connect to the database
+     * @return mixed
+     */
     static function makeConnection(): mixed{
         if (self::$db == null) {
             $dsn = self::$config['driver'].
