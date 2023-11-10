@@ -17,17 +17,45 @@ S3A-SAE-Dev-Web
 - [3. For the administrators](#3-for-the-administrators-)
 
 ---
-## 1. For the new users :
-- ### 1.1. You have access to :
+# 1. For the new users :
+## 1.1. You have access to :
 - The home page :
-![Home page](images/PicsForTheREADME/home.png)
+![Home page](images/PicsForTheREADME/pages/home.png)
 - The login page :
-![Login page](images/PicsForTheREADME/login.png)
+![Login page](images/PicsForTheREADME/pages/login.png)
 - The register page :
-![Register page](images/PicsForTheREADME/register.png)
+![Register page](images/PicsForTheREADME/pages/register.png)
 - The search page :
-![Search page](images/PicsForTheREADME/search.png)
-- ### 1.2. You can :
+![Search page](images/PicsForTheREADME/pages/search.png)
+  - The users profile page :
+![Profile page](images/PicsForTheREADME/pages/profile.png)
+
+## 1.2. You can :
+- Read all the touites
+- Look at the profile of a user when you click on his name
+- Search all ocurances of a tag when you click on it
+- Search a @user, a #tag or a word in the search bar
+- Register
+- Login
+
+## 1.3. You CAN'T :
+> All what you can't do redirect you to the login page
+- Post a touite
+- Like or dislike a touite
+- Follow or unfollow a user
+- Access to the for you page
+- Access to the ADMIN page
+
+## 1.4. How to register if you don't have an account :
+- Click on the register button on the home page
+- Fill the form with your informations
+- Click on the register button
+
+## 1.5. How to login if you already have an account :
+- Click on the login button on the home page
+- Fill the form with your informations
+- Click on the login button
+
 ---
 ## 2. For the users who already have an account :
 TODO

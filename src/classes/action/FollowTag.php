@@ -3,7 +3,7 @@
 namespace touiteur\app\action;
 
 use touiteur\app\action\Action;
-use touiteur\app\Auth\Auth;
+use touiteur\app\auth\Auth;
 
 class FollowTag extends Action {
 
@@ -15,7 +15,7 @@ class FollowTag extends Action {
             $current_user = unserialize($_SESSION['users']);
             $tagToFollow = $_POST['tag'];
             $followed = $current_user->checkFollowTag($tagToFollow);
-        } catch (\touiteur\app\Exception\InvalidUsernameException $e) {
+        } catch (\touiteur\app\exception\InvalidUsernameException $e) {
             return "<h3>Utilisateur inconnu</h3>";
         }
 

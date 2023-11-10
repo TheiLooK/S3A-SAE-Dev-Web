@@ -4,11 +4,11 @@ namespace touiteur\app\renderer;
 
 use touiteur\app\structure\lists\ListUser;
 
-class ListUserRenderer implements Renderer{
+class ListUserRenderer implements Renderer {
 
     private ListUser $list;
 
-    public function __construct($list) {
+    public function __construct(ListUser $list) {
         $this->list = $list;
     }
 

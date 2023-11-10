@@ -3,7 +3,7 @@
 namespace touiteur\app\action;
 
 use touiteur\app\action\Action;
-use touiteur\app\Auth\Auth;
+use touiteur\app\auth\Auth;
 
 class UnfollowTag extends Action {
 
@@ -15,7 +15,7 @@ class UnfollowTag extends Action {
             $current_user = unserialize($_SESSION['users']);
             $tagToFollow = $_POST['tag'];
             $followed = $current_user->checkFollowTag($tagToFollow);
-        } catch (\touiteur\app\Exception\InvalidTagNameException $e) {
+        } catch (\touiteur\app\exception\InvalidTagNameException $e) {
             return "<h3>Tag inconnu</h3>";
         }
 
@@ -28,7 +28,6 @@ class UnfollowTag extends Action {
             $res = $st->fetchAll(\PDO::FETCH_ASSOC);
             $st->closeCursor();
             $idTagToUnfollow = $res[0]['idTag'];
-
             $query = "DELETE FROM followTag WHERE emailSuiveur = ? AND idTag = ?";
             $st = $connexion->prepare($query);
             $st->execute([$current_user->__get("email"), $idTagToUnfollow]);

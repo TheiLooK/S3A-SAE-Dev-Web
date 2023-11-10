@@ -3,12 +3,11 @@
 namespace touiteur\app\action;
 
 use touiteur\app\action\Action;
-use touiteur\app\Auth\Auth;
+use touiteur\app\auth\Auth;
 
 class DisconnectAction extends Action {
 
-    public function execute(): string
-    {
+    public function execute(): string {
         $html='<script type="text/javascript">window.location.replace("?action=home");</script>';;
         if (Auth::checkSignIn()){
             session_destroy();

@@ -4,9 +4,9 @@ namespace touiteur\app\action;
 
 use touiteur\app\db\ConnectionFactory;
 
-class RegisterAction extends Action{
+class RegisterAction extends Action {
 
-    public function execute() : string {
+    public function execute(): string {
         $pageContent = "";
         if ($this->http_method === 'POST') {
             $email = filter_var($_POST['email'], FILTER_SANITIZE_EMAIL);
@@ -28,7 +28,7 @@ class RegisterAction extends Action{
                         //page d'accueil
                         $pageContent .= '<p>Redirection vers la page d\'accueil dans 2 secondes</p></div>';
                         $pageContent .= '<script type="text/javascript">window.setTimeout(function(){window.location.replace("?action=home");}, 2000);</script>';
-                    } catch(\touiteur\app\Exception\AuthException $e) {
+                    } catch(\touiteur\app\exception\AuthException $e) {
                         $pageContent .= "<h4> échec inscription : {$e->getMessage()}</h4>";
                     }
                     break;
@@ -58,7 +58,7 @@ class RegisterAction extends Action{
      * function used to get the form to register
      * @return string the form
      */
-    private function getForm() : string{
+    private function getForm(): string {
         $pageContent = '
             <form method="POST" action="?action=register">
                 <h1>Créer votre compte</h1>
@@ -86,9 +86,9 @@ class RegisterAction extends Action{
      * @param string $username the username in the form
      * @return int 0 if its valid, 1 if the username is taken, 2 if the email is taken
      */
-    private function validateInscription(string $email, string $username) : int{
+    private function validateInscription(string $email, string $username): int {
         $db = ConnectionFactory::makeConnection();
-        $query = "SELECT * FROM users  WHERE email like ? or username like ? ";
+        $query = "SELECT * FROM users  WHERE email LIKE ? OR username LIKE ? ";
         $resultset = $db->prepare(($query));
         $res = $resultset ->execute([$email, $username]);
 

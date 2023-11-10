@@ -2,7 +2,7 @@
 declare(strict_types=1);
 namespace touiteur\app\structure\lists;
 
-use touiteur\app\Exception\InvalidPropertyNameException;
+use touiteur\app\exception\InvalidPropertyNameException;
 use touiteur\app\structure\touite\Touite;
 
 class Feed {
@@ -11,19 +11,23 @@ class Feed {
     const LISTETOUITESPERSONNE = 2;
     const LISTETOUITESFOLLOWED = 3;
     const LISTETOUITESTAG = 4;
+    const LISTETOUITESLIKE = 5;
+
     protected iterable $list;
     protected int $type;
     protected ?string $user;
     protected ?string $tag;
     protected int $nbTouiteMax;
     protected string $action;
+    protected ?string $like;
 
-    public function __construct(int $type, string $action, ?string $user, ?string $tag){
+    public function __construct(int $type, string $action, ?string $user, ?string $tag, ?string $like) {
         $this->list = [];
         $this->type = $type;
         $this->user = $user;
         $this->tag = $tag;
         $this->action = $action;
+        $this->like = $like;
         $this->nbTouiteMax = $this->getNbTouite();
     }
 
@@ -70,6 +74,9 @@ class Feed {
             case self::LISTETOUITESTAG:
                 $this->getListeTouiteTag($nbPage, $this->tag);
                 break;
+            case self::LISTETOUITESLIKE:
+                $this->getListeTouiteLike($nbPage, $this->like);
+                break;
         }
     }
 
@@ -78,11 +85,13 @@ class Feed {
             case self::LISTETOUITES:
                 return $this->getNbTouiteTouite();
             case self::LISTETOUITESPERSONNE:
-                return $this->getNbTouitePersonne($this->user);
+                return Feed::getNbTouitePersonne($this->user);
             case self::LISTETOUITESFOLLOWED:
                 return $this->getNbTouiteFollowed($this->user);
             case self::LISTETOUITESTAG:
-                return $this->getNbTouiteTag($this->tag);
+                return Feed::getNbTouiteTag($this->tag);
+            case self::LISTETOUITESLIKE:
+                return $this->getNbTouiteLike($this->like);
             default:
                 return 0;
         }
@@ -90,9 +99,9 @@ class Feed {
 
     private function getListeTouite(int $nbPage): void {
         $connexion = \touiteur\app\db\ConnectionFactory::makeConnection();
-        $query ="SELECT * FROM touite t INNER JOIN users u on t.email = u.email 
+        $query ="SELECT * FROM touite t INNER JOIN users u ON t.email = u.email 
                            ORDER BY dateTouite DESC
-                           limit ?, ?";
+                           LIMIT ?, ?";
         $resultset = $connexion->prepare(($query));
         $res = $resultset ->execute([($nbPage-1)*self::NBPARPAGEFEED, self::NBPARPAGEFEED]);
 
@@ -103,7 +112,7 @@ class Feed {
 
     private function getListeTouitePersonne(int $nbPage, string $user): void {
         $connexion = \touiteur\app\db\ConnectionFactory::makeConnection();
-        $query ="SELECT * FROM touite t INNER JOIN users u on t.email = u.email
+        $query ="SELECT * FROM touite t INNER JOIN users u ON t.email = u.email
                                         WHERE u.username = ?
                                         ORDER BY dateTouite DESC
                                         LIMIT ?, ?";
@@ -138,11 +147,11 @@ class Feed {
 
     private function getListeTouiteTag(int $nbPage, string $tag): void {
         $connexion = \touiteur\app\db\ConnectionFactory::makeConnection();
-        $query ="SELECT * FROM touite t2 inner join touiteToTag t on t2.idTouite = t.idTouite 
+        $query ="SELECT * FROM touite t2 INNER JOIN touiteToTag t ON t2.idTouite = t.idTouite 
                                         INNER JOIN tag tag ON t.idTag = tag.idTag
                                         WHERE tag.libelle = ?
                                         ORDER BY dateTouite DESC
-                                        limit ?, ?";
+                                        LIMIT ?, ?";
         $resultset = $connexion->prepare(($query));
         $res = $resultset ->execute([$tag, ($nbPage-1)*self::NBPARPAGEFEED, self::NBPARPAGEFEED]);
 
@@ -151,16 +160,29 @@ class Feed {
         }
     }
 
+    private function getListeTouiteLike(int $nbPage, string $like): void {
+        $connexion = \touiteur\app\db\ConnectionFactory::makeConnection();
+        $query ="SELECT * FROM touite WHERE texte LIKE ?
+                                        ORDER BY dateTouite DESC
+                                        LIMIT ?, ?";
+        $resultset = $connexion->prepare(($query));
+        $res = $resultset ->execute(["%$like%", ($nbPage-1)*self::NBPARPAGEFEED, self::NBPARPAGEFEED]);
+
+        while ($data = $resultset->fetch(\PDO::FETCH_ASSOC)){
+            $this->ajouterTouite(Touite::getTouiteById($data['idTouite']));
+        }
+    }
+
     private function getNbTouiteTouite(): int {
         $connexion = \touiteur\app\db\ConnectionFactory::makeConnection();
-        $query ="SELECT COUNT(*) as nbTouite from touite";
+        $query ="SELECT COUNT(*) AS nbTouite FROM touite";
         $resultset = $connexion->prepare(($query));
         $res = $resultset ->execute();
         $data = $resultset->fetch(\PDO::FETCH_ASSOC);
         return $data['nbTouite'];
     }
 
-    private function getNbTouitePersonne(string $user): int {
+    public static function getNbTouitePersonne(string $user): int {
         $connexion = \touiteur\app\db\ConnectionFactory::makeConnection();
         $query ="SELECT COUNT(*) AS nbTouite FROM touite t INNER JOIN users u ON t.email = u.email WHERE u.username = ?";
         $resultset = $connexion->prepare(($query));
@@ -186,11 +208,29 @@ class Feed {
         return $data['nbTouite'];
     }
 
-    private function getNbTouiteTag(string $tag): int {
+    public static function getNbTouiteTag(string $tag): int {
         $connexion = \touiteur\app\db\ConnectionFactory::makeConnection();
         $query ="SELECT COUNT(*) AS nbTouite FROM touiteToTag t INNER JOIN tag tag ON t.idTag = tag.idTag WHERE tag.libelle = ?";
         $resultset = $connexion->prepare(($query));
         $res = $resultset ->execute([$tag]);
+        $data = $resultset->fetch(\PDO::FETCH_ASSOC);
+        return $data['nbTouite'];
+    }
+
+    public static function getNbFollowersTag(string $tag): int {
+        $connexion = \touiteur\app\db\ConnectionFactory::makeConnection();
+        $query ="SELECT COUNT(*) AS nbFollowers FROM followTag ft INNER JOIN tag t ON ft.idTag = t.idTag WHERE t.libelle = ?";
+        $resultset = $connexion->prepare(($query));
+        $res = $resultset ->execute([$tag]);
+        $data = $resultset->fetch(\PDO::FETCH_ASSOC);
+        return $data['nbFollowers'];
+    }
+
+    private function getNbTouiteLike(string $like): int {
+        $connexion = \touiteur\app\db\ConnectionFactory::makeConnection();
+        $query ="SELECT COUNT(*) AS nbTouite FROM touite WHERE texte LIKE ?";
+        $resultset = $connexion->prepare(($query));
+        $res = $resultset ->execute(["%$like%"]);
         $data = $resultset->fetch(\PDO::FETCH_ASSOC);
         return $data['nbTouite'];
     }

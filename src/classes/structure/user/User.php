@@ -26,7 +26,7 @@ class User {
 
     public function __get($name): mixed {
         if (!property_exists($this, $name)) {
-            throw new \touiteur\app\Exception\InvalidPropertyNameException("Property $name does not exist");
+            throw new \touiteur\app\exception\InvalidPropertyNameException("Property $name does not exist");
         }
         return $this->$name;
     }
@@ -91,15 +91,15 @@ class User {
         $res = $st->fetch(\PDO::FETCH_ASSOC);
         $st->closeCursor();
         if ($res === false) {
-            throw new \touiteur\app\Exception\InvalidUsernameException("User $username does not exist");
+            throw new \touiteur\app\exception\InvalidUsernameException("User $username does not exist");
         }
         return new User($res['email'], $res['password'], $res['username'], $res['lastname'], $res['firstname'], $res['role']);
     }
 
-    private function getTouiteNoter() : array {
+    private function getTouiteNoter(): array {
         $tab = [];
         $connexion = ConnectionFactory::makeConnection();
-        $query = "Select * from notation where email like ?";
+        $query = "SELECT * FROM notation WHERE email LIKE ?";
         $resultset = $connexion->prepare(($query));
         $resultset ->execute([$this->email]);
 
@@ -109,13 +109,13 @@ class User {
         return $tab;
     }
 
-    public function getScoreMoyen() : float{
+    public function getScoreMoyen(): float {
         $connexion = ConnectionFactory::makeConnection();
-        $query = "select sum(note) as score from notation where idTouite in (select idTouite from touite where email like ?)";
+        $query = "SELECT SUM(note) AS score FROM notation WHERE idTouite IN (SELECT idTouite FROM touite WHERE email LIKE ?)";
         $resultset = $connexion->prepare(($query));
         $resultset ->execute([$this->email]);
         $data = $resultset->fetch();
-        $query2 = "SELECT count(*) as nbTouite FROM touite WHERE email like ?";
+        $query2 = "SELECT COUNT(*) AS nbTouite FROM touite WHERE email LIKE ?";
         $resultset2 = $connexion->prepare(($query2));
         $resultset2 ->execute([$this->email]);
         $data2 = $resultset2->fetch();
@@ -123,6 +123,24 @@ class User {
             return 0;
         }
         return $data['score']/($data2['nbTouite']);
+    }
+
+    public function getNbFollowers(): int {
+        $connexion = ConnectionFactory::makeConnection();
+        $query = "SELECT COUNT(*) AS nbFollower FROM follow WHERE emailSuivi LIKE ?";
+        $resultset = $connexion->prepare(($query));
+        $resultset ->execute([$this->email]);
+        $data = $resultset->fetch();
+        return $data['nbFollower'];
+    }
+
+    public function getNbFollowing(): int {
+        $connexion = ConnectionFactory::makeConnection();
+        $query = "SELECT COUNT(*) AS nbFollowing FROM follow WHERE emailSuiveur LIKE ?";
+        $resultset = $connexion->prepare(($query));
+        $resultset ->execute([$this->email]);
+        $data = $resultset->fetch();
+        return $data['nbFollowing'];
     }
 
     public function changeNote(int $id, int $note): void {

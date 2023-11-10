@@ -2,7 +2,7 @@
 
 namespace touiteur\app\action;
 
-use touiteur\app\Auth\Auth;
+use touiteur\app\auth\Auth;
 use touiteur\app\structure\user\User;
 
 class FollowUser extends Action {
@@ -15,7 +15,7 @@ class FollowUser extends Action {
             $current_user = unserialize($_SESSION['users']);
             $userToFollow = User::getUser($_POST['user']);
             $followed = $current_user->checkFollow($userToFollow);
-        } catch (\touiteur\app\Exception\InvalidUsernameException $e) {
+        } catch (\touiteur\app\exception\InvalidUsernameException $e) {
             return "<h3>Utilisateur inconnu</h3>";
         }
 
