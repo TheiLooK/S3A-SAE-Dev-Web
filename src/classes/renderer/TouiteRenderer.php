@@ -95,8 +95,8 @@ class TouiteRenderer implements Renderer {
             }
         }
 
+        $button .= "<p>{$this->touite->scoreUp}</p>";
         if (Auth::checkTouite($this->touite->email)) {
-            $button .= "<p>{$this->touite->scoreUp}</p>";
             $button .= '<input disabled type="image" class="'.$classUp.'" src="images/site/up.png" alt="Submit" formaction="?action=evaluer&note=up">';
             $button .= "<p>{$this->touite->scoreDown}</p>";
             $button .= '<input disabled type="image" class="'.$classDown.'" src="images/site/down.png" alt="Submit" formaction="?action=evaluer&note=down">';
