@@ -11,11 +11,12 @@ class AfficherTouiteTag extends Action {
         try {
             $tag = $_GET['tag'];
         } catch (\touiteur\app\exception\InvalidUsernameException $e) {
-            return "<h3>Utilisateur inconnu</h3>";
+            return "<h3>Tag inconnu</h3>";
         }
         try {
             $html = '<div class="tag">';
             $html .= '<div id="info"> <h3>#' . $tag . '</h3>';
+            $html .= '<div class="infoProfil">';
             $nbFollowers = Feed::getNbFollowersTag($tag);
             if ($nbFollowers == 0) {
                 $html .= '<p>Aucun follower</p>';
@@ -32,7 +33,7 @@ class AfficherTouiteTag extends Action {
             } else {
                 $html .= '<p>' . $nbTouites . ' touites</p>';
             }
-            $html .= '</div>';
+            $html .= '</div></div>';
             $html .= '<div id="followButton">';
             if(isset($_SESSION['users']) && unserialize($_SESSION['users'])->checkFollowTag($tag)) {
                 $html .= '<form method="POST" action="?action=unfollowTag">';

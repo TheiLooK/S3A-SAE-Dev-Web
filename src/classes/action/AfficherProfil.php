@@ -22,9 +22,10 @@ class AfficherProfil extends Action {
             $html .= '<div id="info"> <h3>' . $user->__get('prenom'). " " . $user->__get("nom") . '</h3>';
             $html .= '<p>@' . $user->__get('username') . '</p>';
             $html .= '<p>Score moyen : ' . $user->getScoreMoyen() . '</p>';
-            $html .= '<p>Nombre de touites : ' . Feed::getNbTouitePersonne($user->email) . '</p>';
-            $html .= '<p>Nombre de followers : ' . $user->getNbFollowers() . '</p>';
-            $html .= '<p>Nombre de following : ' . $user->getNbFollowing() . '</p>';
+            $html .= '<div class="infoProfil"><p>Touites : ' . Feed::getNbTouitePersonne($user->email) . '</p>';
+            $html .= '<p>Abonnés : ' . $user->getNbFollowers() . '</p>';
+            $html .= '<p>Abonnement : ' . $user->getNbFollowing() . '</p></div>';
+            $html .= '</div>';
             if (isset($_SESSION['users']) && unserialize($_SESSION['users'])->__get('username') != $user->__get('username')) {
                 $html .= '<div id="followButton">';
                 if (unserialize($_SESSION['users'])->checkFollow($user)) {
