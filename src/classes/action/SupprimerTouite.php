@@ -2,14 +2,12 @@
 
 namespace touiteur\app\action;
 
-use touiteur\app\Auth\Auth;
+use touiteur\app\auth\Auth;
 use touiteur\app\db\ConnectionFactory;
 use touiteur\app\renderer\Renderer;
 
-class SupprimerTouite extends Action
-{
-    public function execute(): string
-    {
+class SupprimerTouite extends Action {
+    public function execute(): string {
         $pageContent="";
         // if emailTouite is not set then its an access via modifing the url
         if(!isset($_POST['emailTouite'])){

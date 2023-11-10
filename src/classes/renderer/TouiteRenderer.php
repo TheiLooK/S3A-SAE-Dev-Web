@@ -2,8 +2,8 @@
 
 namespace touiteur\app\renderer;
 
-use touiteur\app\Auth\Auth;
-use touiteur\app\Exception\InvalidPropertyNameException;
+use touiteur\app\auth\Auth;
+use touiteur\app\exception\InvalidPropertyNameException;
 use touiteur\app\structure\touite\Touite;
 
 class TouiteRenderer implements Renderer {

@@ -9,13 +9,11 @@ use touiteur\app\structure\lists\Feed;
 use touiteur\app\structure\lists\ListUser;
 use touiteur\app\structure\user\User;
 
-class AfficherProfil extends Action
-{
-
+class AfficherProfil extends Action {
     public function execute(): string {
         try {
             $user = User::getUser($_GET['user']);
-        } catch (\touiteur\app\Exception\InvalidUsernameException $e) {
+        } catch (\touiteur\app\exception\InvalidUsernameException $e) {
             return "<h3>Utilisateur inconnu</h3>";
         }
         $action = '?action=profil&user=' . $_GET['user'];
@@ -23,7 +21,10 @@ class AfficherProfil extends Action
             $html = '<div class="profil">';
             $html .= '<div id="info"> <h3>' . $user->__get('prenom'). " " . $user->__get("nom") . '</h3>';
             $html .= '<p>@' . $user->__get('username') . '</p>';
-            $html .= '<p>Score moyen : ' . $user->getScoreMoyen() . '</p></div>';
+            $html .= '<p>Score moyen : ' . $user->getScoreMoyen() . '</p>';
+            $html .= '<p>Nombre de touites : ' . Feed::getNbTouitePersonne($user->email) . '</p>';
+            $html .= '<p>Nombre de followers : ' . $user->getNbFollowers() . '</p>';
+            $html .= '<p>Nombre de following : ' . $user->getNbFollowing() . '</p>';
             if (isset($_SESSION['users']) && unserialize($_SESSION['users'])->__get('username') != $user->__get('username')) {
                 $html .= '<div id="followButton">';
                 if (unserialize($_SESSION['users'])->checkFollow($user)) {
@@ -67,7 +68,7 @@ class AfficherProfil extends Action
                 $html .= '<input type="submit" value="Following">';
                 $html .= '</form></div>';
             }
-        } catch (\touiteur\app\Exception\InvalidPropertyNameException $e) {
+        } catch (\touiteur\app\exception\InvalidPropertyNameException $e) {
             return "<h3>Utilisateur inconnu</h3>";
         }
 

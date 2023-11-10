@@ -3,16 +3,13 @@
 namespace touiteur\app\action;
 
 use Couchbase\User;
-use touiteur\app\Auth\Auth;
+use touiteur\app\auth\Auth;
 use touiteur\app\renderer\FeedRenderer;
 use touiteur\app\renderer\Renderer;
 use touiteur\app\structure\lists\Feed;
 
-class AdminAction extends Action
-{
-
-    public function execute(): string
-    {
+class AdminAction extends Action {
+    public function execute(): string {
         //if the user in session is not an admin he can't access the page
         if(!Auth::checkAccessLevel(100)){
             $pageContent = "<h1>Droits insuffisants</h1>";
@@ -20,7 +17,6 @@ class AdminAction extends Action
             $pageContent .= '<script type="text/javascript">window.setTimeout(function(){window.location.replace("?action=home");}, 2000);</script>';
             return $pageContent;
         }
-
 
         $feed = isset($_GET['admin']) ? $_GET['admin'] : (isset($_POST['admin']) ? $_POST['admin'] : 'tendances');
 
@@ -44,7 +40,7 @@ class AdminAction extends Action
         $html .= '</div>';
         if ($feed === 'tendances') {
             $connexion = \touiteur\app\db\ConnectionFactory::makeConnection();
-            $query = "SELECT t2.libelle, COUNT(t.idTag) AS nbTag FROM touiteToTag t inner join tag t2 on t.idTag=t2.idTag GROUP BY libelle ORDER BY nbTag desc;";
+            $query = "SELECT t2.libelle, COUNT(t.idTag) AS nbTag FROM touiteToTag t INNER JOIN tag t2 ON t.idTag=t2.idTag GROUP BY libelle ORDER BY nbTag desc;";
             $st = $connexion->prepare($query);
             $st->execute();
             while ($row = $st->fetch(\PDO::FETCH_ASSOC)) {
@@ -62,7 +58,7 @@ class AdminAction extends Action
             $html .= '</div>';
         } else if ($feed === 'influenceurs') {
             $connexion = \touiteur\app\db\ConnectionFactory::makeConnection();
-            $query = "SELECT u.username,u.email, count(f.emailSuivi) as nbSuivi FROM follow f inner join users u on f.emailSuivi= u.email group by u.email order by nbSuivi desc";
+            $query = "SELECT u.username,u.email, count(f.emailSuivi) AS nbSuivi FROM follow f INNER JOIN users u ON f.emailSuivi= u.email GROUP BY u.email order by nbSuivi desc";
             $st = $connexion->prepare($query);
             $st->execute();
             while ($row = $st->fetch(\PDO::FETCH_ASSOC)) {

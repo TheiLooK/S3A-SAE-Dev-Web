@@ -1,36 +1,31 @@
 <?php
 declare(strict_types=1);
-namespace touiteur\app\Auth;
+namespace touiteur\app\auth;
 use PDO;
 use touiteur\app\db\ConnectionFactory;
 
-class Auth
-{
-    public static function authentification(string $pwd, string $email): void
-    {
-
+class Auth {
+    public static function authentification(string $pwd, string $email): void {
         $query = "SELECT * from users where email=?";
         $connexion = \touiteur\app\db\ConnectionFactory::makeConnection();
         $resultset = $connexion->prepare($query);
         $res = $resultset->execute([$email]);
         if (!$res) {
-            throw new \touiteur\app\Exception\AuthException("Erreur : requetes");
+            throw new \touiteur\app\exception\AuthException("Erreur : requetes");
         }
 
         $user = $resultset->fetch(PDO::FETCH_ASSOC);
         if (!$user) {
-            throw new \touiteur\app\Exception\AuthException("Erreur :  authentification invalid");
+            throw new \touiteur\app\exception\AuthException("Erreur :  authentification invalid");
         }
         if (!password_verify($pwd, $user['password'])) {
-            throw new \touiteur\app\Exception\AuthException("Erreur : mot de passe invalid ");
+            throw new \touiteur\app\exception\AuthException("Erreur : mot de passe invalid ");
         }
     }
 
-    public static function register(string $pwd, string $email, string $pseudo, string $firstname, string $lastname): bool
-    {
-
+    public static function register(string $pwd, string $email, string $pseudo, string $firstname, string $lastname): bool {
         if (!self::checkPasswordStrength($pwd, 1)) {
-            throw new \touiteur\app\Exception\AuthException("password trop faible ");
+            throw new \touiteur\app\exception\AuthException("password trop faible ");
         }
 
         $hash = password_hash($pwd, PASSWORD_DEFAULT, ['cost' => 12]);
@@ -43,21 +38,20 @@ class Auth
         $resultset = $connexion->prepare($query_email);
         $res = $resultset->execute([$email]);
         if ($resultset->fetch()) {
-            throw new \touiteur\app\Exception\AuthException("compte déjà existant");
+            throw new \touiteur\app\exception\AuthException("compte déjà existant");
         }
         try {
             $query = "insert into users(email,username,password,lastname,firstname,role) values (?,?,?,?,?,1)";
             $resultset = $connexion->prepare(($query));
             $res = $resultset->execute([$email, $pseudo, $hash, $lastname, $firstname]);
         } catch (PDOException $e) {
-            throw new \touiteur\app\Exception\AuthException("Erreur lors de la création du compte");
+            throw new \touiteur\app\exception\AuthException("Erreur lors de la création du compte");
 
         }
         return $res;
     }
 
-    public static function checkPasswordStrength(string $pwd, int $min): bool
-    {
+    public static function checkPasswordStrength(string $pwd, int $min): bool {
         $length = (strlen($pwd) > $min);
         if (!$length) {
             return false;
@@ -65,8 +59,7 @@ class Auth
         return true;
     }
 
-    public static function loadProfile(string $email): void
-    {
+    public static function loadProfile(string $email): void {
         $connexion = ConnectionFactory::makeConnection();
         $query = "SELECT * from users where email = :email";
         $resultset = $connexion->prepare(($query));
@@ -82,7 +75,7 @@ class Auth
      * @param int $required the access level needed
      * @return bool true if the user has the correct acces level
      */
-    public static function checkAccessLevel(int $required) : bool{
+    public static function checkAccessLevel(int $required): bool {
         $connexion = ConnectionFactory::makeConnection();
         $user = unserialize($_SESSION['users']);
         if($user->role==$required){
@@ -96,7 +89,7 @@ class Auth
      * @param string $email the user to check
      * @return bool true if the user in session is the user given or an admin
      */
-    public static function checkOwnership(string $email) : bool{
+    public static function checkOwnership(string $email): bool {
         $access = false;
         $user = unserialize($_SESSION['users']);
         if (isset($_SESSION['users']) && ($user->email === $email) || (($user->role == 100))) {
@@ -109,7 +102,7 @@ class Auth
      * Function used to check if the user is signed in or an anonym user
      * @return bool true if the user is signed in
      */
-    public static function checkSignIn() : bool{
+    public static function checkSignIn(): bool {
         return isset($_SESSION['users']);
     }
 }

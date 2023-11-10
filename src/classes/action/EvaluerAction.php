@@ -6,7 +6,7 @@ use touiteur\app\structure\user\User;
 
 class EvaluerAction
 {
-    public function execute() : string {
+    public function execute(): string {
         // if idTouite is not set then its an access via modifing the url
         if(!isset($_POST['idTouite'])){
             $pageContent = "<h1>Access Interdit via modification Url</h1>";
@@ -25,7 +25,7 @@ class EvaluerAction
         $email=$user->email;
 
         // si l'utilisateur est l'auteur du touite on ne fait rien
-        $sql = "select email from touite where idTouite = ?";
+        $sql = "SELECT email FROM touite WHERE idTouite = ?";
         $connexion = ConnectionFactory::makeConnection();
         $resultset = $connexion->prepare(($sql));
         $resultset ->execute([$id]);
@@ -54,9 +54,9 @@ class EvaluerAction
         return '';
     }
 
-    private function updateNote(string $type, string $email, int $id, User $user){
+    private function updateNote(string $type, string $email, int $id, User $user): void {
         $connexion = ConnectionFactory::makeConnection();
-        $query = "UPDATE notation set note = ? where email like ? and idTouite = ?";
+        $query = "UPDATE notation SET note = ? WHERE email LIKE ? AND idTouite = ?";
         $resultset = $connexion->prepare(($query));
         switch ($type){
             case "up":
@@ -71,9 +71,9 @@ class EvaluerAction
         $_SESSION['users']=serialize($user);
     }
 
-    private function insertNote(string $type, string $email, int $id, User $user){
+    private function insertNote(string $type, string $email, int $id, User $user): void {
         $connexion = ConnectionFactory::makeConnection();
-        $query = "insert into notation (email, idTouite, note) values (?,?,?)";
+        $query = "INSERT INTO notation (email, idTouite, note) VALUES (?,?,?)";
         $resultset = $connexion->prepare(($query));
         switch ($type){
             case "up":
@@ -87,7 +87,7 @@ class EvaluerAction
         }
     }
 
-    private function supprimerNote(string $email, int $id, User $user){
+    private function supprimerNote(string $email, int $id, User $user): void {
         $connexion = ConnectionFactory::makeConnection();
         $query = "DELETE FROM notation WHERE email = ? AND idTouite = ?";
         $resultset = $connexion->prepare(($query));

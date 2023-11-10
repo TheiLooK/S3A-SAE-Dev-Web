@@ -2,7 +2,7 @@
 
 namespace touiteur\app\action;
 
-use touiteur\app\Auth\Auth;
+use touiteur\app\auth\Auth;
 use touiteur\app\renderer\FeedRenderer;
 use touiteur\app\renderer\Renderer;
 use touiteur\app\structure\lists\Feed;

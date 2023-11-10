@@ -1,5 +1,5 @@
 <?php
 
-namespace touiteur\app\Exception;
+namespace touiteur\app\exception;
 use Exception;
 class AuthException extends \Exception{}

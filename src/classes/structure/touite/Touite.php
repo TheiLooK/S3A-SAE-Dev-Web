@@ -3,7 +3,7 @@
 namespace touiteur\app\structure\touite;
 
 use touiteur\app\db\ConnectionFactory;
-use touiteur\app\Exception\InvalidPropertyNameException;
+use touiteur\app\exception\InvalidPropertyNameException;
 use PDO;
 class Touite {
     private string $message;

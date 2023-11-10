@@ -1,6 +1,6 @@
 <?php
 
-namespace touiteur\app\Exception;
+namespace touiteur\app\exception;
 class InvalidPropertyNameException extends \Exception
 {
 }
