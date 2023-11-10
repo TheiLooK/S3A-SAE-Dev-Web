@@ -3,6 +3,7 @@
 namespace touiteur\app\action;
 
 use touiteur\app\auth\Auth;
+use touiteur\app\exception\AuthException;
 
 class SigninAction extends Action {
     public function execute(): string {
@@ -33,7 +34,7 @@ class SigninAction extends Action {
                 //page d'accueil
                 $pageContent .= '<p>Redirection vers la page d\'accueil dans 2 secondes</p></div>';
                 $pageContent .= '<script type="text/javascript">window.setTimeout(function(){window.location.replace("?action=home");}, 2000);</script>';
-            } catch(\touiteur\app\exception\AuthException $e) {
+            } catch(AuthException $e) {
                 $pageContent .= "<h4> échec authentification : {$e->getMessage()}</h4>";
             }
 
