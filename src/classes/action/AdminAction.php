@@ -43,6 +43,7 @@ class AdminAction extends Action {
             $query = "SELECT t2.libelle, COUNT(t.idTag) AS nbTag FROM touiteToTag t INNER JOIN tag t2 ON t.idTag=t2.idTag GROUP BY libelle ORDER BY nbTag desc;";
             $st = $connexion->prepare($query);
             $st->execute();
+            $tendances = [];
             while ($row = $st->fetch(\PDO::FETCH_ASSOC)) {
                 $tendances[] = $row;
             }
@@ -61,6 +62,7 @@ class AdminAction extends Action {
             $query = "SELECT u.username,u.email, count(f.emailSuivi) AS nbSuivi FROM follow f INNER JOIN users u ON f.emailSuivi= u.email GROUP BY u.email order by nbSuivi desc";
             $st = $connexion->prepare($query);
             $st->execute();
+            $influenceurs=[];
             while ($row = $st->fetch(\PDO::FETCH_ASSOC)) {
                 $influenceurs[] = $row;
             }
