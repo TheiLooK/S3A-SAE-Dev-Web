@@ -406,6 +406,56 @@ form.active input[type=submit] {
 
 /* Smartphone */
 @media all and (orientation: portrait) {
+    body {
+        flex-direction: column-reverse;
+        justify-content: space-between;
+    }
+
+    .partiegauche nav div {
+        display: flex;
+        flex-direction: row;
+        width: 100%;
+        justify-content: space-around;
+    }
+
+    nav {
+        align-items: center;
+        margin: 0;
+
+    }
+
+    nav .logo {
+        display: none;
+    }
+
+    .partiegauche {
+        border-right: none;
+        border-top: grey 1px solid;
+        box-shadow: 0 0 10px grey;
+        width: 100%;
+        height: 10%;
+    }
+
+
+
+    .partiecentrale {
+        height: 90%;
+        width: 100%;
+        padding: 0;
+    }
+
+    .partiecentrale div {
+        margin: 0 10px;
+    }
+
+    .pagination {
+        margin: 0;
+    }
+
+    .feed {
+        padding: 0;
+    }
+
     /* On enlève la partie droite */
     .partiedroite {
         display: none;
