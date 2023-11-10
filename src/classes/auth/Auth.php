@@ -131,10 +131,19 @@ class Auth
      * @param string $email the user to check
      * @return bool true if the user in session is the user given or an admin
      */
-    public static function checkOwnership(string $email) : bool{
+    public static function checkOwnership(string $email) : bool {
         $access = false;
         $user = unserialize($_SESSION['users']);
         if (isset($_SESSION['users']) && ($user->email === $email) || (($user->role == 100))) {
+            $access = true;
+        }
+        return $access;
+    }
+
+    public static function checkTouite(string $email): bool {
+        $access = false;
+        $user = unserialize($_SESSION['users']);
+        if (isset($_SESSION['users']) && ($user->email === $email)) {
             $access = true;
         }
         return $access;
