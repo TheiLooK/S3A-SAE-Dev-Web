@@ -76,11 +76,10 @@ class Auth {
      * @return bool true if the user has the correct acces level
      */
     public static function checkAccessLevel(int $required): bool {
+        if(!self::checkSignIn()) return false;
         $connexion = ConnectionFactory::makeConnection();
         $user = unserialize($_SESSION['users']);
-        if($user->role==$required){
-            return true;
-        }
+        if($user->role==$required) return true;
         return false;
     }
 
