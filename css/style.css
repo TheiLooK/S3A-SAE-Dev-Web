@@ -145,17 +145,9 @@ nav a {
 /* Form : log-in / sign-in */
 form {
     display: flex;
-    width: fit-content;
-    height: fit-content;
     flex-direction: column;
-    align-items: flex-start;
     padding: 10px;
     margin: 10px auto;
-}
-
-form input {
-    margin: 5px;
-    text-align: left;
 }
 
 form input {
@@ -166,7 +158,6 @@ form input {
     padding: 10px;
     font-size: 20px;
     border-radius: 5px;
-
 }
 
 form label {
@@ -256,7 +247,7 @@ form a {
     background-color: #FF9D08;
 }
 
-.buttons{
+.buttons {
     justify-content: flex-end;
     display: inline-flex;
     flex-direction: row;
@@ -409,6 +400,7 @@ form.active input[type=submit] {
     body {
         flex-direction: column-reverse;
         justify-content: space-between;
+        overflow: hidden;
     }
 
     .partiegauche nav div {
@@ -431,12 +423,9 @@ form.active input[type=submit] {
     .partiegauche {
         border-right: none;
         border-top: grey 1px solid;
-        box-shadow: 0 0 10px grey;
         width: 100%;
         height: 10%;
     }
-
-
 
     .partiecentrale {
         height: 90%;
@@ -444,16 +433,25 @@ form.active input[type=submit] {
         padding: 0;
     }
 
-    .partiecentrale div {
-        margin: 0 10px;
+    form {
+        margin: 0;
+        padding: 0;
+    }
+
+
+    /*Tous les input de .partiecentrale qui ne sont pas de type image*/
+    .partiecentrale *:not(input[type=image]) {
+        margin: 10px;
+        width: auto;
     }
 
     .pagination {
         margin: 0;
     }
 
-    .feed {
+    div.feed {
         padding: 0;
+        margin: 0;
     }
 
     /* On enlève la partie droite */
