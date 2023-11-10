@@ -32,10 +32,12 @@ class SupprimerTouite extends Action
 
         $id = $_POST['idTouite'];
         if(!isset($_GET['delete'])){
+            $mail = $_POST['emailTouite'];
             $pageContent=<<<HTML
                      <form method="POST">
                         <p>Voulez-vous vraiment supprimer votre touite ?</p>
-                        <input type="hidden" name="id" value=$id>
+                        <input type="hidden" name="idTouite" value=$id>
+                        <input type="hidden" name="emailTouite" value=$mail>;
                         <input type="submit" value="Oui" formaction="?action=supprimerTouite&delete=true">
                         <input type="submit" value="Non" formaction="?action=affiche">
                     </form>
@@ -72,6 +74,7 @@ class SupprimerTouite extends Action
                 $res = $resultset ->execute([$id]);
             }
             $pageContent="le touite a bien été supprimé, retour à la page";
+            $pageContent .= '<script type="text/javascript">window.setTimeout(function(){window.location.replace("?action=home");}, 1500);</script>';
         }
 
         return $pageContent;
