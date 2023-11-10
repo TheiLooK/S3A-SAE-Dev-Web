@@ -3,11 +3,12 @@
 namespace touiteur\app\action;
 
 use touiteur\app\action\Action;
+use touiteur\app\Auth\Auth;
 
 class FollowTag extends Action {
 
     public function execute(): string {
-        if (!isset($_SESSION['users'])) {
+        if (!Auth::checkSignIn()) {
             return '<script type="text/javascript">window.location.replace("?action=signin");</script>';
         }
         try {

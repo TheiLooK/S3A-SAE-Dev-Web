@@ -2,12 +2,14 @@
 
 namespace touiteur\app\action;
 use PDO;
+use touiteur\app\Auth\Auth;
+
 class PublierTouiteAction extends Action{
 
     public function execute() : string {
 
         // if the user is not sign in, He can't publish a touite, so we redirect him
-        if(!isset($_SESSION['users'])) {
+        if(!Auth::checkSignIn()) {
             header("Location: index.php?action=signin");
             exit();
         }
@@ -31,10 +33,9 @@ class PublierTouiteAction extends Action{
 
             }else{
                 $idI = null;
-
                 //upload the images if the file is there;
                 if($_FILES['file']['size'] > 0){
-                    $idI=$this->traiterImage();
+                    $idI=$this->uploadImage();
                 }
 
                 // add the touite to the database
@@ -87,7 +88,7 @@ class PublierTouiteAction extends Action{
      * Function used to upload an images and insert the data in the database
      * @return void
      */
-    private function traiterImage() : int{
+    private function uploadImage() : int{
         $idI=-2;
         // we check if the images is the right type
         $extensions=array( 'image/jpeg', 'image/png', 'image/gif', 'image/webp');
@@ -113,7 +114,6 @@ class PublierTouiteAction extends Action{
             $res = $resultset ->execute();
             // we get the id
             $idI = ($resultset->fetch(PDO::FETCH_ASSOC))['idImage'];
-
         }
         return $idI;
     }

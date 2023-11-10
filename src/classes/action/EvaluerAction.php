@@ -7,8 +7,21 @@ use touiteur\app\structure\user\User;
 class EvaluerAction
 {
     public function execute() : string {
+        // if idTouite is not set then its an access via modifing the url
+        if(!isset($_POST['idTouite'])){
+            $pageContent = "<h1>Access Interdit via modification Url</h1>";
+            $pageContent .= '<p>Redirection vers la page d\'accueil dans 2 secondes</p></div>';
+            $pageContent .= '<script type="text/javascript">window.setTimeout(function(){window.location.replace("?action=home");}, 2000);</script>';
+            return $pageContent;
+        }
+
+
         $user = unserialize($_SESSION['users']);
-        $id=$_POST['id'];
+        $id=$_POST['idTouite'];
+
+
+
+
         $email=$user->email;
 
         // si l'utilisateur est l'auteur du touite on ne fait rien
@@ -37,7 +50,7 @@ class EvaluerAction
             $this->insertNote($_GET['note'],$email, $id, $user);
         }
         header("Location:{$_POST['url']}");
-        //return useless but we need it so we don't get any errors.
+        //return useless but we need it so we don't get any errors;
         return '';
     }
 

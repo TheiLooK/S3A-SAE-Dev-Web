@@ -31,7 +31,7 @@ class ListUser{
 
     public function getFollowing() : void{
         $connexion = ConnectionFactory::makeConnection();
-        $query = "select * from users u inner join follow f on u.email = f.emailSuiveur where f.emailSuiveur like ?";
+        $query = "select * from users u inner join follow f on u.email = f.emailSuivi where f.emailSuiveur like ?";
         $resultset = $connexion->prepare(($query));
         $res = $resultset ->execute([$this->user]);
         while($data = $resultset->fetch()){

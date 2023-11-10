@@ -9,15 +9,17 @@ class Touite {
     private string $message;
     private string $date;
     private string $user;
+    private string $email;
     private int $id;
     private int $scoreDown;
     private int $scoreUp;
     private ?string $image;
 
-    public function __construct(string $message, string $user, ?string $image, string $date, int $id) {
+    public function __construct(string $message, string $user, ?string $image, string $date, int $id,string $email) {
         $this->message = $message;
         $this->date = $date;
         $this->user = $user;
+        $this->email = $email;
         $this->image = $image;
         $this->id = $id;
         $this->scoreUp = 0;
@@ -57,9 +59,9 @@ class Touite {
         // we create the touite object
         $touite = null;
         if(isset($data['urlImage'])){
-            $touite = new Touite($data['texte'],$data['username'],$data['urlImage'], $data['dateTouite'], $data['idTouite']);
+            $touite = new Touite($data['texte'],$data['username'],$data['urlImage'], $data['dateTouite'], $data['idTouite'], $data['email']);
         }else{
-            $touite = new Touite($data['texte'],$data['username'],null, $data['dateTouite'], $data['idTouite']);
+            $touite = new Touite($data['texte'],$data['username'],null, $data['dateTouite'], $data['idTouite'], $data['email']);
         }
 
         return $touite;

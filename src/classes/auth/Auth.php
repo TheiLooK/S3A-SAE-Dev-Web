@@ -2,6 +2,8 @@
 declare(strict_types=1);
 namespace touiteur\app\Auth;
 use PDO;
+use touiteur\app\db\ConnectionFactory;
+
 class Auth
 {
     public static function authentification(string $pwd, string $email): void
@@ -63,10 +65,9 @@ class Auth
         return true;
     }
 
-
     public static function loadProfile(string $email): void
     {
-        $connexion = \touiteur\app\db\ConnectionFactory::makeConnection();
+        $connexion = ConnectionFactory::makeConnection();
         $query = "SELECT * from users where email = :email";
         $resultset = $connexion->prepare(($query));
         $resultset->execute(["$email"]);
@@ -76,11 +77,39 @@ class Auth
         $_SESSION['users'] = serialize($profile);
     }
 
-    public static function checkAccessLevel(string $user){
+    /**
+     * function used to check if the user has the required access level
+     * @param int $required the access level needed
+     * @return bool true if the user has the correct acces level
+     */
+    public static function checkAccessLevel(int $required) : bool{
+        $connexion = ConnectionFactory::makeConnection();
+        $user = unserialize($_SESSION['users']);
+        if($user->role==$required){
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Function used to check if the user given is the user in session
+     * @param string $email the user to check
+     * @return bool true if the user in session is the user given or an admin
+     */
+    public static function checkOwnership(string $email) : bool{
         $access = false;
-        if (isset($_SESSION['users']) && ((unserialize($_SESSION['users'])->username === $user) || (unserialize($_SESSION['users'])->role == 100))) {
+        $user = unserialize($_SESSION['users']);
+        if (isset($_SESSION['users']) && ($user->email === $email) || (($user->role == 100))) {
             $access = true;
         }
         return $access;
+    }
+
+    /**
+     * Function used to check if the user is signed in or an anonym user
+     * @return bool true if the user is signed in
+     */
+    public static function checkSignIn() : bool{
+        return isset($_SESSION['users']);
     }
 }

@@ -6,7 +6,7 @@ use touiteur\app\Exception\InvalidPropertyNameException;
 use touiteur\app\structure\touite\Touite;
 
 class Feed {
-    const NBPARPAGEFEED = 5;
+    const NBPARPAGEFEED = 7;
     const LISTETOUITES = 1;
     const LISTETOUITESPERSONNE = 2;
     const LISTETOUITESFOLLOWED = 3;
