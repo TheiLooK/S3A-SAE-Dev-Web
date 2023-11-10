@@ -50,7 +50,7 @@ class Dispatcher {
                 $result = (new \touiteur\app\action\EvaluerAction())->execute();
                 break;
             case 'admin':
-                $result = (new \touiteur\app\action\Admin())->execute();
+                $result = (new \touiteur\app\action\AdminAction())->execute();
                 break;
             default :
                 $result = (new \touiteur\app\action\Home())->execute();

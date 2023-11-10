@@ -7,7 +7,7 @@ use touiteur\app\renderer\FeedRenderer;
 use touiteur\app\renderer\Renderer;
 use touiteur\app\structure\lists\Feed;
 
-class Admin extends Action
+class AdminAction extends Action
 {
 
     public function execute(): string
