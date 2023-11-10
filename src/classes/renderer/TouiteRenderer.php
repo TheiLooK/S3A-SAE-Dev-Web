@@ -60,8 +60,7 @@ class TouiteRenderer implements Renderer {
         $res.="</div>";
         return $res;
     }
-    public function __get(string $at): mixed
-    {
+    public function __get(string $at): mixed {
         if (!property_exists($this, $at)) {
             throw new InvalidPropertyNameException(get_called_class() . "invalid property : $at");
         }
@@ -73,7 +72,7 @@ class TouiteRenderer implements Renderer {
      * Function used to create the buttons upvote, downvote and delete according to the user state(signed in, owner, admin...)
      * @return string the html of the buttons
      */
-    private function createButton() : string{
+    private function createButton(): string {
         // if the user is not sign in he cant see the button
         if(!Auth::checkSignIn()) return "";
 
@@ -88,20 +87,26 @@ class TouiteRenderer implements Renderer {
         $classUp = "icon ";
         $classDown = "icon ";
         //if the user has upvoted the button,
-        if(array_key_exists($this->touite->id, $user->touiteNoter)){
+        if (array_key_exists($this->touite->id, $user->touiteNoter)){
             if(($user->touiteNoter)[$this->touite->id]===-1){
                 $classDown.="selectedIcon";
             }else{
                 $classUp.="selectedIcon";
             }
         }
+
+        if (Auth::checkOwnership($this->touite->email)) {
+            $classUp .= " disabled";
+            $classDown .= " disabled";
+        }
+
         $button .= "<p>{$this->touite->scoreUp}</p>";
         $button .= '<input type="image" class="'.$classUp.'" src="images/site/up.png" alt="Submit" formaction="?action=evaluer&note=up">';
         $button .= "<p>{$this->touite->scoreDown}</p>";
         $button .= '<input type="image" class="'.$classDown.'" src="images/site/down.png" alt="Submit" formaction="?action=evaluer&note=down">';
 
         // create delete button if the user is the creator of the touite
-        if(Auth::checkOwnership($this->touite->email)){
+        if (Auth::checkOwnership($this->touite->email)) {
             $button .= '<input type="image" class="icon" src="images/site/supprimer.png" alt="Submit" formaction="?action=supprimerTouite">';
         }
         $button .= '</form>';

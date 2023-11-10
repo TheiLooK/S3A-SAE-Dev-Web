@@ -35,7 +35,7 @@ class SupprimerTouite extends Action {
                      <form method="POST">
                         <p>Voulez-vous vraiment supprimer votre touite ?</p>
                         <input type="hidden" name="idTouite" value=$id>
-                        <input type="hidden" name="emailTouite" value=$mail>;
+                        <input type="hidden" name="emailTouite" value=$mail>
                         <input type="submit" value="Oui" formaction="?action=supprimerTouite&delete=true">
                         <input type="submit" value="Non" formaction="?action=affiche">
                     </form>
