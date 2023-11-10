@@ -49,7 +49,7 @@ class AfficherProfil extends Action {
                     $html .= '<form method="POST" action="' . $action . '" class="inactive">';
                 }
                 $html .= '<input type="hidden" name="content" value="feed">';
-                $html .= '<input type="submit" value="Touites : '.Feed::getNbTouitePersonne($user->email).'">';
+                $html .= '<input type="submit" value="Touites : ' . Feed::getNbTouitePersonne($user->username) . '">';
                 $html .= '</form>';
 
                 if ($content === 'follower') {
