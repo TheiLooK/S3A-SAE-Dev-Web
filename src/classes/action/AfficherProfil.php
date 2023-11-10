@@ -22,11 +22,11 @@ class AfficherProfil extends Action {
             $html .= '<div id="info"> <h3>' . $user->__get('prenom'). " " . $user->__get("nom") . '</h3>';
             $html .= '<p>@' . $user->__get('username') . '</p>';
             $html .= '<p>Score moyen : ' . $user->getScoreMoyen() . '</p>';
-            $html .= '<div class="infoProfil"><p>Touites : ' . Feed::getNbTouitePersonne($user->email) . '</p>';
-            $html .= '<p>Abonnés : ' . $user->getNbFollowers() . '</p>';
-            $html .= '<p>Abonnement : ' . $user->getNbFollowing() . '</p></div>';
-            $html .= '</div>';
             if (isset($_SESSION['users']) && unserialize($_SESSION['users'])->__get('username') != $user->__get('username')) {
+                $html .= '<div class="infoProfil"><p>Touites : ' . Feed::getNbTouitePersonne($user->email) . '</p>';
+                $html .= '<p>Abonnés : ' . $user->getNbFollowers() . '</p>';
+                $html .= '<p>Abonnement : ' . $user->getNbFollowing() . '</p></div>';
+                $html .= '</div>';
                 $html .= '<div id="followButton">';
                 if (unserialize($_SESSION['users'])->checkFollow($user)) {
                     $html .= '<form method="POST" action="?action=unfollow">';
@@ -40,6 +40,7 @@ class AfficherProfil extends Action {
                 $html .= '</form></div></div>';
             }
             else {
+                $html .= '</div>';
                 $content = $_POST['content'] ?? 'feed';
                 $html .= '</div><div class=home>';
                 if ($content === 'feed') {
@@ -48,7 +49,7 @@ class AfficherProfil extends Action {
                     $html .= '<form method="POST" action="' . $action . '" class="inactive">';
                 }
                 $html .= '<input type="hidden" name="content" value="feed">';
-                $html .= '<input type="submit" value="Touites ">';
+                $html .= '<input type="submit" value="Touites : '.Feed::getNbTouitePersonne($user->email).'">';
                 $html .= '</form>';
 
                 if ($content === 'follower') {
@@ -57,7 +58,7 @@ class AfficherProfil extends Action {
                     $html .= '<form method="POST" action="' . $action . '" class="inactive">';
                 }
                 $html .= '<input type="hidden" name="content" value="follower">';
-                $html .= '<input type="submit" value="Followers">';
+                $html .= '<input type="submit" value="Followers : '.$user->getNbFollowers().'">';
                 $html .= '</form>';
 
                 if ($content === 'following') {
@@ -66,7 +67,7 @@ class AfficherProfil extends Action {
                     $html .= '<form method="POST" action="' . $action . '" class="inactive">';
                 }
                 $html .= '<input type="hidden" name="content" value="following">';
-                $html .= '<input type="submit" value="Following">';
+                $html .= '<input type="submit" value="Following : '.$user->getNbFollowing().'">';
                 $html .= '</form></div>';
             }
         } catch (\touiteur\app\exception\InvalidPropertyNameException $e) {
