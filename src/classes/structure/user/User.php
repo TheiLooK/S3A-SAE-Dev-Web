@@ -122,7 +122,8 @@ class User {
         if($data2['nbTouite'] == 0){
             return 0;
         }
-        return $data['score']/($data2['nbTouite']);
+        $note = $data['score']/($data2['nbTouite']);
+        return round($note, 2);
     }
 
     public function getNbFollowers(): int {
