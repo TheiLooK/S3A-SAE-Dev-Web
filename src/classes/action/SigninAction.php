@@ -30,7 +30,6 @@ class SigninAction extends Action {
                 \touiteur\app\auth\Auth::authentification($pwd,$email);
                 $pageContent.= "<div><h4> Connexion réussie pour {$_POST['email']}</h4>";
                 \touiteur\app\auth\Auth::loadProfile($email);
-                $authenticatedUser = unserialize($_SESSION['users']);
                 //page d'accueil
                 $pageContent .= '<p>Redirection vers la page d\'accueil dans 2 secondes</p></div>';
                 $pageContent .= '<script type="text/javascript">window.setTimeout(function(){window.location.replace("?action=home");}, 2000);</script>';

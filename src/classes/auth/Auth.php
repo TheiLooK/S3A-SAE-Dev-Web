@@ -25,15 +25,15 @@ class Auth
         $resultset = $connexion->prepare($query);
         $res = $resultset->execute([$email]);
         if (!$res) {
-            throw new \touiteur\app\Exception\AuthException("Erreur : requetes");
+            throw new \touiteur\app\exception\AuthException("Erreur : requetes");
         }
 
         $user = $resultset->fetch(PDO::FETCH_ASSOC);
         if (!$user) {
-            throw new \touiteur\app\Exception\AuthException("Erreur :  authentification invalid");
+            throw new \touiteur\app\exception\AuthException("Erreur :  authentification invalid");
         }
         if (!password_verify($pwd, $user['password'])) {
-            throw new \touiteur\app\Exception\AuthException("Erreur : mot de passe invalid ");
+            throw new \touiteur\app\exception\AuthException("Erreur : mot de passe invalid ");
         }
     }
 
@@ -52,7 +52,7 @@ class Auth
     {
 
         if (!self::checkPasswordStrength($pwd, 1)) {
-            throw new \touiteur\app\Exception\AuthException("password trop faible ");
+            throw new \touiteur\app\exception\AuthException("password trop faible ");
         }
 
         $hash = password_hash($pwd, PASSWORD_DEFAULT, ['cost' => 12]);
@@ -65,14 +65,14 @@ class Auth
         $resultset = $connexion->prepare($query_email);
         $res = $resultset->execute([$email]);
         if ($resultset->fetch()) {
-            throw new \touiteur\app\Exception\AuthException("compte déjà existant");
+            throw new \touiteur\app\exception\AuthException("compte déjà existant");
         }
         try {
             $query = "insert into users(email,username,password,lastname,firstname,role) values (?,?,?,?,?,1)";
             $resultset = $connexion->prepare(($query));
             $res = $resultset->execute([$email, $pseudo, $hash, $lastname, $firstname]);
         } catch (PDOException $e) {
-            throw new \touiteur\app\Exception\AuthException("Erreur lors de la création du compte");
+            throw new \touiteur\app\exception\AuthException("Erreur lors de la création du compte");
 
         }
         return $res;
